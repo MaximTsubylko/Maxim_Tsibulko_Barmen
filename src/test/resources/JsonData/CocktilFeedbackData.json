@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "fromUserId": 2,
+    "toCocktileId": 1,
+    "title": "bad cocktile",
+    "mark": 1,
+    "comment": "Bad cocktile"
+  }
+]

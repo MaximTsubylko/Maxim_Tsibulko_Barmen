@@ -1,0 +1,25 @@
+[
+  {
+    "id": 1,
+    "name": "Tomato juice",
+    "description": "tomato juice description"
+  },
+
+  {
+    "id": 2,
+    "name": "Vodka",
+    "description": "Vodka description"
+  },
+
+  {
+    "id": 3,
+    "name": "Whiskey",
+    "description": "Whiskey description"
+  },
+
+  {
+    "id": 4,
+    "name": "Cola",
+    "description": "Cola description"
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Blood Mary",
+    "price": "1000",
+    "description": "Blood Mary discription"
+  },
+
+  {
+    "id": 2,
+    "name": "Whiskey and cola",
+    "price": "1200",
+    "description": "Whiskey and cola discription"
+  }
+]

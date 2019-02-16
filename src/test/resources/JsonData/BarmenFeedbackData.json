@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "fromUserId": 2,
+    "toUserId": 3,
+    "title": "Incredible barmen",
+    "mark": 5,
+    "comment": "Incredible barmen comment"
+  }
+]

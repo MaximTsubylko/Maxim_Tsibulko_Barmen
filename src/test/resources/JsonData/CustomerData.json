@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "login":"root",
+    "password": "root",
+    "email": "test@email.com",
+    "first_name": "testFirstName",
+    "second_name":"testLastName",
+    "registr_date": "2000-09-09",
+    "role_id": "3",
+    "state": "1"
+  },
+
+
+  {
+    "id": 2,
+    "login":"customer",
+    "password": "customer",
+    "email": "test2@email.com",
+    "first_name": "test2FirstName",
+    "second_name":"test2LastName",
+    "registr_date":"2000-09-09",
+    "role_id": "1",
+    "state": "1"
+  },
+
+
+  {
+    "id": 3,
+    "login":"barmen",
+    "password": "barmen",
+    "email": "test3@email.com",
+    "first_name": "test3FirstName",
+    "second_name":"test3LastName",
+    "registr_date":"2000-09-09",
+    "role_id": "2",
+    "state": "1"
+  }
+]
