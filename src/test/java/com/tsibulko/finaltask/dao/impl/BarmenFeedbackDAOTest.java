@@ -3,10 +3,7 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.BarmenFeedback;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.DaoFactory;
-import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
-import com.tsibulko.finaltask.dao.GenericDAO;
+import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
@@ -18,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,8 +25,7 @@ class BarmenFeedbackDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     GenericDAO dao;
     List<BarmenFeedback> feedbacks = JSONParser.BarmenFeedbackParse("src/test/resources/JsonData/BarmenFeedbackData.json");
-
-    BarmenFeedbackDAOTest() throws FileNotFoundException {
+    BarmenFeedbackDAOTest() throws FileNotFoundException, InterruptedException, ConnectionPoolException, SQLException {
     }
 
     @BeforeEach
@@ -44,6 +41,7 @@ class BarmenFeedbackDAOTest {
 
     @Test
     void getByPK() throws DaoException, InterruptedException, SQLException {
+
         assertEquals(feedbacks.get(0), dao.getByPK(1).get());
     }
 

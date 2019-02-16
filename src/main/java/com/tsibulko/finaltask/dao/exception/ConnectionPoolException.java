@@ -10,7 +10,11 @@ public class ConnectionPoolException extends Exception {
         super(message);
     }
 
-    public ConnectionPoolException(String message, Throwable cause) {
+    public ConnectionPoolException(String message, Exception cause) {
         super(message, cause);
+    }
+
+    public ConnectionPoolException(Exception e) {
+
     }
 }

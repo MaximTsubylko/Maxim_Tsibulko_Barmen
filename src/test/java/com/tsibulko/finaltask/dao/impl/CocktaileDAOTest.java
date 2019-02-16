@@ -38,7 +38,6 @@ class CocktaileDAOTest {
 
     @AfterEach
     void tearDown() throws IOException, SQLException, ConnectionPoolException, InterruptedException {
-        InMemoryDBUtil.drop();
     }
 
     @Test

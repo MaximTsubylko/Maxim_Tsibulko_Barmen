@@ -2,6 +2,18 @@ package com.tsibulko.finaltask.dao;
 
 import com.tsibulko.finaltask.dao.exception.DaoException;
 
+import java.io.Serializable;
+
+/**
+ * Dao Factory
+ */
 public interface DaoFactory {
-    GenericDAO getDao(Class entityClass) throws DaoException;
+    /**
+     * Return implementation of DAO for entity class
+     *
+     * @param entityClass - entity class
+     * @return - implementation of DAO for entity class
+     * @throws DaoException - should be clarify
+     */
+    <T extends Identified<PK>, PK extends Serializable> GenericDAO<T, PK> getDao(Class<T> entityClass) throws DaoException;
 }

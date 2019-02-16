@@ -5,6 +5,7 @@ import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import org.hsqldb.rights.User;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -15,9 +16,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class JdbcDaoFactory implements DaoFactory, TransactionalDaoFactory<Connection> {
+public class JdbcDaoFactory implements DaoFactory, TransactionalDaoFactory {
     private static volatile JdbcDaoFactory instance;
     private Map<Class, Supplier<GenericDAO>> creators = new HashMap<>();
+
+    @Override
+    public <T extends Identified<PK>, PK extends Serializable> GenericDAO<T, PK> getTransactionalDao(Class<T> entityClass) throws DaoException {
+        Supplier<GenericDAO> daoCreator = creators.get(entityClass);
+        if (daoCreator == null) {
+            throw new DaoException("Entity Class cannot be find");
+        }
+
+        return daoCreator.get();
+    }
 
     private class DaoInvocationHandler implements InvocationHandler {
         private GenericDAO dao;
@@ -88,18 +99,6 @@ public class JdbcDaoFactory implements DaoFactory, TransactionalDaoFactory<Conne
                 new DaoInvocationHandler(dao));
     }
 
-    @Override
-    public GenericDAO getTransactionalDao(Class entityClass, Connection connection) throws DaoException {
-        Supplier<GenericDAO> daoCreator = creators.get(entityClass);
-        if (daoCreator == null) {
-            throw new DaoException("Entity Class cannot be find");
-        }
-        GenericDAO dao = daoCreator.get();
-
-        setConnectionWithReflection(dao, connection);
-
-        return dao;
-    }
 
     private void setConnectionWithReflection(Object dao, Connection connection) throws DaoException {
         if (!(dao instanceof AbstractJdbcDao)) {

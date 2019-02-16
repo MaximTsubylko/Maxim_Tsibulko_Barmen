@@ -12,37 +12,41 @@ import java.sql.SQLException;
 
 public class InMemoryDBUtil {
     public static void fill() throws DaoException, IOException, SQLException, InterruptedException, ConnectionPoolException {
-        Connection connection = ConnectionPoolFactory
+        try (Connection connection = ConnectionPoolFactory
                 .getInstance()
                 .getConnectionPool()
-                .retrieveConnection();
+                .retrieveConnection()) {
 
-        String dataBase = FileUtils.
-                fileRead("src/test/resources/hsqldb/script/creatbase.sql");
+            String dataBase = FileUtils.
+                    fileRead("src/test/resources/hsqldb/script/creatbase.sql");
 
-        connection
-                .createStatement()
-                .executeUpdate(dataBase);
+            connection
+                    .createStatement()
+                    .executeUpdate(dataBase);
 
-        String fullTestData = FileUtils
-                .fileRead("src/test/resources/hsqldb/script/setdata.sql");
+            String fullTestData = FileUtils
+                    .fileRead("src/test/resources/hsqldb/script/setdata.sql");
 
-        connection
-                .createStatement()
-                .executeUpdate(fullTestData);
+            connection
+                    .createStatement()
+                    .executeUpdate(fullTestData);
+        }
     }
 
     public static void drop() throws SQLException, IOException, ConnectionPoolException, InterruptedException {
-        Connection connection = ConnectionPoolFactory
+        try (Connection connection = ConnectionPoolFactory
                 .getInstance()
                 .getConnectionPool()
-                .retrieveConnection();
+                .retrieveConnection()) {
 
-        String dataBase = FileUtils.
-                fileRead("src/test/resources/hsqldb/script/drop.sql");
+            String dataBase = FileUtils.
+                    fileRead("src/test/resources/hsqldb/script/drop.sql");
 
-        connection
-                .createStatement()
-                .executeUpdate(dataBase);
+            connection
+                    .createStatement()
+                    .executeUpdate(dataBase);
+            ConnectionPoolFactory.getInstance().getConnectionPool().putBackConnection(connection);
+
+        }
     }
 }

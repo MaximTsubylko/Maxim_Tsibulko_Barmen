@@ -3,6 +3,7 @@ package com.tsibulko.finaltask.dao;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Connection Pool
@@ -14,7 +15,7 @@ public interface ConnectionPool {
      * @return - connection from CP if exists
      * @throws ConnectionPoolException - should be clarify
      */
-    Connection retrieveConnection() throws ConnectionPoolException;
+    Connection retrieveConnection() throws ConnectionPoolException, InterruptedException, SQLException;
 
     /**
      * Put back connection after using

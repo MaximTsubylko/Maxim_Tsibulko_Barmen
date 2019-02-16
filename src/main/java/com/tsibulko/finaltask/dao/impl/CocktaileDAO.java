@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements CocktileSpecificDAO<Cocktaile, Integer> {
 
+    @AutoConnection
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Cocktaile cocktaile) throws SQLException {

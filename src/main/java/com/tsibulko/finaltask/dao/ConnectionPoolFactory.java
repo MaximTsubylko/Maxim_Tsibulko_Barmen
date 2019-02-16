@@ -29,7 +29,7 @@ public class ConnectionPoolFactory {
         return instance;
     }
 
-    public ConnectionPool getConnectionPool() throws IOException {
+    public ConnectionPool getConnectionPool(){
         return JDBCConnectionPool.getInstance();
     }
 }

@@ -62,7 +62,7 @@ public class JDBCConnectionPool implements ConnectionPool {
         try {
             semaphore.acquire();
 
-            if (availableConnection.size() + usedConnection.size() < POOL_CAPACITY && counter.get() < POOL_CAPACITY) {
+            if (counter.get() <= POOL_CAPACITY) {
                 lock.lock();
                 try {
                     Connection connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
@@ -132,6 +132,9 @@ public class JDBCConnectionPool implements ConnectionPool {
             throw new IllegalStateException("Driver cannot be found", e);
         }
     }
+    private Integer getAvaid(){
+        return semaphore.availablePermits();
+    }//удалить нужен для дебага
 
     private void init() throws IOException {
         Properties properties = new Properties();

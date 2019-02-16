@@ -20,7 +20,7 @@ public class FactoryProducer {
     public static DaoFactory getDaoFactory(DaoFactoryType type) {
         switch (type){
             case JDBC:
-                return new JdbcDaoFactory();
+                return JdbcDaoFactory.getInstance();
         }
         throw new UnsupportedOperationException();
     }

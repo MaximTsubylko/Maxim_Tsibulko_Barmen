@@ -26,11 +26,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class ConnectionPoolTest {
-    private static final int N_THREADS = 5;
+    private static final int N_THREADS = 8;
     private static final int POOL_CAPACITY = 8;
-    private static final String JDBCDRIVER_CLASS = "org.hsqldb.jdbc.JDBCDriver";
-    private static final String DB_URL = "jdbc:hsqldb:mem:testdb;DB_CLOSE_DELAY=-1";
-    private static final String DB_USER = "sa";
     @Test
     public void shouldGetConnection() throws InterruptedException, IOException {
 
