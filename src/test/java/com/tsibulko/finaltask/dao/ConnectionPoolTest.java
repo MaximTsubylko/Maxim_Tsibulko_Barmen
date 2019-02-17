@@ -1,8 +1,5 @@
 package com.tsibulko.finaltask.dao;
 
-import com.tsibulko.finaltask.dao.ConnectionPool;
-import com.tsibulko.finaltask.dao.ConnectionPoolFactory;
-import com.tsibulko.finaltask.dao.ConnectionPoolType;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.impl.JDBCConnectionPool;
 import org.junit.Assert;
@@ -22,14 +19,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
-import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class ConnectionPoolTest {
-    private static final int N_THREADS = 8;
+    private static final int N_THREADS = 100;
     private static final int POOL_CAPACITY = 8;
     @Test
-    public void shouldGetConnection() throws InterruptedException, IOException {
+    public void shouldGetConnection() throws InterruptedException, IOException, ConnectionPoolException {
 
         ConnectionPool connectionPool = Mockito.spy(ConnectionPoolFactory.getInstance().getConnectionPool());
         ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);

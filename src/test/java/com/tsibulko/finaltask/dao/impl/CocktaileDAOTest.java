@@ -38,6 +38,7 @@ class CocktaileDAOTest {
 
     @AfterEach
     void tearDown() throws IOException, SQLException, ConnectionPoolException, InterruptedException {
+        InMemoryDBUtil.drop();
     }
 
     @Test
@@ -52,7 +53,7 @@ class CocktaileDAOTest {
     }
 
     @Test
-    void persist() throws SQLException, InterruptedException, DaoException {
+    void persist() throws SQLException, InterruptedException, DaoException, PersistException {
         Cocktaile cocktaile = new Cocktaile();
         cocktaile.setId(3);
         cocktaile.setName("TestPersist");

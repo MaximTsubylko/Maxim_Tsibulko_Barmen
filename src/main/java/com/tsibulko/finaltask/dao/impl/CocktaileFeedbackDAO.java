@@ -13,6 +13,11 @@ import java.util.Optional;
 public class CocktaileFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Integer> implements GenericDAO<CocktaileFeedback, Integer> {
 
     @Override
+    protected List<CocktaileFeedback> parseResultSet(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
     protected void prepareStatementForInsert(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws SQLException {
         int i = 0;
         statement.setInt(++i, cocktaileFeedback.getFromUserId());
@@ -99,6 +104,7 @@ public class CocktaileFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Int
         return "DELETE FROM cocktaile_feedback WHERE id = ?";
     }
 
+    @AutoConnection
     @Override
     public Optional<CocktaileFeedback> getByPK(Integer id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
@@ -107,6 +113,7 @@ public class CocktaileFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Int
         }
     }
 
+    @AutoConnection
     @Override
     public List<CocktaileFeedback> getAll() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
@@ -114,14 +121,16 @@ public class CocktaileFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Int
         }
     }
 
-
+    @AutoConnection
     @Override
-    public void persist(CocktaileFeedback cocktaileFeedback) throws SQLException {
+    public CocktaileFeedback persist(CocktaileFeedback cocktaileFeedback) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
             prepareStatementForInsert(statement, cocktaileFeedback);
+            return cocktaileFeedback;
         }
     }
 
+    @AutoConnection
     @Override
     public void delete(CocktaileFeedback cocktaileFeedback) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
@@ -129,11 +138,11 @@ public class CocktaileFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Int
         }
     }
 
-
+    @AutoConnection
     @Override
     public void update(CocktaileFeedback cocktaileFeedback) throws SQLException {
-       try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
-           prepareStatementForUpdate(statement, cocktaileFeedback);
-       }
+        try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
+            prepareStatementForUpdate(statement, cocktaileFeedback);
+        }
     }
 }

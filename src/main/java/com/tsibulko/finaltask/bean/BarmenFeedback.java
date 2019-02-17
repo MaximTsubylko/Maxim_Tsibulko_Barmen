@@ -10,7 +10,7 @@ public class BarmenFeedback implements Identified<Integer> {
     private String title;
     private String comment;
 
-    public BarmenFeedback(int id,int fromUserId, int toUserId, int mark, String title, String comment) {
+    public BarmenFeedback(Integer id,int fromUserId, int toUserId, int mark, String title, String comment) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
@@ -34,7 +34,7 @@ public class BarmenFeedback implements Identified<Integer> {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

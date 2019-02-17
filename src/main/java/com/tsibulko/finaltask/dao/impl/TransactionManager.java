@@ -21,7 +21,7 @@ public final class TransactionManager {
     private Connection proxyConnection;
     private List<GenericDAO> currentDaos;
 
-    public void begin(GenericDAO dao, GenericDAO... daos) throws DaoException, SQLException, InterruptedException {
+    public void begin(GenericDAO dao, GenericDAO... daos) throws DaoException {
         try {
             ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
             proxyConnection = connectionPool.retrieveConnection();
@@ -40,13 +40,17 @@ public final class TransactionManager {
     }
 
     public void end() throws DaoException {
-        for (GenericDAO d : currentDaos) {
-            setConnectionWithReflection(d, null);
+        try {
+            for (GenericDAO d : currentDaos) {
+                setConnectionWithReflection(d, null);
+            }
+            ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
+            connectionPool.putBackConnection(proxyConnection);
+            proxyConnection = null;
+            currentDaos = null;
+        } catch (ConnectionPoolException e) {
+            e.printStackTrace();
         }
-        ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
-        connectionPool.putBackConnection(proxyConnection);
-        proxyConnection = null;
-        currentDaos = null;
     }
 
     public void commit() throws SQLException {
@@ -74,6 +78,5 @@ public final class TransactionManager {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new DaoException("Failed to set connection for transactional DAO. ", e);
         }
-
     }
 }

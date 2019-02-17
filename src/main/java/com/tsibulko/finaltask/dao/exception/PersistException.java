@@ -1,9 +1,15 @@
 package com.tsibulko.finaltask.dao.exception;
 
+import java.sql.SQLException;
+
 public class PersistException extends Exception {
 
-    PersistException(String message, Throwable cause) {
+    public PersistException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    public PersistException(Exception e) {
+
     }
     //provide your code here
 

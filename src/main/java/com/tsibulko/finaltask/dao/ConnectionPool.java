@@ -12,20 +12,25 @@ public interface ConnectionPool {
 
     /**
      * Return connection from CP if exists
+     *
      * @return - connection from CP if exists
      * @throws ConnectionPoolException - should be clarify
      */
-    Connection retrieveConnection() throws ConnectionPoolException, InterruptedException, SQLException;
+    Connection retrieveConnection() throws ConnectionPoolException;
 
     /**
      * Put back connection after using
+     *
      * @param connection - connection
      */
     void putBackConnection(Connection connection);
 
     /**
      * Destroy CP. Method close all connections.
+     *
      * @throws ConnectionPoolException should be clarify
      */
-    void destroyPool() throws ConnectionPoolException;
+    void destroyPool() throws ConnectionPoolException, SQLException;
+
+    void init() throws ConnectionPoolException;
 }

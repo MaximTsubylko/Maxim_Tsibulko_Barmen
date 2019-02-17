@@ -53,7 +53,7 @@ class CocktaileFeedbackDAOTest {
     }
 
     @Test
-    void persist() throws SQLException, InterruptedException, DaoException {
+    void persist() throws SQLException, InterruptedException, DaoException, PersistException {
         CocktaileFeedback cocktaileFeedback = new CocktaileFeedback(2, 1, 2, 1, "test", "");
         dao.persist(cocktaileFeedback);
         assertEquals(cocktaileFeedback, dao.getByPK(2).get());

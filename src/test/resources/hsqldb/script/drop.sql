@@ -6,4 +6,4 @@ drop table ingredient;
 drop table cocktail;
 drop table user;
 drop table user_state;
-drop table role;
+drop table ROLE;

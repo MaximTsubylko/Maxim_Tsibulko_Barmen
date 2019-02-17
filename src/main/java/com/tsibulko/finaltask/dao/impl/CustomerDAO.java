@@ -13,6 +13,11 @@ import java.util.Optional;
 public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements GenericDAO<Customer, Integer> {
 
     @Override
+    protected List<Customer> parseResultSet(ResultSet rs) throws SQLException {
+        return null;
+    }
+
+    @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Customer customer) throws SQLException {
         int i = 0;
         statement.setString(++i, customer.getFirst_name());
@@ -113,7 +118,7 @@ public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements G
     public String getDeleteQuery() {
         return "DELETE FROM user WHERE id = ?";
     }
-
+    @AutoConnection
     @Override
     public Optional<Customer> getByPK(Integer id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
@@ -121,7 +126,7 @@ public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements G
             return Optional.of(prepareStatementForGet(statement));
         }
     }
-
+    @AutoConnection
     @Override
     public List<Customer> getAll() throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
@@ -129,14 +134,15 @@ public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements G
        }
     }
 
-
+    @AutoConnection
     @Override
-    public void persist(Customer customer) throws SQLException {
+    public Customer persist(Customer customer) throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
            prepareStatementForInsert(statement, customer);
+           return customer;
        }
     }
-
+    @AutoConnection
     @Override
     public void delete(Customer customer) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
@@ -144,7 +150,7 @@ public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements G
         }
     }
 
-
+    @AutoConnection
     @Override
     public void update(Customer customer) throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {

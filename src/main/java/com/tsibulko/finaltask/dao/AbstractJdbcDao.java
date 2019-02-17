@@ -1,18 +1,16 @@
 package com.tsibulko.finaltask.dao;
 
-import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Number> implements GenericDAO<T, PK> {
     protected Connection connection;
+
+    protected abstract List<T> parseResultSet(ResultSet rs) throws SQLException;
 
     protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws SQLException;
 
@@ -37,31 +35,66 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
 
     @Override
     @AutoConnection
-    public Optional<T> getByPK(PK id) throws DaoException, SQLException, InterruptedException {
-        return Optional.empty();
+    public Optional<T> getByPK(PK key) throws DaoException, SQLException {
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(getSelectQuery() + " WHERE id = " + key)) {
+            return Optional.of(parseResultSet(preparedStatement.executeQuery()).get(0));
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
     @AutoConnection
-    public List<T> getAll() throws SQLException, DaoException {
-        return null;
+    public List<T> getAll() throws DaoException, SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getSelectQuery())) {
+            return parseResultSet(preparedStatement.executeQuery());
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     @Override
     @AutoConnection
-    public void persist(T daoObject) throws SQLException {
+    public T persist(T object) throws PersistException, SQLException {
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(getPersistQuery(), Statement.RETURN_GENERATED_KEYS)) {
+            prepareStatementForInsert(preparedStatement, object);
+            preparedStatement.execute();
 
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    object.setId(generatedKeys.getInt(1));
+                    return object;
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new PersistException(e);
+        }
     }
 
     @Override
     @AutoConnection
-    public void delete(T id) throws SQLException, PersistException {
-
+    public void update(T object) throws PersistException, SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getUpdateQuery())) {
+            prepareStatementForUpdate(preparedStatement, object);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new PersistException(e);
+        }
     }
 
     @Override
     @AutoConnection
-    public void update(T daoObject) throws SQLException, PersistException {
-
+    public void delete(T object) throws PersistException, SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(getDeleteQuery())) {
+            preparedStatement.setInt(1, (Integer) object.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new PersistException(e);
+        }
     }
 }

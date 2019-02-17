@@ -51,7 +51,7 @@ class BarmenFeedbackDAOTest {
     }
 
     @Test
-    void persist() throws SQLException, InterruptedException, DaoException {
+    void persist() throws SQLException, InterruptedException, DaoException, PersistException {
         BarmenFeedback barmenFeedback = new BarmenFeedback(2, 1, 2, 1, "test", "");
         dao.persist(barmenFeedback);
         assertEquals(barmenFeedback, dao.getByPK(2).get());

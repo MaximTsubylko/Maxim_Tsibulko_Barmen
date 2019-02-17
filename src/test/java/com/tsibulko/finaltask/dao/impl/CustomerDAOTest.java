@@ -55,7 +55,7 @@ class CustomerDAOTest {
     }
 
     @Test
-    void persist() throws SQLException, InterruptedException, DaoException {
+    void persist() throws SQLException, InterruptedException, DaoException, PersistException {
         Customer customer = customers.get(1);
         customer.setLogin("TestLogin");
         customer.setEmail("TestEmail");

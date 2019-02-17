@@ -3,7 +3,6 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.BarmenFeedback;
 import com.tsibulko.finaltask.dao.*;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> implements GenericDAO<BarmenFeedback, Integer> {
+
+    @Override
+    protected List<BarmenFeedback> parseResultSet(ResultSet rs) throws SQLException {
+        return null;
+    }
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
@@ -99,6 +103,7 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
         return "DELETE FROM barmen_feedback WHERE id = ?";
     }
 
+    @AutoConnection
     @Override
     public Optional<BarmenFeedback> getByPK(Integer id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
@@ -106,7 +111,7 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
             return Optional.of(prepareStatementForGet(statement));
         }
     }
-
+    @AutoConnection
     @Override
     public List<BarmenFeedback> getAll() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
@@ -114,14 +119,15 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
         }
     }
 
-
+    @AutoConnection
     @Override
-    public void persist(BarmenFeedback barmenFeedback) throws SQLException {
+    public BarmenFeedback persist(BarmenFeedback barmenFeedback) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
             prepareStatementForInsert(statement, barmenFeedback);
         }
+        return barmenFeedback;
     }
-
+    @AutoConnection
     @Override
     public void delete(BarmenFeedback barmenFeedback) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
@@ -129,12 +135,12 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
         }
     }
 
-
+    @AutoConnection
     @Override
     public void update(BarmenFeedback barmenFeedback) throws SQLException {
-       try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
-           prepareStatementForUpdate(statement, barmenFeedback);
-       }
+        try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
+            prepareStatementForUpdate(statement, barmenFeedback);
+        }
 
     }
 }

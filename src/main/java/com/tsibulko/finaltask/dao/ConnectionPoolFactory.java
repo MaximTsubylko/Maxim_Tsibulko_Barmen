@@ -1,19 +1,21 @@
 package com.tsibulko.finaltask.dao;
 
+
+import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.impl.JDBCConnectionPool;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Connection Pool Factory
+ */
 public class ConnectionPoolFactory {
-
     private static ConnectionPoolFactory instance;
     private static Lock lock = new ReentrantLock();
 
-    private ConnectionPoolFactory() {}
+    private ConnectionPoolFactory() {
+    }
 
     public static ConnectionPoolFactory getInstance() {
         lock.lock();
@@ -29,8 +31,7 @@ public class ConnectionPoolFactory {
         return instance;
     }
 
-    public ConnectionPool getConnectionPool(){
+    public ConnectionPool getConnectionPool() throws ConnectionPoolException {
         return JDBCConnectionPool.getInstance();
     }
 }
-

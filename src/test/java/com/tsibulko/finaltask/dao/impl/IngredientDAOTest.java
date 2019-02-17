@@ -53,7 +53,7 @@ class IngredientDAOTest {
     }
 
     @Test
-    void persist() throws DaoException, InterruptedException, SQLException {
+    void persist() throws DaoException, InterruptedException, SQLException, PersistException {
         Ingredient ingredient = ingredients.get(1);
         ingredient.setName("Test");
         ingredient.setDescription("Test");

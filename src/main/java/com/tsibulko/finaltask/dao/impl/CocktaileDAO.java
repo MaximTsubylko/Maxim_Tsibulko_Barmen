@@ -4,7 +4,6 @@ import com.tsibulko.finaltask.bean.Cocktaile;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.*;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,7 +13,11 @@ import java.util.Optional;
 
 public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements CocktileSpecificDAO<Cocktaile, Integer> {
 
-    @AutoConnection
+    @Override
+    protected List<Cocktaile> parseResultSet(ResultSet rs) throws SQLException {
+        return null;
+    }
+
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Cocktaile cocktaile) throws SQLException {
@@ -71,7 +74,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     protected List<Cocktaile> prepareStatmentForGetCocktailList(PreparedStatement statement, Customer customer) throws SQLException {
         List<Cocktaile> resultList = new ArrayList<>();
-        statement.setInt(1,customer.getId());
+        statement.setInt(1, customer.getId());
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             Cocktaile cocktaile = new Cocktaile();
@@ -109,8 +112,11 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
         return "DELETE FROM cocktail WHERE id = ?";
     }
 
-    public String getCocktailListQuery(){return "SELECT * FROM user_coctails INNER JOIN cocktail ON cocktail_id=cocktail.id WHERE user_id = ?";}
+    public String getCocktailListQuery() {
+        return "SELECT * FROM user_coctails INNER JOIN cocktail ON cocktail_id=cocktail.id WHERE user_id = ?";
+    }
 
+    @AutoConnection
     @Override
     public Optional<Cocktaile> getByPK(Integer id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
@@ -119,20 +125,24 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
         }
     }
 
+    @AutoConnection
     @Override
     public List<Cocktaile> getAll() throws SQLException {
-       try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
-           return prepareStatementForGetAll(statement);
-       }
-    }
-
-    @Override
-    public void persist(Cocktaile cocktaile) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
-            prepareStatementForInsert(statement, cocktaile);
+        try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
+            return prepareStatementForGetAll(statement);
         }
     }
 
+    @AutoConnection
+    @Override
+    public Cocktaile persist(Cocktaile cocktaile) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
+            prepareStatementForInsert(statement, cocktaile);
+            return cocktaile;
+        }
+    }
+
+    @AutoConnection
     @Override
     public void delete(Cocktaile cocktaile) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
@@ -141,6 +151,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     }
 
+    @AutoConnection
     @Override
     public void update(Cocktaile cocktaile) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
@@ -148,6 +159,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
         }
     }
 
+    @AutoConnection
     public List<Cocktaile> getCocktaileByCustomer(Customer customer) throws SQLException {
         try (PreparedStatement statment = connection.prepareStatement(getCocktailListQuery())) {
             statment.setInt(1, customer.getId());

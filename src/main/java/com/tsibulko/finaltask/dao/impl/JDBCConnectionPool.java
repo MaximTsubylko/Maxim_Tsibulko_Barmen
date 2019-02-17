@@ -1,11 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
-import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.ConnectionPool;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
-import com.tsibulko.finaltask.dao.exception.DaoException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Proxy;
@@ -22,39 +19,62 @@ import java.util.concurrent.locks.ReentrantLock;
  * Implementation of Connection Pool
  */
 public class JDBCConnectionPool implements ConnectionPool {
+    private static ConnectionPool instance;
+    private static final String DB_PATH = "property/database.properties";
     private static final String CLOSE_REGEX = ".*close.*";
 
-    private volatile List<Connection> availableConnection;
-    private volatile List<Connection> usedConnection;
+    private Queue<Connection> availableConnection;
+    private Queue<Connection> usedConnection;
     private Semaphore semaphore;
-    private Lock lock;
+    private Lock safeLock;
     private AtomicInteger counter;
-    private static Lock lockin = new ReentrantLock();
 
-    private String JDBC_URL;
-    private String USER;
-    private String PASSWORD;
-    private int POOL_CAPACITY;
+    private String url;
+    private String user;
+    private String password;
+    private int poolCapacity;
 
-    private static JDBCConnectionPool instance;
+    private static Lock lock = new ReentrantLock();
 
-    private JDBCConnectionPool() {}
+    private JDBCConnectionPool() {
+    }
 
-    public static JDBCConnectionPool getInstance() {
-        lockin.lock();
+    public static ConnectionPool getInstance() throws ConnectionPoolException {
+        lock.lock();
         try {
             if (instance == null) {
                 instance = new JDBCConnectionPool();
                 instance.init();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
-            lockin.unlock();
+            lock.unlock();
         }
 
         return instance;
+    }
+
+    public void init() throws ConnectionPoolException {//???
+        Properties properties = new Properties();
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        try (InputStream inputStream = classLoader.getResourceAsStream(DB_PATH)) {
+            properties.load(inputStream);
+            url = properties.getProperty("url") + "?" +
+                    "useUnicode=" + properties.getProperty("useUnicode") + "&" +
+                    "characterEncoding=" + properties.getProperty("characterEncoding") + "&" +
+                    "autoReconnect=" + properties.getProperty("autoReconnect");
+            user = properties.getProperty("user");
+            password = properties.getProperty("password");
+            poolCapacity = Integer.parseInt(properties.getProperty("poolCapacity"));
+            Class.forName(properties.getProperty("driver"));
+            semaphore = new Semaphore(poolCapacity);
+            availableConnection = new LinkedList<>();
+            usedConnection = new LinkedList<>();
+            safeLock = new ReentrantLock();
+            counter = new AtomicInteger();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new ConnectionPoolException("Initialize error.", e);
+        }
     }
 
     @Override
@@ -62,24 +82,24 @@ public class JDBCConnectionPool implements ConnectionPool {
         try {
             semaphore.acquire();
 
-            if (counter.get() <= POOL_CAPACITY) {
-                lock.lock();
+            if (availableConnection.size() + usedConnection.size() < poolCapacity && counter.get() < poolCapacity) {
+                safeLock.lock();
                 try {
-                    Connection connection = DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
+                    Connection connection = DriverManager.getConnection(url, user, password);
                     usedConnection.add(connection);
                     counter.incrementAndGet();
                     return getProxyConnection(connection);
                 } finally {
-                    lock.unlock();
+                    safeLock.unlock();
                 }
             } else {
-                lock.lock();
+                safeLock.lock();
                 try {
-                    Connection connection = availableConnection.remove(0);
+                    Connection connection = availableConnection.remove();
                     usedConnection.add(connection);
                     return getProxyConnection(connection);
                 } finally {
-                    lock.unlock();
+                    safeLock.unlock();
                 }
 
             }
@@ -94,6 +114,7 @@ public class JDBCConnectionPool implements ConnectionPool {
                 (proxy, method, args) -> {
                     if (method.getName().matches(CLOSE_REGEX)) {
                         putBackConnection(connection);
+                        return null;
                     }
 
                     return method.invoke(connection, args);
@@ -102,63 +123,24 @@ public class JDBCConnectionPool implements ConnectionPool {
 
     @Override
     public void putBackConnection(Connection connection) {
-        lock.lock();
+        safeLock.lock();
         try {
             if (usedConnection.remove(connection) && availableConnection.add(connection)) {
                 semaphore.release();
             }
         } finally {
-            lock.unlock();
+            safeLock.unlock();
         }
     }
 
     @Override
-    public void destroyPool() {
-        List<Connection> con = new ArrayList<>();
-        con.addAll(availableConnection);
-        con.addAll(usedConnection);
-        con.forEach(c -> {
-            try {
-                c.close();
-            } catch (SQLException e) {
-            }
-        });
-    }
-
-    private void initDriver(String driverClass) {
-        try {
-            Class.forName(driverClass);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalStateException("Driver cannot be found", e);
+    public void destroyPool() throws SQLException {
+        List<Connection> connectionList = new ArrayList<>();
+        connectionList.addAll(availableConnection);
+        connectionList.addAll(usedConnection);
+        for (Connection connection : connectionList) {
+            connection.close();
         }
-    }
-    private Integer getAvaid(){
-        return semaphore.availablePermits();
-    }//удалить нужен для дебага
-
-    private void init() throws IOException {
-        Properties properties = new Properties();
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        try (InputStream in = classLoader.getResourceAsStream("property/database.properties")) {
-            properties.load(in);
-            POOL_CAPACITY = Integer.valueOf(properties.getProperty("POOL_CAPACITY"));
-            semaphore = new Semaphore(POOL_CAPACITY);
-            availableConnection = new LinkedList<>();
-            usedConnection = new LinkedList<>();
-            lock = new ReentrantLock();
-            counter = new AtomicInteger();
-            this.JDBC_URL = properties.getProperty("URL");
-            this.USER = properties.getProperty("USER");
-            this.PASSWORD = properties.getProperty("PASSWORD");
-            initDriver(properties.getProperty("DRIVERCLASS"));
-//                    properties.getProperty("URL"),
-//                    properties.getProperty("USER"),
-//                    properties.getProperty("PASSWORD"),
-//                    properties.getProperty("DRIVERCLASS"),
-//                    Integer.valueOf(properties.getProperty("POOL_CAPACITY"));
-        }
-;
-
     }
 
 

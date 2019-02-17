@@ -3,9 +3,7 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.Cocktaile;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
-import com.tsibulko.finaltask.dao.exception.DaoException;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +15,11 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
 
     public static final String SQL_CREATE_INGREDIENTS = "INSERT INTO cocktail_ingredient (cocktail_id, ingredient_id) VALUES (?,?);";
 
+
+    @Override
+    protected List<Ingredient> parseResultSet(ResultSet rs) throws SQLException {
+        return null;
+    }
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Ingredient ingredient) throws SQLException {
@@ -114,7 +117,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
                 "ON cocktail_ingredient.ingredient_id=ingredient.id " +
                 "WHERE cocktail_id = ?;";
     }
-
+    @AutoConnection
     @Override
     public Optional<Ingredient> getByPK(Integer id) throws SQLException{
       try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
@@ -122,7 +125,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
           return Optional.of(prepareStatementForGet(statement));
       }
     }
-
+    @AutoConnection
     @Override
     public List<Ingredient> getAll() throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
@@ -130,14 +133,15 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
        }
     }
 
-
+    @AutoConnection
     @Override
-    public void persist(Ingredient ingredient) throws SQLException {
+    public Ingredient persist(Ingredient ingredient) throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
            prepareStatementForInsert(statement, ingredient);
+           return ingredient;
        }
     }
-
+    @AutoConnection
     @Override
     public void delete(Ingredient ingredient) throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
@@ -145,7 +149,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
        }
     }
 
-
+    @AutoConnection
     @Override
     public void update(Ingredient ingredient) throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
@@ -154,6 +158,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
 
     }
 
+    @AutoConnection
     public List<Ingredient> getIngredientByCocktail(Cocktaile cocktaile) throws SQLException {
        try (PreparedStatement statement = connection.prepareStatement(getIngredientsByCocktailIdQuery())) {
            statement.setInt(1, cocktaile.getId());
