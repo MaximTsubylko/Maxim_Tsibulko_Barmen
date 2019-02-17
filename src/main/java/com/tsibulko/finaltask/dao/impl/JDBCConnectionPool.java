@@ -5,11 +5,14 @@ import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
@@ -33,6 +36,10 @@ public class JDBCConnectionPool implements ConnectionPool {
     private String user;
     private String password;
     private int poolCapacity;
+
+    private final Deque<Connection> connectionDeque = new ConcurrentLinkedDeque<>();
+    private final List<Connection> allConnections = new ArrayList<>();
+
 
     private static Lock lock = new ReentrantLock();
 
@@ -81,30 +88,12 @@ public class JDBCConnectionPool implements ConnectionPool {
     public Connection retrieveConnection() throws ConnectionPoolException {
         try {
             semaphore.acquire();
-
-            if (availableConnection.size() + usedConnection.size() < poolCapacity && counter.get() < poolCapacity) {
-                safeLock.lock();
-                try {
-                    Connection connection = DriverManager.getConnection(url, user, password);
-                    usedConnection.add(connection);
-                    counter.incrementAndGet();
-                    return getProxyConnection(connection);
-                } finally {
-                    safeLock.unlock();
-                }
-            } else {
-                safeLock.lock();
-                try {
-                    Connection connection = availableConnection.remove();
-                    usedConnection.add(connection);
-                    return getProxyConnection(connection);
-                } finally {
-                    safeLock.unlock();
-                }
-
+            if (connectionDeque.size() == 0) {
+                return createConnection();
             }
+            return connectionDeque.pop();
         } catch (InterruptedException | SQLException e) {
-            throw new ConnectionPoolException("Failed to get connection.", e);
+            throw new ConnectionPoolException(e);
         }
     }
 
@@ -123,14 +112,8 @@ public class JDBCConnectionPool implements ConnectionPool {
 
     @Override
     public void putBackConnection(Connection connection) {
-        safeLock.lock();
-        try {
-            if (usedConnection.remove(connection) && availableConnection.add(connection)) {
-                semaphore.release();
-            }
-        } finally {
-            safeLock.unlock();
-        }
+        connectionDeque.push(connection);
+        semaphore.release();
     }
 
     @Override
@@ -142,6 +125,19 @@ public class JDBCConnectionPool implements ConnectionPool {
             connection.close();
         }
     }
+    private Connection createConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection(url, user, password);
+        allConnections.add(connection);
+        InvocationHandler connectionHandler = (Object proxy, Method method, Object[] args) -> {
+            if (method.getName().equals("close")) {
+                putBackConnection((Connection) proxy);
+                return null;
+            }
+            return method.invoke(connection, args);
+        };
 
+        return (Connection) Proxy.newProxyInstance(connection.getClass().getClassLoader(),
+                connection.getClass().getInterfaces(), connectionHandler);
+    }
 
 }
