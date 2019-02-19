@@ -20,11 +20,11 @@
                         <p><strong>Description: </strong><c:out value="${cocktil.description}"/></p>
                         <p><strong>Price: </strong><c:out value="${cocktil.price}"/></p>
                     </div>
-                    <form action="${pageContext.request.contextPath}/demo" method="post">
-                        <input type="hidden" name="command" value="update_cocktil">
-                        <input type="hidden" name="cocktilId" value="${cocktil.id}">
-                        <input class="button is-light" type="submit" value="Update cocktil">
-                    </form>
+                    <%--<form action="${pageContext.request.contextPath}/demo" method="post">--%>
+                        <%--<input type="hidden" name="command" value="update_cocktil">--%>
+                        <%--<input type="hidden" name="cocktilId" value="${cocktil.id}">--%>
+                        <%--<input class="button is-light" type="submit" value="Update cocktil">--%>
+                    <%--</form>--%>
                     <form action="${pageContext.request.contextPath}/demo" method="post">
                         <input type="hidden" name="command" value="delete_cocktil">
                         <input type="hidden" name="cocktilId" value="${cocktil.id}">

@@ -5,6 +5,8 @@ import com.tsibulko.finaltask.controller.command.CommandProvider;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.dto.ResponseContent;
+import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
+import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,6 +48,12 @@ public class IndexController extends HttpServlet {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } catch (ViewDateValidationException e) {
+            response.sendRedirect("/demo");
+            //тут должно выводиться сообщение
+        } catch (ServiceDateValidationException e) {
+            response.sendRedirect("/demo");
+            //тут должно выводиться сообщение
         }
     }
 }
