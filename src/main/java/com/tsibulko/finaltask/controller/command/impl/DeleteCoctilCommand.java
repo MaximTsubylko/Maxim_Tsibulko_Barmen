@@ -9,6 +9,7 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktaileService;
+import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 
 public class DeleteCoctilCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException {
+    public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException, ServiceDateValidationException {
         CocktaileService service = (CocktaileService) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
         Integer id = Integer.parseInt(request.getParameter("cocktilId"));
         Cocktaile cocktaile = service.getByPK(id);

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public interface CRUDService<T> {
     T create(T obj) throws SQLException, DaoException, PersistException, ServiceDateValidationException;
-    void delete(T obj) throws SQLException, PersistException, DaoException;
+    void delete(T obj) throws SQLException, PersistException, DaoException, ServiceDateValidationException;
     T getByPK(Integer id) throws DaoException, SQLException, InterruptedException;
     void update(T obj) throws DaoException, SQLException, PersistException;
 }

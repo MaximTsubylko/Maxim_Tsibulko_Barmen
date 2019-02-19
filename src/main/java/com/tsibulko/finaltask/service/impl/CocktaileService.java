@@ -57,9 +57,13 @@ public class CocktaileService implements CocktileService {
     }
 
     @Override
-    public void delete(Cocktaile cocktaile) throws SQLException, PersistException, DaoException {
-        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class);
-        dao.delete(cocktaile);
+    public void delete(Cocktaile cocktaile) throws SQLException, PersistException, DaoException, ServiceDateValidationException {
+        if (validator.isExistCoctil(cocktaile)) {
+            dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class);
+            dao.delete(cocktaile);
+        } else {
+            throw new ServiceDateValidationException("This cocktil not exist!");
+        }
     }
 
     @Override

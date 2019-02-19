@@ -18,9 +18,16 @@ public class ServiceDateValidator implements ServiceValid {
     @Override
     public boolean isUniqueCocktil(Cocktaile cocktaile) throws DaoException, SQLException {
         dao = daoFactory.getDao(Cocktaile.class);
-        List<Cocktaile> cocktailes = dao.getAll();
-        return cocktailes
+        List<Cocktaile> cocktails = dao.getAll();
+        return !(cocktails
                 .stream()
-                .anyMatch(c -> c.equals(cocktaile.getName()));
+                .anyMatch(c -> c.getName().equals(cocktaile.getName())));
+    }
+
+    @Override
+    public boolean isExistCoctil(Cocktaile cocktaile) throws DaoException, SQLException {
+        dao = daoFactory.getDao(Cocktaile.class);
+        List<Cocktaile> cocktails = dao.getAll();
+        return cocktails.stream().anyMatch(c->c.getName().equals(cocktaile.getName()));
     }
 }

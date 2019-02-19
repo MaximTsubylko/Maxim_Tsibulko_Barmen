@@ -7,4 +7,5 @@ import java.sql.SQLException;
 
 public interface ServiceValid extends Validator {
     boolean isUniqueCocktil(Cocktaile cocktaile) throws DaoException, SQLException;
+    boolean isExistCoctil(Cocktaile cocktaile) throws DaoException, SQLException;
 }
