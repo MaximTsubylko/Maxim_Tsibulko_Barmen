@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(urlPatterns = "/", name = "index")
+@WebServlet(urlPatterns = "/demo")
 public class IndexController extends HttpServlet {
 
     @Override

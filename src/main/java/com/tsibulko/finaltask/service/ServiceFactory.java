@@ -18,7 +18,7 @@ public class ServiceFactory {
         return INSTANCE;
     }
 
-    public СRUDService getSrvice(ServiceTypeEnum type) throws IllegalStateException{
+    public CRUDService getSrvice(ServiceTypeEnum type) throws IllegalStateException{
         switch (type){
             case COCKTAILE:
                 return new CocktaileService();

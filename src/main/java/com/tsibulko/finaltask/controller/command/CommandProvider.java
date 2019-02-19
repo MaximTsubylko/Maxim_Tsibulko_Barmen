@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.controller.command;
 
 import com.tsibulko.finaltask.controller.command.impl.CreateNewCocktilCommand;
+import com.tsibulko.finaltask.controller.command.impl.TestCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +18,8 @@ public class CommandProvider {
     }
 
     private CommandProvider() {
+
+        commandMap.put("hello", new TestCommand());
         commandMap.put("register_cocktil", new CreateNewCocktilCommand());
     }
 
