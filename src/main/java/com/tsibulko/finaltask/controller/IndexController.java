@@ -44,6 +44,8 @@ public class IndexController extends HttpServlet {
             e.printStackTrace();
         } catch (DaoException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

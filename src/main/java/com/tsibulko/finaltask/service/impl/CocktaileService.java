@@ -12,6 +12,7 @@ import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.CocktileService;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -47,11 +48,27 @@ public class CocktaileService implements CocktileService {
     }
 
     @Override
-    public void delete (Cocktaile cocktaile) throws SQLException, PersistException {
+    public void delete (Cocktaile cocktaile) throws SQLException, PersistException, DaoException {
+        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class);
         dao.delete(cocktaile);
     }
 
-    public void uppdateCocktile(Cocktaile cocktaile) throws IllegalTypeDAOException, SQLException, PersistException {
+    @Override
+    public Cocktaile getByPK(Integer id) throws DaoException, SQLException, InterruptedException {
+        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class);
+        Cocktaile cocktaile = (Cocktaile) dao.getByPK(id).get();
+        return cocktaile;
+    }
+
+    @Override
+    public void update(Cocktaile cocktaile) throws SQLException, PersistException, DaoException {
+        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class);
         dao.update(cocktaile);
+    }
+
+    @Override
+    public List<Cocktaile> getCoctilList() throws DaoException, SQLException {
+        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class);
+        return dao.getAll();
     }
 }

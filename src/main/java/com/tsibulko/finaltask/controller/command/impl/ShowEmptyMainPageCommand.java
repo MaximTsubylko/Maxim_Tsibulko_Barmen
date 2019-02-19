@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class TestCommand implements Command {
+public class ShowEmptyMainPageCommand implements Command {
     @Override
-    public ResponseContent process (HttpServletRequest request) {
+    public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException {
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("/jsp/hello.jsp", "forward"));
-        request.setAttribute("viewName", "hello");
+        responseContent.setRouter(new Router("/jsp/main.jsp", "forward"));
+        request.setAttribute("viewName", "empty");
         return responseContent;
+
     }
 }

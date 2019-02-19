@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.controller.command;
 
-import com.tsibulko.finaltask.controller.command.impl.CreateNewCocktilCommand;
-import com.tsibulko.finaltask.controller.command.impl.TestCommand;
+import com.tsibulko.finaltask.controller.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,9 +17,12 @@ public class CommandProvider {
     }
 
     private CommandProvider() {
-
-        commandMap.put("hello", new TestCommand());
+        commandMap.put("show_create_coctil", new ViewCreateCoctileFormCommand());
+        commandMap.put("main", new ShowEmptyMainPageCommand());
         commandMap.put("register_cocktil", new CreateNewCocktilCommand());
+        commandMap.put("cocktil_list", new ViewCoctilListCommand());
+        commandMap.put("view_cocktil_details", new ViewCocktileDetailCommand());
+        commandMap.put("delete_cocktil", new DeleteCoctilCommand());
     }
 
     /**

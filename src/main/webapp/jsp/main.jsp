@@ -11,6 +11,11 @@
     <title>le</title>
 </head>
 <body>
-    hello world!
+<div class="column is-one-quarter">
+    <jsp:include page="navigation.jsp"/>
+</div>
+<div class="column is-three-quarters">
+    <jsp:include page="include/${viewName}.jsp"/>
+</div>
 </body>
 </html>

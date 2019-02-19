@@ -12,5 +12,5 @@ import java.sql.SQLException;
 
 @FunctionalInterface
 public interface Command {
-    ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException;
+    ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException;
 }
