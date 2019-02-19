@@ -41,7 +41,6 @@ public class ValidatorFactory {
                 validator = new ViewDateValidator();
                 break;
         }
-
         return validator;
     }
 }
