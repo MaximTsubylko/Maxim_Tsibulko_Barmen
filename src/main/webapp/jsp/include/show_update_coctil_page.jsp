@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
-    <form action="${pageContext.request.contextPath}/demo" method="post">
+    <form action="${pageContext.request.contextPath}/main" method="post">
         <p><strong>Name: </strong>
             <input type="text" id="name" class="text-field" name="name" required="required"
                    placeholder="name"/></p>

@@ -18,10 +18,10 @@
                         <%--<input type="hidden" name="cocktilId" value="${cocktil.id}">--%>
                         <%--<input class="button is-light" type="submit" value="Update cocktil">--%>
                     <%--</form>--%>
-                    <form action="${pageContext.request.contextPath}/demo" method="post">
+                    <form action="${pageContext.request.contextPath}/main" method="post">
                         <input type="hidden" name="command" value="delete_cocktil">
                         <input type="hidden" name="cocktilId" value="${cocktil.id}">
-                        <input class="button is-danger" type="submit" value="delete">
+                        <input class="button is-danger" type="submit" value="Delete">
                     </form>
                 </div>
             </div>
