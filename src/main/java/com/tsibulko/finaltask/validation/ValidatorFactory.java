@@ -27,7 +27,6 @@ public class ValidatorFactory {
         } finally {
             lock.unlock();
         }
-
         return instance;
     }
 
