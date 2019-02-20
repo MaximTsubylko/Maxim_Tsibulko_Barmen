@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  <h2><a href="/demo?command=main">Create new cocktile</a> </h2>
+  <h2><a href="/main?command=main">Create new cocktile</a> </h2>
   </body>
 </html>

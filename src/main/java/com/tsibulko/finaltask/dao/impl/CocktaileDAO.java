@@ -1,6 +1,6 @@
 package com.tsibulko.finaltask.dao.impl;
 
-import com.tsibulko.finaltask.bean.Cocktaile;
+import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.*;
 
@@ -11,16 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements CocktileSpecificDAO<Cocktaile, Integer> {
+public class CocktaileDAO extends AbstractJdbcDao<Cocktail, Integer> implements CocktileSpecificDAO<Cocktail, Integer> {
 
     @Override
-    protected List<Cocktaile> parseResultSet(ResultSet rs) throws SQLException {
+    protected List<Cocktail> parseResultSet(ResultSet rs) throws SQLException {
         return null;
     }
 
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Cocktaile cocktaile) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Cocktail cocktaile) throws SQLException {
         int i = 0;
         statement.setString(++i, cocktaile.getName());
         statement.setString(++i, cocktaile.getDescription());
@@ -29,13 +29,13 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
     }
 
     @Override
-    protected void prepareStatementForDelete(PreparedStatement statement, Cocktaile cocktaile) throws SQLException {
+    protected void prepareStatementForDelete(PreparedStatement statement, Cocktail cocktaile) throws SQLException {
         statement.setInt(1, cocktaile.getId());
         statement.executeUpdate();
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Cocktaile cocktaile) throws SQLException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Cocktail cocktaile) throws SQLException {
         int i = 0;
         statement.setString(++i, cocktaile.getName());
         statement.setString(++i, cocktaile.getDescription());
@@ -45,8 +45,8 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
     }
 
     @Override
-    protected Cocktaile prepareStatementForGet(PreparedStatement statement) throws SQLException {
-        Cocktaile cocktaile = new Cocktaile();
+    protected Cocktail prepareStatementForGet(PreparedStatement statement) throws SQLException {
+        Cocktail cocktaile = new Cocktail();
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             cocktaile.setName(resultSet.getString("name"));
@@ -58,11 +58,11 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
     }
 
     @Override
-    protected List<Cocktaile> prepareStatementForGetAll(PreparedStatement statement) throws SQLException {
-        List<Cocktaile> resultList = new ArrayList<>();
+    protected List<Cocktail> prepareStatementForGetAll(PreparedStatement statement) throws SQLException {
+        List<Cocktail> resultList = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            Cocktaile cocktaile = new Cocktaile();
+            Cocktail cocktaile = new Cocktail();
             cocktaile.setId(resultSet.getInt("id"));
             cocktaile.setName(resultSet.getString("name"));
             cocktaile.setDescription(resultSet.getString("description"));
@@ -72,12 +72,12 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
         return resultList;
     }
 
-    protected List<Cocktaile> prepareStatmentForGetCocktailList(PreparedStatement statement, Customer customer) throws SQLException {
-        List<Cocktaile> resultList = new ArrayList<>();
+    protected List<Cocktail> prepareStatmentForGetCocktailList(PreparedStatement statement, Customer customer) throws SQLException {
+        List<Cocktail> resultList = new ArrayList<>();
         statement.setInt(1, customer.getId());
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            Cocktaile cocktaile = new Cocktaile();
+            Cocktail cocktaile = new Cocktail();
             cocktaile.setId(resultSet.getInt("id"));
             cocktaile.setName(resultSet.getString("name"));
             cocktaile.setDescription(resultSet.getString("description"));
@@ -118,7 +118,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     @AutoConnection
     @Override
-    public Optional<Cocktaile> getByPK(Integer id) throws SQLException {
+    public Optional<Cocktail> getByPK(Integer id) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
             statement.setInt(1, id);
             return Optional.of(prepareStatementForGet(statement));
@@ -127,7 +127,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     @AutoConnection
     @Override
-    public List<Cocktaile> getAll() throws SQLException {
+    public List<Cocktail> getAll() throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
             return prepareStatementForGetAll(statement);
         }
@@ -135,7 +135,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     @AutoConnection
     @Override
-    public Cocktaile persist(Cocktaile cocktaile) throws SQLException {
+    public Cocktail persist(Cocktail cocktaile) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
             prepareStatementForInsert(statement, cocktaile);
             return cocktaile;
@@ -144,7 +144,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     @AutoConnection
     @Override
-    public void delete(Cocktaile cocktaile) throws SQLException {
+    public void delete(Cocktail cocktaile) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
             prepareStatementForDelete(statement, cocktaile);
         }
@@ -153,14 +153,14 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktaile, Integer> implements
 
     @AutoConnection
     @Override
-    public void update(Cocktaile cocktaile) throws SQLException {
+    public void update(Cocktail cocktaile) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
             prepareStatementForUpdate(statement, cocktaile);
         }
     }
 
     @AutoConnection
-    public List<Cocktaile> getCocktaileByCustomer(Customer customer) throws SQLException {
+    public List<Cocktail> getCocktaileByCustomer(Customer customer) throws SQLException {
         try (PreparedStatement statment = connection.prepareStatement(getCocktailListQuery())) {
             statment.setInt(1, customer.getId());
             return prepareStatmentForGetCocktailList(statment, customer);

@@ -12,17 +12,17 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class JSONParser  {
-    public static final Type COCKTILE = new TypeToken<List<Cocktaile>>() {}.getType();
+    public static final Type COCKTILE = new TypeToken<List<Cocktail>>() {}.getType();
     public static final Type CUSTOMER = new TypeToken<List<Customer>>() {}.getType();
     public static final Type INGREDIENT = new TypeToken<List<Ingredient>>() {}.getType();
     public static final Type COCKTILE_FEEDBACK = new TypeToken<List<CocktaileFeedback>>() {}.getType();
     public static final Type BARMEN_FEEDBACK = new TypeToken<List<BarmenFeedback>>() {}.getType();
 
 
-    public static List<Cocktaile> CocktaileParse(String path) throws FileNotFoundException {
+    public static List<Cocktail> CocktaileParse(String path) throws FileNotFoundException {
         Gson gs = new GsonBuilder().setPrettyPrinting().create();
         JsonReader reader = new JsonReader(new FileReader(path));
-        List<Cocktaile> data = gs.fromJson(reader,COCKTILE);
+        List<Cocktail> data = gs.fromJson(reader,COCKTILE);
         return data;
     }
 

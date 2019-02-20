@@ -1,8 +1,7 @@
 package com.tsibulko.finaltask.dao.impl;
 
-import com.tsibulko.finaltask.bean.Cocktaile;
+import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.exception.DaoException;
@@ -21,19 +20,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-class CocktaileDAOTest {
+class CocktailDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     CocktileSpecificDAO dao;
-    List<Cocktaile> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
+    List<Cocktail> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
     List<Customer> customers = JSONParser.CustomerParse("src/test/resources/JsonData/CustomerData.json");
 
-    CocktaileDAOTest() throws FileNotFoundException {
+    CocktailDAOTest() throws FileNotFoundException {
     }
 
     @BeforeEach
     void setUp() throws InterruptedException, SQLException, DaoException, IOException, ConnectionPoolException {
         InMemoryDBUtil.fill();
-        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktaile.class) ;
+        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktail.class) ;
     }
 
     @AfterEach
@@ -43,7 +42,7 @@ class CocktaileDAOTest {
 
     @Test
     void getByPK() throws DaoException, InterruptedException, SQLException {
-        Cocktaile cocktaile = cocktailes.get(0);
+        Cocktail cocktaile = cocktailes.get(0);
         assertEquals(cocktaile,dao.getByPK(1).get());
     }
 
@@ -54,7 +53,7 @@ class CocktaileDAOTest {
 
     @Test
     void persist() throws SQLException, InterruptedException, DaoException, PersistException {
-        Cocktaile cocktaile = new Cocktaile();
+        Cocktail cocktaile = new Cocktail();
         cocktaile.setId(3);
         cocktaile.setName("TestPersist");
         cocktaile.setPrice(1000);
@@ -66,8 +65,8 @@ class CocktaileDAOTest {
 
     @Test
     void delete() throws SQLException, DaoException, PersistException {
-        List<Cocktaile> actualCocktailes;
-        Cocktaile cocktaile1 = new Cocktaile();
+        List<Cocktail> actualCocktailes;
+        Cocktail cocktaile1 = new Cocktail();
         cocktaile1.setId(3);
         cocktaile1.setName("TestPersist");
         cocktaile1.setPrice(1000);
@@ -80,7 +79,7 @@ class CocktaileDAOTest {
 
     @Test
     void update() throws SQLException, PersistException, InterruptedException, DaoException {
-        Cocktaile cocktaile = cocktailes.get(0);
+        Cocktail cocktaile = cocktailes.get(0);
         cocktaile.setPrice(1100);
         dao.update(cocktaile);
         assertEquals(cocktaile,dao.getByPK(1).get());
@@ -88,7 +87,7 @@ class CocktaileDAOTest {
 
     @Test
     void getCocktaileByCustomer() throws SQLException {
-        List<Cocktaile> cocktaileList = new ArrayList<>();
+        List<Cocktail> cocktaileList = new ArrayList<>();
         cocktaileList.add(cocktailes.get(0));
         cocktaileList.add(cocktailes.get(1));
         assertEquals(cocktaileList,dao.getCocktaileByCustomer(customers.get(2)));

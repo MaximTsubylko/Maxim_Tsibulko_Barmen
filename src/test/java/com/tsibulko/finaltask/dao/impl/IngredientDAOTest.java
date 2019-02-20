@@ -1,6 +1,6 @@
 package com.tsibulko.finaltask.dao.impl;
 
-import com.tsibulko.finaltask.bean.Cocktaile;
+import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
@@ -24,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class IngredientDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     IngredientSpecificDAO dao;
-    List<Cocktaile> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
+    CocktileSpecificDAO daoCocktail;
+    List<Cocktail> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
     List<Ingredient> ingredients = JSONParser.IngredientParse("src/test/resources/JsonData/IngredientData.json");
 
     IngredientDAOTest() throws FileNotFoundException {
@@ -34,6 +35,7 @@ class IngredientDAOTest {
     void setUp() throws DaoException, InterruptedException, SQLException, ConnectionPoolException, IOException {
         InMemoryDBUtil.fill();
         dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
+        daoCocktail = (CocktileSpecificDAO) daoFactory.getDao(Cocktail.class);
     }
 
     @AfterEach
@@ -49,7 +51,7 @@ class IngredientDAOTest {
 
     @Test
     void getAll() throws SQLException, DaoException {
-        assertEquals(ingredients,dao.getAll());
+        assertEquals(ingredients, dao.getAll());
     }
 
     @Test
@@ -59,7 +61,7 @@ class IngredientDAOTest {
         ingredient.setDescription("Test");
         ingredient.setId(5);
         dao.persist(ingredient);
-        assertEquals(ingredient,dao.getByPK(5).get());
+        assertEquals(ingredient, dao.getByPK(5).get());
     }
 
     @Test
@@ -70,7 +72,7 @@ class IngredientDAOTest {
         ingredient.setId(5);
         dao.persist(ingredient);
         dao.delete(ingredient);
-        assertEquals(ingredients,dao.getAll());
+        assertEquals(ingredients, dao.getAll());
 
     }
 
@@ -79,15 +81,34 @@ class IngredientDAOTest {
         Ingredient ingredient = ingredients.get(1);
         ingredient.setName("Test");
         dao.update(ingredient);
-        assertEquals(ingredient,dao.getByPK(2).get());
+        assertEquals(ingredient, dao.getByPK(2).get());
     }
 
     @Test
     void getIngredientByCocktail() throws SQLException, DaoException {
-    Cocktaile cocktaile = cocktailes.get(0);
-    List<Ingredient> ingredientList = new ArrayList<>();
-    ingredientList.add(ingredients.get(0));
-    ingredientList.add(ingredients.get(1));
-    assertEquals(ingredientList,dao.getIngredientByCocktail(cocktaile) );
+        Cocktail cocktaile = cocktailes.get(0);
+        List<Ingredient> ingredientList = new ArrayList<>();
+        ingredientList.add(ingredients.get(0));
+        ingredientList.add(ingredients.get(1));
+        assertEquals(ingredientList, dao.getIngredientByCocktail(cocktaile));
+    }
+
+    @Test
+    void setCockrailIngredients() throws SQLException, PersistException, DaoException {
+        Cocktail cocktaile = new Cocktail();
+        cocktaile.setName("Test");
+        cocktaile.setDescription("Test descr");
+        cocktaile.setId(3);
+        cocktaile.setPrice(1000);
+
+        List<Ingredient> ingredientList = new ArrayList<>();
+        ingredientList.add(ingredients.get(0));
+        ingredientList.add(ingredients.get(1));
+
+        daoCocktail.persist(cocktaile);
+        dao.setCockrailIngredients(cocktaile,ingredientList);
+
+
+        assertEquals(ingredientList,dao.getIngredientByCocktail(cocktaile));
     }
 }

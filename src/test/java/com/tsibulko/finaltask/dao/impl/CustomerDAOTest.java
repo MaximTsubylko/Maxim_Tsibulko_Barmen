@@ -1,6 +1,5 @@
 package com.tsibulko.finaltask.dao.impl;
 
-import com.tsibulko.finaltask.bean.Cocktaile;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoFactory;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 

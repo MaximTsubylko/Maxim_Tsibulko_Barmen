@@ -1,12 +1,13 @@
 package com.tsibulko.finaltask.service;
 
-import com.tsibulko.finaltask.service.impl.CocktaileService;
+import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
+import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 
 import java.util.Map;
 
 public class ServiceFactory {
     private static ServiceFactory INSTANCE;
-    private static Map<ServiceTypeEnum, Class<CocktaileService>> serviceMap;
+    private static Map<ServiceTypeEnum, Class<CocktailServiceImpl>> serviceMap;
     private ServiceFactory(){
     }
 
@@ -20,8 +21,10 @@ public class ServiceFactory {
 
     public CRUDService getSrvice(ServiceTypeEnum type) throws IllegalStateException{
         switch (type){
+            case CUSTOMER:
+                return new CustomerServiceImpl();
             case COCKTAILE:
-                return CocktaileService.getInstance();
+                return new CocktailServiceImpl();
             default:
                 throw new IllegalStateException();
         }

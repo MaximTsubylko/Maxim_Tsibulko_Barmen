@@ -3,16 +3,15 @@ package com.tsibulko.finaltask.bean;
 import com.tsibulko.finaltask.dao.Identified;
 
 import java.util.List;
-import java.util.Map;
 
-public class Cocktaile implements Identified<Integer> {
+public class Cocktail implements Identified<Integer> {
     private Integer id;
     private String name;
     private String description;
     private int price;
     private List<Ingredient> ingredients;
 
-    public Cocktaile(String name, String description, int price, List<Ingredient> ingredients) {
+    public Cocktail(String name, String description, int price, List<Ingredient> ingredients) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -21,7 +20,7 @@ public class Cocktaile implements Identified<Integer> {
 
 
 
-    public Cocktaile() {
+    public Cocktail() {
     }
 
     public List<Ingredient> getIngredients() {
@@ -69,7 +68,7 @@ public class Cocktaile implements Identified<Integer> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Cocktaile cocktaile = (Cocktaile) o;
+        Cocktail cocktaile = (Cocktail) o;
 
         if (price != cocktaile.price) return false;
         if (id != null ? !id.equals(cocktaile.id) : cocktaile.id != null) return false;
@@ -91,7 +90,7 @@ public class Cocktaile implements Identified<Integer> {
 
     @Override
     public String toString() {
-        return "Cocktaile{" +
+        return "Cocktail{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
