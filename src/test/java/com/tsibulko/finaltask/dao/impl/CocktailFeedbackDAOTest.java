@@ -22,12 +22,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CocktaileFeedbackDAOTest {
+class CocktailFeedbackDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     GenericDAO dao;
     List<CocktaileFeedback> feedbacks = JSONParser.CocktileFeedbackParse("src/test/resources/JsonData/CocktilFeedbackData.json");
 
-    CocktaileFeedbackDAOTest() throws FileNotFoundException {
+    CocktailFeedbackDAOTest() throws FileNotFoundException {
     }
 
 

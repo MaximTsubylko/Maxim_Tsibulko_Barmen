@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(urlPatterns = "/demo")
+@WebServlet(urlPatterns = "/main")
 public class IndexController extends HttpServlet {
 
     @Override
@@ -49,10 +49,10 @@ public class IndexController extends HttpServlet {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ViewDateValidationException e) {
-            response.sendRedirect("/demo");
+            response.sendRedirect("/jsp/error.jsp");
             //тут должно выводиться сообщение
         } catch (ServiceDateValidationException e) {
-            response.sendRedirect("/demo");
+            response.sendRedirect("/jsp/error.jsp");
             //тут должно выводиться сообщение
         }
     }

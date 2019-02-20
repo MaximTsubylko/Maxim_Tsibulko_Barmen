@@ -14,7 +14,7 @@ public class Customer implements Identified<Integer> {
     private Date registr_date;
     private int state;
     private String email;
-    private List<Cocktaile> cocktails;
+    private List<Cocktail> cocktails;
     private int role_id = 1;
 
     public Customer() {
@@ -33,11 +33,11 @@ public class Customer implements Identified<Integer> {
         this.email = email;
     }
 
-    public List<Cocktaile> getCocktails() {
+    public List<Cocktail> getCocktails() {
         return cocktails;
     }
 
-    public void setCocktails(List<Cocktaile> cocktails) {
+    public void setCocktails(List<Cocktail> cocktails) {
         this.cocktails = cocktails;
     }
 
