@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
-    <form action="${pageContext.request.contextPath}/main" method="post">
+    <form action="${pageContext.request.contextPath}/barman" method="post">
         <p><strong>Name: </strong>
             <input type="text" id="name" class="text-field" name="name" required="required"
                    placeholder="name"/></p>
@@ -14,7 +14,7 @@
             <input type="text" id="price" class="text-field" name="price" required="required"
                    placeholder="price"/></p>
 
-        <input type="hidden" name="command" value="update_cocktil">
+        <input type="hidden" name="command" value="update_cocktail">
         <input class="button is-danger" type="submit" value="Apply">
     </form>
 </div>

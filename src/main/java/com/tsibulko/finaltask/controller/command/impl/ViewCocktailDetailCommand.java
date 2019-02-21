@@ -15,11 +15,11 @@ import java.sql.SQLException;
 public class ViewCocktailDetailCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws SQLException, DaoException, InterruptedException, ServiceDateValidationException {
-        CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
-        request.setAttribute("cocktil", service.getByPK(Integer.parseInt(request.getParameter("id"))));
+        CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+        request.setAttribute("cocktail", service.getByPK(Integer.parseInt(request.getParameter("id"))));
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("/jsp/main.jsp", "forward"));
-        request.setAttribute("viewName", "cocktil_detail");
+        responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+        request.setAttribute("viewName", "cocktail_detail");
         return responseContent;
     }
 }

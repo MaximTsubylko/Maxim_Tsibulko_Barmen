@@ -14,11 +14,11 @@ import java.sql.SQLException;
 public class ViewCocktailListCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws SQLException, DaoException {
-        CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
-        request.setAttribute("cocktilList", service.getList());
+        CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+        request.setAttribute("cocktailList", service.getList());
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("/jsp/main.jsp", "forward"));
-        request.setAttribute("viewName", "cocktil_list");
+        responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+        request.setAttribute("viewName", "cocktail_list");
         return responseContent;
     }
 }

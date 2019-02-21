@@ -17,12 +17,12 @@ import java.sql.SQLException;
 public class DeleteCocktailCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws SQLException, PersistException, DaoException, InterruptedException, ServiceDateValidationException {
-        CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
-        Integer id = Integer.parseInt(request.getParameter("cocktilId"));
+        CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+        Integer id = Integer.parseInt(request.getParameter("cocktailId"));
         Cocktail cocktaile = service.getByPK(id);
         service.delete(cocktaile);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("main?command=cocktil_list", "redirect"));
+        responseContent.setRouter(new Router("barman?command=cocktail_list", "redirect"));
         return responseContent;
     }
 }

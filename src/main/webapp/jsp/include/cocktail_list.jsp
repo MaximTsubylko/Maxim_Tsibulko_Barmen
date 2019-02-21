@@ -10,16 +10,16 @@
             <th>Price</th>
             </thead>
             <tbody>
-            <c:forEach items="${cocktilList}" var="cocktil">
+            <c:forEach items="${cocktailList}" var="cocktail">
                 <tr>
                     <td>
-                        <a href="?command=view_cocktil_details&id=${cocktil.id}">
-                            <c:out value="${cocktil.id}"/>
+                        <a href="?command=view_cocktail_details&id=${cocktail.id}">
+                            <c:out value="${cocktail.id}"/>
                         </a>
                     </td>
-                    <td><c:out value="${cocktil.name}"/></td>
-                    <td><c:out value="${cocktil.description}"/></td>
-                    <td><c:out value="${cocktil.price}"/></td>
+                    <td><c:out value="${cocktail.name}"/></td>
+                    <td><c:out value="${cocktail.description}"/></td>
+                    <td><c:out value="${cocktail.price}"/></td>
                 </tr>
             </c:forEach>
             </tbody>

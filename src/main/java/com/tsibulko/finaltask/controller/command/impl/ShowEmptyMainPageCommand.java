@@ -10,7 +10,7 @@ public class ShowEmptyMainPageCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) {
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("/jsp/main.jsp", "forward"));
+        responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
         request.setAttribute("viewName", "empty");
         return responseContent;
 

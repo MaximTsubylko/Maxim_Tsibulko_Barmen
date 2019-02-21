@@ -34,7 +34,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public Cocktail create(Cocktail cocktaile) throws SQLException, DaoException, PersistException, ServiceDateValidationException {
-        if (validator.isUniqueCocktil(cocktaile)) {
+        if (validator.isUniqueCocktail(cocktaile)) {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.persist(cocktaile);
             return cocktaile;
@@ -46,7 +46,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public void delete(Cocktail cocktaile) throws SQLException, PersistException, DaoException, ServiceDateValidationException {
-        if (validator.isExistCoctil(cocktaile)) {
+        if (validator.isExistCocktail(cocktaile)) {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.delete(cocktaile);
         } else {
@@ -67,7 +67,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public void update(Cocktail cocktaile) throws SQLException, PersistException, DaoException, ServiceDateValidationException {
-        if (validator.isExistCoctil(cocktaile)) {
+        if (validator.isExistCocktail(cocktaile)) {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.update(cocktaile);
         } else {

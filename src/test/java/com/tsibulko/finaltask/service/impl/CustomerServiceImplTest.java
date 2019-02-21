@@ -22,7 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerServiceImplTest {
-    CRUDService<Customer> customerService = ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.CUSTOMER);
+    CRUDService<Customer> customerService = ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
     List<Customer> customers = JSONParser.CustomerParse("src/test/resources/JsonData/CustomerData.json");
 
     CustomerServiceImplTest() throws FileNotFoundException {

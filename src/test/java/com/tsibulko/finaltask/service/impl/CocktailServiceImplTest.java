@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.service.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.exception.DaoException;
@@ -24,7 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CocktailServiceImplTest {
-    CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
+    CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
     List<Cocktail> cocktJson = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
     List<Ingredient> ingredients = JSONParser.IngredientParse("src/test/resources/JsonData/IngredientData.json");
 

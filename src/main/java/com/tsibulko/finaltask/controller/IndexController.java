@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-@WebServlet(urlPatterns = "/main")
+@WebServlet(urlPatterns = "/barman")
 public class IndexController extends HttpServlet {
 
     @Override

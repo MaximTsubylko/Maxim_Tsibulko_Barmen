@@ -17,12 +17,12 @@ public class CommandProvider {
     }
 
     private CommandProvider() {
-        commandMap.put("show_create_coctil", new ViewCreateCocktailFormCommand());
+        commandMap.put("show_create_cocktail", new ViewCreateCocktailFormCommand());
         commandMap.put("main", new ShowEmptyMainPageCommand());
-        commandMap.put("register_cocktil", new CreateNewCocktailCommand());
-        commandMap.put("cocktil_list", new ViewCocktailListCommand());
-        commandMap.put("view_cocktil_details", new ViewCocktailDetailCommand());
-        commandMap.put("delete_cocktil", new DeleteCocktailCommand());
+        commandMap.put("register_cocktail", new CreateNewCocktailCommand());
+        commandMap.put("cocktail_list", new ViewCocktailListCommand());
+        commandMap.put("view_cocktail_details", new ViewCocktailDetailCommand());
+        commandMap.put("delete_cocktail", new DeleteCocktailCommand());
     }
 
     /**
