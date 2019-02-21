@@ -2,18 +2,27 @@ package com.tsibulko.finaltask.dao;
 
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 
-public class FactoryProducer {
-    private static volatile FactoryProducer instance;
-    private FactoryProducer() {}
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-    public FactoryProducer getInstance() {
-        if (instance == null) {
-            synchronized (FactoryProducer.class) {
-                if (instance == null) {
-                    instance = new FactoryProducer();
-                }
+public class FactoryProducer {
+    private static FactoryProducer instance;
+    private static Lock lock = new ReentrantLock();
+
+    private FactoryProducer() {
+    }
+
+    public static FactoryProducer getInstance() {
+        lock.lock();
+        try {
+            if (instance == null) {
+                instance = new FactoryProducer();
             }
+
+        } finally {
+            lock.unlock();
         }
+
         return instance;
     }
 

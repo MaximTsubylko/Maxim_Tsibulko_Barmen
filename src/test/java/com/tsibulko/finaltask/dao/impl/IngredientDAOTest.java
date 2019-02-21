@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IngredientDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     IngredientSpecificDAO dao;
-    CocktileSpecificDAO daoCocktail;
+    CocktailSpecificDAO daoCocktail;
     List<Cocktail> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
     List<Ingredient> ingredients = JSONParser.IngredientParse("src/test/resources/JsonData/IngredientData.json");
 
@@ -35,7 +35,7 @@ class IngredientDAOTest {
     void setUp() throws DaoException, InterruptedException, SQLException, ConnectionPoolException, IOException {
         InMemoryDBUtil.fill();
         dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
-        daoCocktail = (CocktileSpecificDAO) daoFactory.getDao(Cocktail.class);
+        daoCocktail = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
     }
 
     @AfterEach
@@ -106,7 +106,7 @@ class IngredientDAOTest {
         ingredientList.add(ingredients.get(1));
 
         daoCocktail.persist(cocktaile);
-        dao.setCockrailIngredients(cocktaile,ingredientList);
+        dao.setCocktailIngredients(cocktaile,ingredientList);
 
 
         assertEquals(ingredientList,dao.getIngredientByCocktail(cocktaile));

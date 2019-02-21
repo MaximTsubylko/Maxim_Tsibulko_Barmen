@@ -22,7 +22,7 @@ import java.util.List;
 
 class CocktailDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
-    CocktileSpecificDAO dao;
+    CocktailSpecificDAO dao;
     List<Cocktail> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
     List<Customer> customers = JSONParser.CustomerParse("src/test/resources/JsonData/CustomerData.json");
 
@@ -32,7 +32,7 @@ class CocktailDAOTest {
     @BeforeEach
     void setUp() throws InterruptedException, SQLException, DaoException, IOException, ConnectionPoolException {
         InMemoryDBUtil.fill();
-        dao = (CocktileSpecificDAO) daoFactory.getDao(Cocktail.class) ;
+        dao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class) ;
     }
 
     @AfterEach
@@ -90,6 +90,6 @@ class CocktailDAOTest {
         List<Cocktail> cocktaileList = new ArrayList<>();
         cocktaileList.add(cocktailes.get(0));
         cocktaileList.add(cocktailes.get(1));
-        assertEquals(cocktaileList,dao.getCocktaileByCustomer(customers.get(2)));
+        assertEquals(cocktaileList,dao.getCocktailByCustomer(customers.get(2)));
     }
 }

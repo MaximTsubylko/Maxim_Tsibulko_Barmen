@@ -15,9 +15,8 @@ public class Cocktail implements Identified<Integer> {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.ingredients  = ingredients;
+        this.ingredients = ingredients;
     }
-
 
 
     public Cocktail() {

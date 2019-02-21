@@ -3,21 +3,18 @@ package com.tsibulko.finaltask.controller.command.impl;
 import com.tsibulko.finaltask.controller.command.Command;
 import com.tsibulko.finaltask.controller.command.Router;
 import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.sql.SQLException;
 
-public class ViewCocktileDetailCommand implements Command {
+public class ViewCocktailDetailCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException, ServiceDateValidationException {
+    public ResponseContent process(HttpServletRequest request) throws SQLException, DaoException, InterruptedException, ServiceDateValidationException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
         request.setAttribute("cocktil", service.getByPK(Integer.parseInt(request.getParameter("id"))));
         ResponseContent responseContent = new ResponseContent();

@@ -15,8 +15,16 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
 
 
     @Override
-    protected List<Ingredient> parseResultSet(ResultSet rs) throws SQLException {
-        return null;
+    protected List<Ingredient> parseResultSet(ResultSet resultSet) throws SQLException {
+        List<Ingredient> result = new ArrayList<>();
+        while (resultSet.next()) {
+            Ingredient ingredient = new Ingredient();
+            ingredient.setId(resultSet.getInt("id"));
+            ingredient.setName(resultSet.getString("name"));
+            ingredient.setDescription(resultSet.getString("description"));
+            result.add(ingredient);
+        }
+        return result;
     }
 
     @Override
@@ -24,7 +32,6 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
         int i = 0;
         statement.setString(++i, ingredient.getName());
         statement.setString(++i, ingredient.getDescription());
-
         statement.executeUpdate();
     }
 
@@ -36,29 +43,15 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
 
     @Override
     protected Ingredient prepareStatementForGet(PreparedStatement statement) throws SQLException {
-        Ingredient result = new Ingredient();
         ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            result.setName(resultSet.getString("name"));
-            result.setDescription(resultSet.getString("description"));
-            result.setId(resultSet.getInt("id"));
-        }
+        Ingredient result = parseResultSet(resultSet).get(0);
         return result;
     }
 
     @Override
     protected List<Ingredient> prepareStatementForGetAll(PreparedStatement statement) throws SQLException {
-        List<Ingredient> resultList = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            Ingredient ingredient = new Ingredient();
-            ingredient.setId(resultSet.getInt("id"));
-            ingredient.setName(resultSet.getString("name"));
-            ingredient.setDescription(resultSet.getString("description"));
-            resultList.add(ingredient);
-        }
-
-        return resultList;
+        return parseResultSet(resultSet);
     }
 
 
@@ -72,7 +65,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
     }
 
     @Override
-    public List<Ingredient> prepareStatmentForGetIngredientsList(PreparedStatement statement) throws SQLException {
+    public List<Ingredient> prepareStatementForGetIngredientsList(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
         List<Ingredient> resultList = new ArrayList<>();
         while (resultSet.next()) {
@@ -86,7 +79,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
     }
 
     @Override
-    public void prepareStatmentForSetCocktailIngredient(PreparedStatement statement) throws SQLException {
+    public void prepareStatementForSetCocktailIngredient(PreparedStatement statement) throws SQLException {
         statement.executeUpdate();
     }
 
@@ -177,18 +170,18 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
     public List<Ingredient> getIngredientByCocktail(Cocktail cocktaile) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(getIngredientsByCocktailIdQuery())) {
             statement.setInt(1, cocktaile.getId());
-            return prepareStatmentForGetIngredientsList(statement);
+            return prepareStatementForGetIngredientsList(statement);
         }
     }
 
     @AutoConnection
     @Override
-    public Cocktail setCockrailIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getSetIngredientsQuery())){
-            statement.setInt(1,cocktail.getId());
-            for (Ingredient i:ingredients) {
-                statement.setInt(2,i.getId());
-                prepareStatmentForSetCocktailIngredient(statement);
+    public Cocktail setCocktailIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(getSetIngredientsQuery())) {
+            statement.setInt(1, cocktail.getId());
+            for (Ingredient i : ingredients) {
+                statement.setInt(2, i.getId());
+                prepareStatementForSetCocktailIngredient(statement);
             }
         }
         cocktail.setIngredients(ingredients);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CocktaileDAO extends AbstractJdbcDao<Cocktail, Integer> implements CocktileSpecificDAO<Cocktail, Integer> {
+public class CocktaileDAO extends AbstractJdbcDao<Cocktail, Integer> implements CocktailSpecificDAO<Cocktail, Integer> {
 
     @Override
     protected List<Cocktail> parseResultSet(ResultSet rs) throws SQLException {
@@ -160,7 +160,7 @@ public class CocktaileDAO extends AbstractJdbcDao<Cocktail, Integer> implements 
     }
 
     @AutoConnection
-    public List<Cocktail> getCocktaileByCustomer(Customer customer) throws SQLException {
+    public List<Cocktail> getCocktailByCustomer(Customer customer) throws SQLException {
         try (PreparedStatement statment = connection.prepareStatement(getCocktailListQuery())) {
             statment.setInt(1, customer.getId());
             return prepareStatmentForGetCocktailList(statment, customer);

@@ -80,7 +80,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     @AutoConnection
     public void update(T object) throws PersistException, SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(getUpdateQuery())) {
-            prepareStatementForUpdate(preparedStatement, object);
+            prepareStatementForInsert(preparedStatement, object);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new PersistException(e);

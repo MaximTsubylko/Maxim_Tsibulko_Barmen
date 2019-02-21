@@ -10,7 +10,7 @@ public class CocktaileFeedback implements Identified<Integer> {
     private String title;
     private String comment;
 
-    public CocktaileFeedback(int id , int fromUserId, int toCocktileId, int mark, String title, String comment) {
+    public CocktaileFeedback(int id, int fromUserId, int toCocktileId, int mark, String title, String comment) {
         this.id = id;
         this.fromUserId = fromUserId;
         this.toCocktileId = toCocktileId;

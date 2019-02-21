@@ -18,7 +18,7 @@ import com.tsibulko.finaltask.validation.impl.ViewDateValidator;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
-public class CreateNewCocktilCommand implements Command {
+public class CreateNewCocktailCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws SQLException, PersistException, DaoException, ViewDateValidationException, ServiceDateValidationException {
         ViewDateValidator validator = (ViewDateValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.VIEW);

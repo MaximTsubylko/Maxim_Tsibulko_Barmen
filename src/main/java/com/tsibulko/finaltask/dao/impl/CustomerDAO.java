@@ -13,8 +13,22 @@ import java.util.Optional;
 public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements GenericDAO<Customer, Integer> {
 
     @Override
-    protected List<Customer> parseResultSet(ResultSet rs) throws SQLException {
-        return null;
+    protected List<Customer> parseResultSet(ResultSet resultSet) throws SQLException {
+        List<Customer> result = new ArrayList<>();
+        while (resultSet.next()) {
+            Customer customer = new Customer();
+            customer.setFirst_name(resultSet.getString("first_name"));
+            customer.setSecond_name(resultSet.getString("last_name"));
+            customer.setRegistr_date(resultSet.getDate("registr_date"));
+            customer.setRole_id(resultSet.getInt("role_id"));
+            customer.setState(resultSet.getInt("state_id"));
+            customer.setEmail(resultSet.getString("email"));
+            customer.setLogin(resultSet.getString("login"));
+            customer.setPassword(resultSet.getString("password"));
+            customer.setId(resultSet.getInt("id"));
+            result.add(customer);
+        }
+        return result;
     }
 
     @Override
@@ -57,19 +71,7 @@ public class CustomerDAO extends AbstractJdbcDao<Customer, Integer> implements G
     @Override
     protected Customer prepareStatementForGet(PreparedStatement statement) throws SQLException {
         ResultSet resultSet = statement.executeQuery();
-        Customer customer = new Customer();
-        while (resultSet.next()) {
-            customer.setFirst_name(resultSet.getString("first_name"));
-            customer.setSecond_name(resultSet.getString("last_name"));
-            customer.setRegistr_date(resultSet.getDate("registr_date"));
-            customer.setRole_id(resultSet.getInt("role_id"));
-            customer.setState(resultSet.getInt("state_id"));
-            customer.setEmail(resultSet.getString("email"));
-            customer.setLogin(resultSet.getString("login"));
-            customer.setPassword(resultSet.getString("password"));
-            customer.setId(resultSet.getInt("id"));
-        }
-        return customer;
+        return parseResultSet(resultSet).get(0);
     }
 
     @Override
