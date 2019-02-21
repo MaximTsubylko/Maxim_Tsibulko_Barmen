@@ -32,7 +32,7 @@ class IngredientDAOTest {
     }
 
     @BeforeEach
-    void setUp() throws DaoException, InterruptedException, SQLException, ConnectionPoolException, IOException {
+    void setUp() throws DaoException, SQLException, ConnectionPoolException, IOException {
         InMemoryDBUtil.fill();
         dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
         daoCocktail = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
@@ -59,8 +59,8 @@ class IngredientDAOTest {
         Ingredient ingredient = ingredients.get(1);
         ingredient.setName("Test");
         ingredient.setDescription("Test");
-        ingredient.setId(5);
         dao.persist(ingredient);
+        List<Ingredient> d = dao.getAll();
         assertEquals(ingredient, dao.getByPK(5).get());
     }
 
@@ -69,7 +69,6 @@ class IngredientDAOTest {
         Ingredient ingredient = new Ingredient();
         ingredient.setName("test");
         ingredient.setDescription("test");
-        ingredient.setId(5);
         dao.persist(ingredient);
         dao.delete(ingredient);
         assertEquals(ingredients, dao.getAll());
@@ -98,7 +97,6 @@ class IngredientDAOTest {
         Cocktail cocktaile = new Cocktail();
         cocktaile.setName("Test");
         cocktaile.setDescription("Test descr");
-        cocktaile.setId(3);
         cocktaile.setPrice(1000);
 
         List<Ingredient> ingredientList = new ArrayList<>();

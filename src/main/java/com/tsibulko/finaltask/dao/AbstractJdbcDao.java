@@ -14,17 +14,9 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
 
     protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws SQLException;
 
-    protected abstract void prepareStatementForDelete(PreparedStatement statement, T object) throws SQLException;
-
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws SQLException;
 
-    protected abstract T prepareStatementForGet(PreparedStatement statement) throws SQLException;
-
-    protected abstract List<T> prepareStatementForGetAll(PreparedStatement statement) throws SQLException;
-
     public abstract String getSelectQuery();
-
-    public abstract String getSelectAllQuery();
 
     public abstract String getPersistQuery();
 
@@ -37,7 +29,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     @AutoConnection
     public Optional<T> getByPK(PK key) throws DaoException, SQLException {
         try (PreparedStatement preparedStatement =
-                     connection.prepareStatement(getSelectQuery())) {
+                     connection.prepareStatement(getSelectQuery() + " WHERE id = " + key)) {
             return Optional.of(parseResultSet(preparedStatement.executeQuery()).get(0));
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -80,7 +72,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     @AutoConnection
     public void update(T object) throws PersistException, SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(getUpdateQuery())) {
-            prepareStatementForInsert(preparedStatement, object);
+            prepareStatementForUpdate(preparedStatement, object);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new PersistException(e);

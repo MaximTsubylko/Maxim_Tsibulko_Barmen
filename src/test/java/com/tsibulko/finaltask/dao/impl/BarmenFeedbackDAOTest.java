@@ -25,8 +25,10 @@ class BarmenFeedbackDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     GenericDAO dao;
     List<BarmenFeedback> feedbacks = JSONParser.BarmenFeedbackParse("src/test/resources/JsonData/BarmenFeedbackData.json");
-    BarmenFeedbackDAOTest() throws FileNotFoundException, InterruptedException, ConnectionPoolException, SQLException {
+
+    BarmenFeedbackDAOTest() throws FileNotFoundException {
     }
+
 
     @BeforeEach
     void setUp() throws DaoException, InterruptedException, SQLException, ConnectionPoolException, IOException {
@@ -52,14 +54,14 @@ class BarmenFeedbackDAOTest {
 
     @Test
     void persist() throws SQLException, InterruptedException, DaoException, PersistException {
-        BarmenFeedback barmenFeedback = new BarmenFeedback(2, 1, 2, 1, "test", "");
+        BarmenFeedback barmenFeedback = new BarmenFeedback(1, 2, 1, "test", "");
         dao.persist(barmenFeedback);
         assertEquals(barmenFeedback, dao.getByPK(2).get());
     }
 
     @Test
     void delete() throws SQLException, PersistException, DaoException {
-        BarmenFeedback barmenFeedback = new BarmenFeedback(2, 1, 2, 1, "test", "");
+        BarmenFeedback barmenFeedback = new BarmenFeedback(1, 2, 1, "test", "");
         dao.persist(barmenFeedback);
         dao.delete(barmenFeedback);
         assertEquals(feedbacks,dao.getAll());

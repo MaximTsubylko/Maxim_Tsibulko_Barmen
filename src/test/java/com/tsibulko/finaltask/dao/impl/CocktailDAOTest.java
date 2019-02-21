@@ -54,7 +54,6 @@ class CocktailDAOTest {
     @Test
     void persist() throws SQLException, InterruptedException, DaoException, PersistException {
         Cocktail cocktaile = new Cocktail();
-        cocktaile.setId(3);
         cocktaile.setName("TestPersist");
         cocktaile.setPrice(1000);
         cocktaile.setDescription("TestPersist discription");
@@ -67,7 +66,6 @@ class CocktailDAOTest {
     void delete() throws SQLException, DaoException, PersistException {
         List<Cocktail> actualCocktailes;
         Cocktail cocktaile1 = new Cocktail();
-        cocktaile1.setId(3);
         cocktaile1.setName("TestPersist");
         cocktaile1.setPrice(1000);
         cocktaile1.setDescription("TestPersist discription");

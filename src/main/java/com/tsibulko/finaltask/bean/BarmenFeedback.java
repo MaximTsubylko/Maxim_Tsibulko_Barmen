@@ -22,6 +22,14 @@ public class BarmenFeedback implements Identified<Integer> {
     public BarmenFeedback() {
     }
 
+    public BarmenFeedback(int fromUserId, int toUserId, int mark, String title, String comment) {
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.mark = mark;
+        this.title = title;
+        this.comment = comment;
+    }
+
     public String getTitle() {
         return title;
     }

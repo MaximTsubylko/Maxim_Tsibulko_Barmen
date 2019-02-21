@@ -19,6 +19,14 @@ public class CocktaileFeedback implements Identified<Integer> {
         this.comment = comment;
     }
 
+    public CocktaileFeedback(int fromUserId, int toCocktileId, int mark, String title, String comment) {
+        this.fromUserId = fromUserId;
+        this.toCocktileId = toCocktileId;
+        this.mark = mark;
+        this.title = title;
+        this.comment = comment;
+    }
+
     public CocktaileFeedback() {
     }
 
