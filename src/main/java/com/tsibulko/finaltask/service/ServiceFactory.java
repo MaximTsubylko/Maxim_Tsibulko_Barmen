@@ -3,27 +3,35 @@ package com.tsibulko.finaltask.service;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 
-import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ServiceFactory {
-    private static ServiceFactory INSTANCE;
-    private static Map<ServiceTypeEnum, Class<CocktailServiceImpl>> serviceMap;
-    private ServiceFactory(){
+    private static ServiceFactory instance;
+    private static Lock lock = new ReentrantLock();
+
+    private ServiceFactory() {
     }
 
-    public static ServiceFactory getInstance(){
-        if (INSTANCE == null){
-            INSTANCE = new ServiceFactory();
+    public static ServiceFactory getInstance() {
+        lock.lock();
+        try {
+            if (instance == null) {
+                instance = new ServiceFactory();
+            }
+
+        } finally {
+            lock.unlock();
         }
 
-        return INSTANCE;
+        return instance;
     }
 
-    public CRUDService getSrvice(ServiceTypeEnum type) throws IllegalStateException{
-        switch (type){
+    public CRUDService getService(ServiceTypeEnum type) throws IllegalStateException {
+        switch (type) {
             case CUSTOMER:
                 return new CustomerServiceImpl();
-            case COCKTAILE:
+            case COCKTAIL:
                 return new CocktailServiceImpl();
             default:
                 throw new IllegalStateException();

@@ -18,22 +18,22 @@ import com.tsibulko.finaltask.validation.impl.ViewDateValidator;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
-public class CreateNewCocktilCommand implements Command {
+public class CreateNewCocktailCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws SQLException, PersistException, DaoException, ViewDateValidationException, ServiceDateValidationException {
         ViewDateValidator validator = (ViewDateValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.VIEW);
-        if (validator.doValidCocktilCreateReq(request)) {
-            Cocktail cocktaile = new Cocktail();
-            CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getSrvice(ServiceTypeEnum.COCKTAILE);
-            cocktaile.setName(request.getParameter("name"));
-            cocktaile.setDescription(request.getParameter("description"));
-            cocktaile.setPrice(Integer.valueOf(request.getParameter("price")));
-            service.create(cocktaile);
+        if (validator.doValidCocktailCreateRequest(request)) {
+            Cocktail cocktail = new Cocktail();
+            CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+            cocktail.setName(request.getParameter("name"));
+            cocktail.setDescription(request.getParameter("description"));
+            cocktail.setPrice(Integer.valueOf(request.getParameter("price")));
+            service.create(cocktail);
             ResponseContent responseContent = new ResponseContent();
-            responseContent.setRouter(new Router("main?command=cocktil_list", "redirect"));
+            responseContent.setRouter(new Router("barman?command=cocktail_list", "redirect"));
             return responseContent;
         } else {
-            throw new ViewDateValidationException("Invalid date for create cocktil!");
+            throw new ViewDateValidationException("Invalid date for create cocktail!");
         }
     }
 }

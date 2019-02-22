@@ -6,6 +6,6 @@
 </head>
 <body>
 <h1>ERROR</h1>
-<h2><a href="/main?command=main">Return to main</a> </h2>
+<h2><a href="/barman?command=main">Return to main</a> </h2>
 </body>
 </html>

@@ -7,17 +7,18 @@ import com.tsibulko.finaltask.dao.DaoFactoryType;
 import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.validation.ServiceValid;
+import com.tsibulko.finaltask.validation.ServiceValidator;
 
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ServiceDateValidator implements ServiceValid {
+public class ServiceDateValidator implements ServiceValidator {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static GenericDAO dao;
+
     @Override
-    public boolean isUniqueCocktil(Cocktail cocktaile) throws DaoException, SQLException {
+    public boolean isUniqueCocktail(Cocktail cocktaile) throws DaoException, SQLException {
         dao = daoFactory.getDao(Cocktail.class);
         List<Cocktail> cocktails = dao.getAll();
         return !(cocktails
@@ -27,12 +28,12 @@ public class ServiceDateValidator implements ServiceValid {
     }
 
     @Override
-    public boolean isExistCoctil(Cocktail cocktaile) throws DaoException, SQLException {
+    public boolean isExistCocktail(Cocktail cocktaile) throws DaoException, SQLException {
         dao = daoFactory.getDao(Cocktail.class);
         List<Cocktail> cocktails = dao.getAll();
         return cocktails
                 .stream()
-                .anyMatch(c->c.getId()
+                .anyMatch(c -> c.getId()
                         .equals(cocktaile.getId()));
     }
 
@@ -52,7 +53,7 @@ public class ServiceDateValidator implements ServiceValid {
         List<Customer> customers = dao.getAll();
         return customers
                 .stream()
-                .anyMatch(c->c.getLogin()
+                .anyMatch(c -> c.getLogin()
                         .equals(customer.getLogin()));
 
     }

@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  <h2><a href="/main?command=main">Create new cocktile</a> </h2>
+  <h2><a href="/barman?command=main">Create new cocktail</a> </h2>
   </body>
 </html>

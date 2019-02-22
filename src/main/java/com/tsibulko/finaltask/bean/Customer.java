@@ -62,7 +62,6 @@ public class Customer implements Identified<Integer> {
     }
 
 
-
     public String getFirst_name() {
         return first_name;
     }

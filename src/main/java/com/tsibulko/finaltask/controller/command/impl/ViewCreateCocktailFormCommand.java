@@ -6,13 +6,12 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ShowEmptyMainPageCommand implements Command {
+public class ViewCreateCocktailFormCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) {
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
-        request.setAttribute("viewName", "empty");
+        request.setAttribute("viewName", "show_create_cocktail");
         return responseContent;
-
     }
 }

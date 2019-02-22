@@ -97,19 +97,6 @@ public class JDBCConnectionPool implements ConnectionPool {
         }
     }
 
-    private Connection getProxyConnection(Connection connection) {
-        return (Connection) Proxy.newProxyInstance(connection.getClass().getClassLoader(),
-                new Class[]{Connection.class},
-                (proxy, method, args) -> {
-                    if (method.getName().matches(CLOSE_REGEX)) {
-                        putBackConnection(connection);
-                        return null;
-                    }
-
-                    return method.invoke(connection, args);
-                });
-    }
-
     @Override
     public void putBackConnection(Connection connection) {
         connectionDeque.push(connection);
@@ -125,6 +112,7 @@ public class JDBCConnectionPool implements ConnectionPool {
             connection.close();
         }
     }
+
     private Connection createConnection() throws SQLException {
         Connection connection = DriverManager.getConnection(url, user, password);
         allConnections.add(connection);

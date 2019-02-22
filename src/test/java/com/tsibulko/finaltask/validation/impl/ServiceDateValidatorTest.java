@@ -5,7 +5,7 @@ import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
-import com.tsibulko.finaltask.validation.ServiceValid;
+import com.tsibulko.finaltask.validation.ServiceValidator;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
 import org.junit.jupiter.api.AfterEach;
@@ -19,12 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceDateValidatorTest {
     ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
-    ServiceValid validator;
+    ServiceValidator validator;
 
     @BeforeEach
     void setUp() throws InterruptedException, SQLException, ConnectionPoolException, DaoException, IOException {
         InMemoryDBUtil.fill();
-        validator = (ServiceValid) validatorFactory.getValidator(ValidatorType.SERVICE);
+        validator = (ServiceValidator) validatorFactory.getValidator(ValidatorType.SERVICE);
     }
 
     @AfterEach
@@ -36,7 +36,7 @@ class ServiceDateValidatorTest {
     void isUniqueCocktil() throws SQLException, DaoException {
         Cocktail cocktaile = new Cocktail();
         cocktaile.setName("test name");
-        assertTrue(validator.isUniqueCocktil(cocktaile));
+        assertTrue(validator.isUniqueCocktail(cocktaile));
     }
 
     @Test
@@ -46,7 +46,7 @@ class ServiceDateValidatorTest {
         cocktaile.setName("Blood Mary");
         cocktaile.setDescription("Blood Mary description");
         cocktaile.setPrice(1000);
-        assertTrue(validator.isExistCoctil(cocktaile));
+        assertTrue(validator.isExistCocktail(cocktaile));
     }
 
     @Test

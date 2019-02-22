@@ -4,7 +4,7 @@
         Menu
     </p>
     <ul>
-        <li><a href="?command=cocktil_list">Coctil List</a></li>
-        <li><a href="?command=show_create_coctil">Create coctil</a></li>
+        <li><a href="?command=cocktail_list">Cocktail List</a></li>
+        <li><a href="?command=show_create_cocktail">Create cocktail</a></li>
     </ul>
 </aside>

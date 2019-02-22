@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -70,14 +71,16 @@ class CustomerDAOTest {
         customer.setPassword("123");
         customer.setRole_id(1);
         customer.setState(1);
-        customer.setId(4);
+
         dao.persist(customer);
         dao.delete(customer);
+
         assertEquals(customers,dao.getAll());
     }
 
     @Test
     void update() throws SQLException, PersistException, InterruptedException, DaoException {
+        List<Customer> cu = dao.getAll();
         Customer customer = customers.get(1);
         customer.setLogin("TestLogin");
         dao.update(customer);

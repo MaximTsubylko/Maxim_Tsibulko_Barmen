@@ -61,8 +61,8 @@ public class JdbcDaoFactory implements DaoFactory, TransactionalDaoFactory {
 
     private JdbcDaoFactory() {
         creators.put(Customer.class, CustomerDAO::new);
-        creators.put(Cocktail.class, CocktaileDAO::new);
-        creators.put(CocktaileFeedback.class, CocktaileFeedbackDAO::new);
+        creators.put(Cocktail.class, CocktailDAO::new);
+        creators.put(CocktaileFeedback.class, CocktailFeedbackDAO::new);
         creators.put(BarmenFeedback.class, BarmenFeedbackDAO::new);
         creators.put(Ingredient.class, IngredientDAO::new);
     }

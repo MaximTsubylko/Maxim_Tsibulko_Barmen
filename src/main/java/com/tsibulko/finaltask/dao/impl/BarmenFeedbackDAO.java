@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
+import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
 
 import java.sql.PreparedStatement;
@@ -13,59 +14,10 @@ import java.util.Optional;
 public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> implements GenericDAO<BarmenFeedback, Integer> {
 
     @Override
-    protected List<BarmenFeedback> parseResultSet(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
-        int i = 0;
-        statement.setInt(++i, barmenFeedback.getFromUserId());
-        statement.setInt(++i, barmenFeedback.getToUserId());
-        statement.setString(++i, barmenFeedback.getTitle());
-        statement.setInt(++i, barmenFeedback.getMark());
-        statement.setString(++i, barmenFeedback.getComment());
-        statement.executeUpdate();
-    }
-
-    @Override
-    protected void prepareStatementForDelete(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
-        statement.setInt(1, barmenFeedback.getId());
-        statement.executeUpdate();
-    }
-
-    @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
-        int i = 0;
-        statement.setInt(++i, barmenFeedback.getFromUserId());
-        statement.setInt(++i, barmenFeedback.getToUserId());
-        statement.setString(++i, barmenFeedback.getTitle());
-        statement.setInt(++i, barmenFeedback.getMark());
-        statement.setString(++i, barmenFeedback.getComment());
-        statement.executeUpdate();
-    }
-
-    @Override
-    protected BarmenFeedback prepareStatementForGet(PreparedStatement statement) throws SQLException {
-        BarmenFeedback barmenFeedback = new BarmenFeedback();
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            barmenFeedback.setFromUserId(resultSet.getInt("from_user_id"));
-            barmenFeedback.setToUserId(resultSet.getInt("to_user_id"));
-            barmenFeedback.setMark(resultSet.getInt("mark"));
-            barmenFeedback.setTitle(resultSet.getString("title"));
-            barmenFeedback.setComment(resultSet.getString("comment"));
-            barmenFeedback.setId(resultSet.getInt("id"));
-        }
-        return barmenFeedback;
-    }
-
-    @Override
-    protected List<BarmenFeedback> prepareStatementForGetAll(PreparedStatement statement) throws SQLException {
+    protected List<BarmenFeedback> parseResultSet(ResultSet resultSet) throws SQLException {
         List<BarmenFeedback> resultList = new ArrayList<>();
-        ResultSet resultSet = statement.executeQuery();
+        BarmenFeedback barmenFeedback = new BarmenFeedback();
         while (resultSet.next()) {
-            BarmenFeedback barmenFeedback = new BarmenFeedback();
             barmenFeedback.setId(resultSet.getInt("id"));
             barmenFeedback.setFromUserId(resultSet.getInt("from_user_id"));
             barmenFeedback.setToUserId(resultSet.getInt("to_user_id"));
@@ -78,12 +30,29 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
     }
 
     @Override
-    public String getSelectQuery() {
-        return "SELECT * FROM barmen_feedback WHERE id=?";
+    protected void prepareStatementForInsert(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
+        statementPreparation(statement,barmenFeedback);
+    }
+
+
+    @Override
+    protected void prepareStatementForUpdate(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
+        statementPreparation(statement,barmenFeedback);
+        statement.setInt(statement.getParameterMetaData().getParameterCount(),barmenFeedback.getId());
+    }
+
+
+    private void statementPreparation(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
+        int i = 0;
+        statement.setInt(++i, barmenFeedback.getFromUserId());
+        statement.setInt(++i, barmenFeedback.getToUserId());
+        statement.setString(++i, barmenFeedback.getTitle());
+        statement.setInt(++i, barmenFeedback.getMark());
+        statement.setString(++i, barmenFeedback.getComment());
     }
 
     @Override
-    public String getSelectAllQuery() {
+    public String getSelectQuery() {
         return "SELECT * FROM barmen_feedback";
     }
 
@@ -95,7 +64,7 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE barmen_feedback set from_user_id = ?, to_user_id = ?, title = ?, mark = ?, comment = ?";
+        return "UPDATE barmen_feedback set from_user_id = ?, to_user_id = ?, title = ?, mark = ?, comment = ? WHERE id = ?";
     }
 
     @Override
@@ -103,44 +72,4 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
         return "DELETE FROM barmen_feedback WHERE id = ?";
     }
 
-    @AutoConnection
-    @Override
-    public Optional<BarmenFeedback> getByPK(Integer id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getSelectQuery())) {
-            statement.setInt(1, id);
-            return Optional.of(prepareStatementForGet(statement));
-        }
-    }
-    @AutoConnection
-    @Override
-    public List<BarmenFeedback> getAll() throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getSelectAllQuery())) {
-            return prepareStatementForGetAll(statement);
-        }
-    }
-
-    @AutoConnection
-    @Override
-    public BarmenFeedback persist(BarmenFeedback barmenFeedback) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getPersistQuery())) {
-            prepareStatementForInsert(statement, barmenFeedback);
-        }
-        return barmenFeedback;
-    }
-    @AutoConnection
-    @Override
-    public void delete(BarmenFeedback barmenFeedback) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getDeleteQuery())) {
-            prepareStatementForDelete(statement, barmenFeedback);
-        }
-    }
-
-    @AutoConnection
-    @Override
-    public void update(BarmenFeedback barmenFeedback) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getUpdateQuery())) {
-            prepareStatementForUpdate(statement, barmenFeedback);
-        }
-
-    }
 }
