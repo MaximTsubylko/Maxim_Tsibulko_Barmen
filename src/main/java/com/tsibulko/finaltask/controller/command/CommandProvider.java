@@ -23,6 +23,7 @@ public class CommandProvider {
         commandMap.put("cocktail_list", new ViewCocktailListCommand());
         commandMap.put("view_cocktail_details", new ViewCocktailDetailCommand());
         commandMap.put("delete_cocktail", new DeleteCocktailCommand());
+        commandMap.put("loginmain", new TryLoginCommand());
     }
 
     /**

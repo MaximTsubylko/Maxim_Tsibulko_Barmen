@@ -7,9 +7,11 @@ import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.CustomerService;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationValid;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
+import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 import com.tsibulko.finaltask.validation.impl.ServiceDateValidator;
 
 import java.sql.SQLException;
@@ -18,7 +20,7 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static GenericDAO dao;
-    private ServiceDateValidator validator = (ServiceDateValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.SERVICE);
+    private LoginAndRegistrationValidator validator = (LoginAndRegistrationValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);
 
     @Override
     public Customer create(Customer customer) throws SQLException, DaoException, PersistException, ServiceDateValidationException {
@@ -33,7 +35,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(Customer customer) throws SQLException, PersistException, DaoException, ServiceDateValidationException {
-        if (validator.isExistCustomer(customer)) {
+        if (validator.isExistCustomer(customer.getLogin())) {
             dao = daoFactory.getDao(Customer.class);
             dao.delete(customer);
         } else {
@@ -54,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void update(Customer customer) throws DaoException, SQLException, PersistException, ServiceDateValidationException {
-        if (validator.isExistCustomer(customer)) {
+        if (validator.isExistCustomer(customer.getLogin())) {
             dao = daoFactory.getDao(Customer.class);
             dao.update(customer);
         } else {

@@ -11,7 +11,4 @@ public interface ServiceValidator extends Validator {
 
     boolean isExistCocktail(Cocktail cocktail) throws DaoException, SQLException;
 
-    boolean isUniqueCustomer(Customer customer) throws DaoException, SQLException;
-
-    boolean isExistCustomer(Customer customer) throws DaoException, SQLException;
 }

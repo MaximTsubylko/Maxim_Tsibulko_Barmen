@@ -1,5 +1,6 @@
 package com.tsibulko.finaltask.validation;
 
+import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 import com.tsibulko.finaltask.validation.impl.ServiceDateValidator;
 import com.tsibulko.finaltask.validation.impl.ViewDateValidator;
 
@@ -29,6 +30,8 @@ public class ValidatorFactory {
                 return new ServiceDateValidator();
             case VIEW:
                 return new ViewDateValidator();
+            case LOGANDREG:
+                return new LoginAndRegistrationValidator();
         }
         throw new UnsupportedOperationException();
     }

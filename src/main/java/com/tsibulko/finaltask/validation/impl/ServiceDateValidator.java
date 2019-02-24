@@ -37,24 +37,5 @@ public class ServiceDateValidator implements ServiceValidator {
                         .equals(cocktaile.getId()));
     }
 
-    @Override
-    public boolean isUniqueCustomer(Customer customer) throws DaoException, SQLException {
-        dao = daoFactory.getDao(Customer.class);
-        List<Customer> customers = dao.getAll();
-        return !(customers
-                .stream()
-                .anyMatch(c -> c.getLogin()
-                        .equals(customer.getLogin())));
-    }
 
-    @Override
-    public boolean isExistCustomer(Customer customer) throws DaoException, SQLException {
-        dao = daoFactory.getDao(Customer.class);
-        List<Customer> customers = dao.getAll();
-        return customers
-                .stream()
-                .anyMatch(c -> c.getLogin()
-                        .equals(customer.getLogin()));
-
-    }
 }

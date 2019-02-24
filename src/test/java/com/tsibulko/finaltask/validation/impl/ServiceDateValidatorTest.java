@@ -20,11 +20,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class ServiceDateValidatorTest {
     ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
     ServiceValidator validator;
+    LoginAndRegistrationValidator validat;
 
     @BeforeEach
     void setUp() throws InterruptedException, SQLException, ConnectionPoolException, DaoException, IOException {
         InMemoryDBUtil.fill();
         validator = (ServiceValidator) validatorFactory.getValidator(ValidatorType.SERVICE);
+        validat = (LoginAndRegistrationValidator) validatorFactory.getValidator(ValidatorType.LOGANDREG);
+
     }
 
     @AfterEach
@@ -53,13 +56,13 @@ class ServiceDateValidatorTest {
     void isUniqueCustomer() throws SQLException, DaoException {
         Customer customer = new Customer();
         customer.setLogin("test");
-        assertTrue(validator.isUniqueCustomer(customer));
+        assertTrue(validat.isUniqueCustomer(customer));
     }
 
     @Test
     void isExistCustomer() throws SQLException, DaoException {
         Customer customer = new Customer();
         customer.setLogin("root");
-        assertTrue(validator.isExistCustomer(customer));
+        assertTrue(validat.isExistCustomer(customer.getLogin()));
     }
 }
