@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <head>
-    <%@include file="/static/resources.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
 
 </head>
 <div id="content-header">

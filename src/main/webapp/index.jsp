@@ -11,7 +11,7 @@
 <head>
     <title>Matrix Admin</title>
     <meta charset="UTF-8"/>
-    <%@include file="/static/resources.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
 </head>
 <body>
 <div id="loginbox">
@@ -35,7 +35,7 @@
         </div>
         <div class="form-actions">
             <input type="hidden" name="command" value="loginmain">
-            <button type="submit" class="btn btn-success btn btn-large btn-block">Create</button>
+            <button type="submit" class="btn btn-success btn btn-large btn-block">Log in</button>
         </div>
     </form>
 

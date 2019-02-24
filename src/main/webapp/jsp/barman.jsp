@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Main page</title>
-    <%@include file="../static/resources.jsp" %>
+    <%@include file="../WEB-INF/resources.jsp" %>
 
 </head>
 <body>
@@ -27,9 +27,9 @@
         <li><a href="?command=cocktail_list"><i class="icon icon-signal"></i> <span>Cocktail list</span></a></li>
         <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>User menu</span></a>
         <ul>
-            <li><a href="index2.html">My profile</a></li>
-            <li><a href="index2.html">Edit</a></li>
-            <li><a href="gallery.html">Log out</a></li>
+            <li><a href="#">My profile</a></li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">Log out</a></li>
 
         </ul>
         </li>
