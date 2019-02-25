@@ -50,7 +50,6 @@ public class IndexController extends HttpServlet {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ViewDateValidationException e) {
-            response.sendRedirect("/jsp/error.jsp");
             //тут должно выводиться сообщение
         } catch (ServiceDateValidationException e) {
             response.sendRedirect("/jsp/error.jsp");

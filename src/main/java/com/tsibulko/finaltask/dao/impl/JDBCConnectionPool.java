@@ -61,7 +61,7 @@ public class JDBCConnectionPool implements ConnectionPool {
         return instance;
     }
 
-    public void init() throws ConnectionPoolException {//???
+    public void init() throws ConnectionPoolException {
         Properties properties = new Properties();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         try (InputStream inputStream = classLoader.getResourceAsStream(DB_PATH)) {
