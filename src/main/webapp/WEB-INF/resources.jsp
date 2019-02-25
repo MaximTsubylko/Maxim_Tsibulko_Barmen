@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="static/css/fullcalendar.css" />
 <link rel="stylesheet" href="static/css/matrix-style.css" />
 <link rel="stylesheet" href="static/css/matrix-media.css" />
-<link rel="stylesheet" href="static/css/matrix-login.css" />
 <link href="static/font-awesome/css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 

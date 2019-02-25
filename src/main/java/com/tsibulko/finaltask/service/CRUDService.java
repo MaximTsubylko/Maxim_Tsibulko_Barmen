@@ -4,11 +4,12 @@ import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
 public interface CRUDService<T> {
-    T create(T obj) throws SQLException, DaoException, PersistException, ServiceDateValidationException;
+    T create(T obj) throws SQLException, DaoException, PersistException, ServiceDateValidationException, NoSuchAlgorithmException;
 
     void delete(T obj) throws SQLException, PersistException, DaoException, ServiceDateValidationException;
 

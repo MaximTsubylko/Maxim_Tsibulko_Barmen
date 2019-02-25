@@ -10,9 +10,10 @@ import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 @FunctionalInterface
 public interface Command {
-    ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException, ViewDateValidationException, ServiceDateValidationException;
+    ResponseContent process(HttpServletRequest request) throws Exception;
 }

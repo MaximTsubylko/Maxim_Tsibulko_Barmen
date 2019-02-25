@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -39,7 +40,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void create() throws SQLException, PersistException, DaoException, ServiceDateValidationException {
+    void create() throws SQLException, PersistException, DaoException, ServiceDateValidationException, NoSuchAlgorithmException {
         Customer customer = customers.get(1);
         customer.setId(4);
         customer.setLogin("test");
@@ -48,7 +49,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void delete() throws SQLException, PersistException, DaoException, ServiceDateValidationException {
+    void delete() throws SQLException, PersistException, DaoException, ServiceDateValidationException, NoSuchAlgorithmException {
         Customer customer = new Customer();
         customer.setLogin("TestLogin");
         customer.setEmail("TestEmail");

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 
@@ -54,6 +55,10 @@ public class IndexController extends HttpServlet {
         } catch (ServiceDateValidationException e) {
             response.sendRedirect("/jsp/error.jsp");
             //тут должно выводиться сообщение
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

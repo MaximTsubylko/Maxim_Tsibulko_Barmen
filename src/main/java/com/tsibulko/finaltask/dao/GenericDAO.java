@@ -20,4 +20,6 @@ public interface GenericDAO<T extends Identified<PK>, PK extends Serializable> {
     void delete(T id) throws SQLException, PersistException;
 
     void update(T daoObject) throws SQLException, PersistException;
+
+    List<String> getStringsFromColumn(String column) throws DaoException;
 }

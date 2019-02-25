@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,18 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
     protected void prepareStatementForUpdate(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws SQLException {
         statementPreparation(statement, cocktaileFeedback);
         statement.setInt(statement.getParameterMetaData().getParameterCount(), cocktaileFeedback.getId());
+    }
+
+
+    @Override
+    protected boolean hasColumn(String column) {
+        return Arrays.asList("id", "user_id", "title", "cocktail_id", "mark", "comment")
+                .contains(column);
+    }
+
+    @Override
+    protected String getSelectColumnQuery() {
+        return "FROM cocktaile_feedback";
     }
 
 

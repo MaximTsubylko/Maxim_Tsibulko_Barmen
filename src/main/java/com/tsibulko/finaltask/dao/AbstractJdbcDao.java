@@ -4,6 +4,7 @@ import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,10 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws SQLException;
 
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws SQLException;
+
+    protected abstract boolean hasColumn(String column);
+
+    protected abstract String getSelectColumnQuery();
 
     public abstract String getSelectQuery();
 
@@ -87,6 +92,26 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new PersistException(e);
+        }
+    }
+
+    @Override
+    @AutoConnection
+    public List<String> getStringsFromColumn(String column) throws DaoException {
+        if (!hasColumn(column)) {
+            throw new DaoException("This column does not exist");
+        }
+        try (PreparedStatement preparedStatement
+                     = connection.prepareStatement("SELECT " + column + " " + getSelectColumnQuery())) {
+            List<String> strings = new ArrayList<>();
+            //preparedStatement.setString(1, column);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                strings.add(rs.getString(column));
+            }
+            return strings;
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
     }
 }

@@ -24,6 +24,7 @@ public class CommandProvider {
         commandMap.put("view_cocktail_details", new ViewCocktailDetailCommand());
         commandMap.put("delete_cocktail", new DeleteCocktailCommand());
         commandMap.put("loginmain", new TryLoginCommand());
+        commandMap.put("registration", new RegistrationCommand());
     }
 
     /**

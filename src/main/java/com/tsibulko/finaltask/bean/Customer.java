@@ -12,7 +12,7 @@ public class Customer implements Identified<Integer> {
     private String login;
     private String password;
     private Date registr_date;
-    private int state;
+    private int state = 3;
     private String email;
     private List<Cocktail> cocktails;
     private int role_id = 1;

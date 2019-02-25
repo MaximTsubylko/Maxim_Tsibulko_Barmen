@@ -12,15 +12,17 @@
     <title>Matrix Admin</title>
     <meta charset="UTF-8"/>
     <%@include file="/WEB-INF/resources.jsp" %>
+    <link rel="stylesheet" href="static/css/matrix-login.css"/>
+
 </head>
 <body>
 <div id="loginbox">
-    <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post" >
+    <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
         <div class="control-group normal_text"><h3><img src="static/img/logo.png" alt="Logo"/></h3></div>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input type="text" name="login"
+                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text" name="login"
                                                                                        placeholder="Username"/>
                 </div>
             </div>
@@ -28,14 +30,26 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" name="password"
+                    <span class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required" type="password" name="password"
                                                                                       placeholder="Password"/>
                 </div>
             </div>
         </div>
         <div class="form-actions">
-            <input type="hidden" name="command" value="loginmain">
-            <button type="submit" class="btn btn-success btn btn-large btn-block">Log in</button>
+            <div class="center-pill">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <input type="hidden" name="command" value="loginmain">
+                        <button type="submit" class="btn btn-success btn btn-block">Log in</button>
+                    </div>
+                    <div class="span4">
+                        <a href="#" class="flip-link btn btn-danger" id="to-recover">Forgot password?</a>
+                    </div>
+                    <div class="span4">
+                        <a href="#" class="flip-link btn btn-warning" id="to-registration">Registration</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 
@@ -46,7 +60,7 @@
 
         <div class="controls">
             <div class="main_input_box">
-                <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text"
+                <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input required="required" type="email"
                                                                                       placeholder="E-mail address"/>
             </div>
         </div>
@@ -57,10 +71,57 @@
             <span class="pull-right"><a class="btn btn-info">Reecover</a></span>
         </div>
     </form>
+
+
+    <form id="registrationform" action="${pageContext.request.contextPath}/barman" method="post" class="form-vertical">
+
+        <p class="normal_text">Fil this form and let`s start!</p>
+        <div class="control-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text" name="login"
+                                                                                       placeholder="Username"/>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required" type="email" name="email"
+                                                                                               placeholder="E-mail"/>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password" name="password"
+                                                                                     placeholder="Password"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <div class="center-pill">
+                <div class="row-fluid">
+                    <div class="pull-right span4">
+                        <input type="hidden" name="command" value="registration">
+                        <button type="submit" class="btn btn-success btn btn-block">Register</button>
+                    </div>
+                    <div class="pull-left span4">
+                    <a href="#" class="flip-link btn btn-success"
+                       id="registrationform-login">&laquo; Back to login</a></div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
 </div>
 
 <script src="static/js/jquery.min.js"></script>
 <script src="static/js/matrix.login.js"></script>
+
 </body>
 
 </html>

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,17 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
     protected void prepareStatementForUpdate(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
         statementPreparation(statement,barmenFeedback);
         statement.setInt(statement.getParameterMetaData().getParameterCount(),barmenFeedback.getId());
+    }
+
+    @Override
+    protected boolean hasColumn(String column) {
+        return Arrays.asList("id", "from_user_id", "title", "to_user_id", "mark", "comment")
+                .contains(column);
+    }
+
+    @Override
+    protected String getSelectColumnQuery() {
+        return "FROM barmen_feedback";
     }
 
 

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements CocktailSpecificDAO<Cocktail, Integer> {
@@ -37,6 +38,17 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
     protected void prepareStatementForUpdate(PreparedStatement statement, Cocktail cocktail) throws SQLException {
         statementPreparation(statement,cocktail);
         statement.setInt(statement.getParameterMetaData().getParameterCount(),cocktail.getId());
+    }
+
+    @Override
+    protected boolean hasColumn(String column) {
+        return Arrays.asList("id", "name", "price", "description")
+                .contains(column);
+    }
+
+    @Override
+    protected String getSelectColumnQuery() {
+        return "FROM cocktail";
     }
 
 

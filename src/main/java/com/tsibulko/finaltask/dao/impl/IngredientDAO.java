@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,16 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
         statement.setInt(statement.getParameterMetaData().getParameterCount(),ingredient.getId());
     }
 
+    @Override
+    protected boolean hasColumn(String column) {
+        return Arrays.asList("id", "name", "description")
+                .contains(column);
+    }
+
+    @Override
+    protected String getSelectColumnQuery() {
+        return "FROM ingredient";
+    }
     @Override
     public List<Ingredient> prepareStatementForGetIngredientsList(PreparedStatement statement) throws SQLException {
         try (ResultSet resultSet = statement.executeQuery()) {
