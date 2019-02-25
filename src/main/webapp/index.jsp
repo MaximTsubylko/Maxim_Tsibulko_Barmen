@@ -22,7 +22,8 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text" name="login"
+                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
+                                                                                       name="login"
                                                                                        placeholder="Username"/>
                 </div>
             </div>
@@ -30,7 +31,8 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required" type="password" name="password"
+                    <span class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required"
+                                                                                      type="password" name="password"
                                                                                       placeholder="Password"/>
                 </div>
             </div>
@@ -54,21 +56,31 @@
     </form>
 
 
-    <form id="recoverform" action="#" class="form-vertical">
+    <form id="recoverform" action="${pageContext.request.contextPath}/barman" method="post" class="form-vertical">
         <p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a
             password.</p>
 
         <div class="controls">
             <div class="main_input_box">
                 <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input required="required" type="email"
+                                                                                      name="email"
                                                                                       placeholder="E-mail address"/>
             </div>
         </div>
 
         <div class="form-actions">
-            <span class="pull-left"><a href="#" class="flip-link btn btn-success"
-                                       id="to-login">&laquo; Back to login</a></span>
-            <span class="pull-right"><a class="btn btn-info">Reecover</a></span>
+            <div class="center-pill">
+                <div class="row-fluid">
+                    <div class="pull-right span4">
+                        <input type="hidden" name="command" value="send_recovery_message">
+                        <button type="submit" class="btn btn-info btn btn-block">Recovery</button>
+                    </div>
+                    <div class="pull-left span4">
+                        <a href="#" class="flip-link btn btn-success"
+                           id="to-login">&laquo; Back to login</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 
@@ -79,7 +91,8 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text" name="login"
+                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
+                                                                                       name="login"
                                                                                        placeholder="Username"/>
                 </div>
             </div>
@@ -87,7 +100,8 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required" type="email" name="email"
+                    <span class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required"
+                                                                                               type="email" name="email"
                                                                                                placeholder="E-mail"/>
                 </div>
             </div>
@@ -95,7 +109,8 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password" name="password"
+                    <span class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password"
+                                                                                     name="password"
                                                                                      placeholder="Password"/>
                 </div>
             </div>
@@ -109,8 +124,8 @@
                         <button type="submit" class="btn btn-success btn btn-block">Register</button>
                     </div>
                     <div class="pull-left span4">
-                    <a href="#" class="flip-link btn btn-success"
-                       id="registrationform-login">&laquo; Back to login</a></div>
+                        <a href="#" class="flip-link btn btn-success"
+                           id="registrationform-login">&laquo; Back to login</a></div>
                 </div>
             </div>
         </div>

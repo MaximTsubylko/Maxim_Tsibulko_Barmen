@@ -10,4 +10,6 @@ public interface LoginAndRegistrationValid extends Validator{
 
     boolean isExistCustomer(String login) throws DaoException, SQLException;
 
+    boolean isExistEmail(String email) throws DaoException;
+
 }

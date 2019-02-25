@@ -7,7 +7,7 @@ import com.tsibulko.finaltask.controller.command.Router;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.dto.ResponseContent;
-import com.tsibulko.finaltask.service.Sender;
+import com.tsibulko.finaltask.service.MailSender;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
@@ -25,13 +25,13 @@ public class RegistrationCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException, ViewDateValidationException, ServiceDateValidationException, NoSuchAlgorithmException {
         Customer customer = new Customer();
-        Sender sender = new Sender("barmensupp@gmail.com","asfG3421");
+        MailSender sender = new MailSender();
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         customer.setLogin(request.getParameter("login"));
         customer.setPassword(request.getParameter("password"));
         customer.setEmail(request.getParameter("email"));
-//        service.create(customer);
-        sender.send("sdfsdfsd","sdfsdfsdfsdf", "barmensupp@gmail.com", "maxim.tsibulko@gmail.com");
+        service.create(customer);
+        sender.send("barmensupp@gmail.com","asdfG3421",request.getParameter("email"),"Test","test confirm message");
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router("success_registration.jsp", "redirect"));
         return responseContent;
