@@ -24,7 +24,6 @@ import java.util.concurrent.locks.ReentrantLock;
 public class JDBCConnectionPool implements ConnectionPool {
     private static ConnectionPool instance;
     private static final String DB_PATH = "property/database.properties";
-    private static final String CLOSE_REGEX = ".*close.*";
 
     private Queue<Connection> availableConnection;
     private Queue<Connection> usedConnection;

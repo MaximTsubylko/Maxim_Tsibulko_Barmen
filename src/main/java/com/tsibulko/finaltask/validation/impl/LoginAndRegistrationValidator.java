@@ -18,30 +18,26 @@ public class LoginAndRegistrationValidator implements LoginAndRegistrationValid 
     @Override
     public boolean isUniqueCustomer(Customer customer) throws DaoException, SQLException {
         dao = daoFactory.getDao(Customer.class);
-        if (dao.getStringsFromColumn("login").contains(customer.getLogin())){
-            return false;
-        } else if (dao.getStringsFromColumn("email").equals(customer.getEmail())){
+        if (dao.getStringsFromColumn("login").contains(customer.getLogin())
+                || dao.getStringsFromColumn("email").equals(customer.getEmail())) {
             return false;
         }
-
         return true;
     }
 
     @Override
     public boolean isExistCustomer(String login) throws DaoException, SQLException {
         dao = daoFactory.getDao(Customer.class);
-        List<Customer> customers = dao.getAll();
-        return customers
-                .stream()
-                .anyMatch(c -> c.getLogin()
-                        .equals(login));
-
+        if (dao.getStringsFromColumn("login").contains(login)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean isExistEmail(String email) throws DaoException {
         dao = daoFactory.getDao(Customer.class);
-        if (dao.getStringsFromColumn("email").contains(email)){
+        if (dao.getStringsFromColumn("email").contains(email)) {
             return true;
         }
         return false;

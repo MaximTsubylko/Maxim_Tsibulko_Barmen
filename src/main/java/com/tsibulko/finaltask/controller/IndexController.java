@@ -57,7 +57,8 @@ public class IndexController extends HttpServlet {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            response.sendRedirect("/jsp/error.jsp");
+            e.printStackTrace();
+//            response.sendRedirect("/jsp/error.jsp");
         }
     }
 }
