@@ -29,7 +29,8 @@
         <ul>
             <li><a href="#">My profile</a></li>
             <li><a href="#">Edit</a></li>
-            <li><a href="#">Log out</a></li>
+            <li><a href="barman?command=logout">Log out</a>
+            </li>
 
         </ul>
         </li>

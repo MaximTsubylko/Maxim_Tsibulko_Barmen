@@ -61,16 +61,21 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    public static boolean isAuthenticated(Object object, HttpSession session){
-        if (object == null){
+    public static boolean isAuthenticated(HttpSession session){
+        if (session.getAttribute("sessionAttribute") == null){
             return false;
         }
 
-        if (authenticatedCustomer.get(session.getId()).equals(object)){
+        if (authenticatedCustomer.get(session.getId()).equals(session.getAttribute("sessionAttribute"))){
             return true;
         }
 
         return false;
+    }
+
+    public static void logout(HttpSession session){
+        session.removeAttribute("sessionAttribute");
+        authenticatedCustomer.remove(session.getId());
     }
 
     @Override
