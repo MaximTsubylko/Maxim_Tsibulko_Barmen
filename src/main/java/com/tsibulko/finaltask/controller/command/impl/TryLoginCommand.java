@@ -23,6 +23,7 @@ import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -32,13 +33,14 @@ public class TryLoginCommand implements Command {
     private static GenericDAO dao;
     @Override
     public ResponseContent process(HttpServletRequest request) throws CommandRuningException {
+        HttpSession session = request.getSession();
         LoginAndRegistrationValid validator = (LoginAndRegistrationValid) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         Customer customer = new Customer();
         customer.setLogin(request.getParameter("login"));
         customer.setPassword(request.getParameter("password"));
         try {
-            service.authenticate(customer);
+            service.authenticate(customer,session);
         } catch (ServiceException e) {
             throw new CommandRuningException();
         }

@@ -4,9 +4,13 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import com.tsibulko.finaltask.service.message.CustomMessage;
 
 public class MailSender {
-    public static void send(String from,String password,String to,String sub,String msg){
+    private static final String USERNAME = "barmensupp@gmail.com";
+    private static final String PASSWORD = "asdfG3421";
+
+    public void send(String to, CustomMessage m) {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -14,21 +18,22 @@ public class MailSender {
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
+
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(from, password);
+                        return new PasswordAuthentication(USERNAME, PASSWORD);
                     }
                 });
 
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
-            message.setSubject(sub);
-            message.setText(msg);
+            message.setSubject(m.getSubject());
+            message.setText(m.getText());
 
             Transport.send(message);
 

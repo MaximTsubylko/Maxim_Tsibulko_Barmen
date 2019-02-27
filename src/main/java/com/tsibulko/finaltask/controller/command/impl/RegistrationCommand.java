@@ -12,6 +12,9 @@ import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
+import com.tsibulko.finaltask.service.message.CustomMessage;
+import com.tsibulko.finaltask.service.message.CustomMessageFactory;
+import com.tsibulko.finaltask.service.message.CustomMessageType;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
 
@@ -24,6 +27,7 @@ import java.sql.SQLException;
 public class RegistrationCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException, ViewDateValidationException, ServiceDateValidationException, NoSuchAlgorithmException {
+        CustomMessage customMessage = CustomMessageFactory.getInstance().getMessage(CustomMessageType.CONFIRM);
         Customer customer = new Customer();
         MailSender sender = new MailSender();
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
@@ -31,9 +35,9 @@ public class RegistrationCommand implements Command {
         customer.setPassword(request.getParameter("password"));
         customer.setEmail(request.getParameter("email"));
         service.create(customer);
-        sender.send("barmensupp@gmail.com","asdfG3421",request.getParameter("email"),"Test","test confirm message");
+        sender.send(request.getParameter("email"),customMessage);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("success_registration.jsp", "redirect"));
+        responseContent.setRouter(new Router("jsp/success_registration.jsp", "redirect"));
         return responseContent;
     }
 }

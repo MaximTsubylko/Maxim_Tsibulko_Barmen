@@ -1,31 +1,33 @@
 package com.tsibulko.finaltask.service.impl;
 
 
-import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.CustomerService;
 import com.tsibulko.finaltask.service.exception.ServiceException;
-import com.tsibulko.finaltask.validation.LoginAndRegistrationValid;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
-import com.tsibulko.finaltask.validation.impl.ServiceDateValidator;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CustomerServiceImpl implements CustomerService {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CustomerDAO dao;
+    private static Map<String,Customer> authenticatedCustomer = new WeakHashMap<>();
     private LoginAndRegistrationValidator validator = (LoginAndRegistrationValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);
 
     private void encryptPassword(Customer user) throws NoSuchAlgorithmException {
@@ -39,7 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
         user.setPassword(decimalHash);
     }
 
-    public Customer authenticate(Customer user) throws ServiceException {
+    public Customer authenticate(Customer user, HttpSession session) throws ServiceException {
+        SessionAttribute sessionAttribute = new SessionAttribute();
         try {
             dao = (CustomerDAO)daoFactory.getDao(Customer.class);
             if (!dao.getStringsFromColumn("login").contains(user.getLogin())) {
@@ -50,10 +53,24 @@ public class CustomerServiceImpl implements CustomerService {
             if (!user.getPassword().equals(validUser.getPassword())){
                 throw new ServiceException("error");
             }
+            session.setAttribute("sessionAttribute",validUser);
+            authenticatedCustomer.put(session.getId(),validUser);
             return validUser;
         }catch (DaoException | NoSuchAlgorithmException e){
             throw new ServiceException(e);
         }
+    }
+
+    public static boolean isAuthenticated(Object object, HttpSession session){
+        if (object == null){
+            return false;
+        }
+
+        if (authenticatedCustomer.get(session.getId()).equals(object)){
+            return true;
+        }
+
+        return false;
     }
 
     @Override
