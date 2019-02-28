@@ -16,7 +16,7 @@ public class ShowLoginPageCommand implements Command {
     public ResponseContent process(HttpServletRequest request) {
         HttpSession session = request.getSession();
         ResponseContent responseContent = new ResponseContent();
-         if (CustomerServiceImpl.isAuthenticated(session.getAttribute("sessionAttribute"), session)) {
+         if (CustomerServiceImpl.isAuthenticated(session)) {
             System.out.println("aut");
             responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
              request.setAttribute("viewName", "empty"); //ПЕРЕДЕЛАТЬ КАК ТОЛЬКО ТАК СРАЗУ!!

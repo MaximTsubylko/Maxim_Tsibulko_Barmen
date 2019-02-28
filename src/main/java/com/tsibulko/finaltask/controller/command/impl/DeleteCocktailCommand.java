@@ -9,20 +9,28 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
+import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 public class DeleteCocktailCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws SQLException, PersistException, DaoException, InterruptedException, ServiceDateValidationException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
-        Integer id = Integer.parseInt(request.getParameter("cocktailId"));
-        Cocktail cocktaile = service.getByPK(id);
-        service.delete(cocktaile);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("barman?command=cocktail_list", "redirect"));
+        HttpSession session = request.getSession();
+        if (CustomerServiceImpl.isAuthenticated(session)) {
+
+            Integer id = Integer.parseInt(request.getParameter("cocktailId"));
+            Cocktail cocktaile = service.getByPK(id);
+            service.delete(cocktaile);
+            responseContent.setRouter(new Router("barman?command=cocktail_list", "redirect"));
+        } else {
+            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+        }
         return responseContent;
     }
 }

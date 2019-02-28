@@ -28,6 +28,8 @@ public class CommandProvider {
         commandMap.put("show_main_page", new ShowLoginPageCommand());
         commandMap.put("show_success_page", new ShowSuccessPageCommand());
         commandMap.put("send_recovery_message",new RecoverySendMessageCommand());
+        commandMap.put("logout", new LogoutCommand());
+        commandMap.put("show_profile", new ShowProfilePage());
     }
 
     /**
