@@ -1,6 +1,5 @@
 package com.tsibulko.finaltask.dao;
 
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 
@@ -12,11 +11,11 @@ import java.util.Optional;
 public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Number> implements GenericDAO<T, PK> {
     protected Connection connection;
 
-    protected abstract List<T> parseResultSet(ResultSet rs) throws SQLException;
+    protected abstract List<T> parseResultSet(ResultSet rs) throws DaoException;
 
-    protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws SQLException;
+    protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws DaoException;
 
-    protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws SQLException;
+    protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws DaoException;
 
     protected abstract boolean hasColumn(String column);
 
@@ -33,28 +32,28 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
 
     @Override
     @AutoConnection
-    public Optional<T> getByPK(PK key) throws DaoException, SQLException {
+    public Optional<T> getByPK(PK key) throws DaoException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(getSelectQuery() + " WHERE id = " + key)){
             return Optional.of(parseResultSet(preparedStatement.executeQuery()).get(0));
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e,"Get by PK error");
         }
     }
 
     @Override
     @AutoConnection
-    public List<T> getAll() throws DaoException, SQLException {
+    public List<T> getAll() throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(getSelectQuery())) {
             return parseResultSet(preparedStatement.executeQuery());
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e,"Get all error");
         }
     }
 
     @Override
     @AutoConnection
-    public T persist(T object) throws PersistException, SQLException {
+    public T persist(T object) throws DaoException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(getPersistQuery(), Statement.RETURN_GENERATED_KEYS)) {
             prepareStatementForInsert(preparedStatement, object);
@@ -70,29 +69,29 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
             }
 
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e,"Persist error");
         }
     }
 
     @Override
     @AutoConnection
-    public void update(T object) throws PersistException, SQLException {
+    public void update(T object) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(getUpdateQuery())) {
             prepareStatementForUpdate(preparedStatement, object);
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e, "Update error");
         }
     }
 
     @Override
     @AutoConnection
-    public void delete(T object) throws PersistException, SQLException {
+    public void delete(T object) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(getDeleteQuery())) {
             preparedStatement.setInt(1, (Integer) object.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new PersistException(e);
+            throw new DaoException(e,"Delete error");
         }
     }
 
@@ -105,14 +104,13 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
         try (PreparedStatement preparedStatement
                      = connection.prepareStatement("SELECT " + column + " " + getSelectColumnQuery())) {
             List<String> strings = new ArrayList<>();
-            //preparedStatement.setString(1, column);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 strings.add(rs.getString(column));
             }
             return strings;
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e,"Get string from column error");
         }
     }
 }

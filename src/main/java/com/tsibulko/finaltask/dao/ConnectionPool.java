@@ -30,7 +30,7 @@ public interface ConnectionPool {
      *
      * @throws ConnectionPoolException should be clarify
      */
-    void destroyPool() throws ConnectionPoolException, SQLException;
+    void destroyPool() throws ConnectionPoolException;
 
     void init() throws ConnectionPoolException;
 }

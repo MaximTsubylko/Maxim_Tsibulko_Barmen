@@ -44,7 +44,7 @@ class IngredientDAOTest {
     }
 
     @Test
-    void getByPK() throws DaoException, InterruptedException, SQLException {
+    void getByPK() throws DaoException {
         Ingredient ingredient = ingredients.get(0);
         assertEquals(ingredient, dao.getByPK(1).get());
     }

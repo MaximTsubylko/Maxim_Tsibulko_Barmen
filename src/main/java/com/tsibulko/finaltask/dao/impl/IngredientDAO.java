@@ -3,6 +3,7 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,36 +11,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implements IngredientSpecificDAO<Ingredient, Integer> {
 
 
     @Override
-    protected List<Ingredient> parseResultSet(ResultSet resultSet) throws SQLException {
+    protected List<Ingredient> parseResultSet(ResultSet resultSet) throws DaoException {
         List<Ingredient> result = new ArrayList<>();
-        while (resultSet.next()) {
-            Ingredient ingredient = new Ingredient();
-            ingredient.setId(resultSet.getInt("id"));
-            ingredient.setName(resultSet.getString("name"));
-            ingredient.setDescription(resultSet.getString("description"));
-            result.add(ingredient);
+        try {
+            while (resultSet.next()) {
+                while (resultSet.next()) {
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setId(resultSet.getInt("id"));
+                    ingredient.setName(resultSet.getString("name"));
+                    ingredient.setDescription(resultSet.getString("description"));
+                    result.add(ingredient);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t parse ingredient result set!");
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Ingredient ingredient) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Ingredient ingredient) throws DaoException {
         int i = 0;
-        statement.setString(++i, ingredient.getName());
-        statement.setString(++i, ingredient.getDescription());
+        statementPreparation(statement,ingredient);
     }
 
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Ingredient ingredient) throws SQLException {
-        statementPreparation(statement,ingredient);
-        statement.setInt(statement.getParameterMetaData().getParameterCount(),ingredient.getId());
+    protected void prepareStatementForUpdate(PreparedStatement statement, Ingredient ingredient) throws DaoException {
+        statementPreparation(statement, ingredient);
+        try {
+            statement.setInt(statement.getParameterMetaData().getParameterCount(), ingredient.getId());
+        } catch (SQLException e){
+            throw new DaoException(e,"Cun`t run statement for update ingredient feedback!");
+        }
     }
 
     @Override
@@ -52,32 +61,45 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
     protected String getSelectColumnQuery() {
         return "FROM ingredient";
     }
+
     @Override
-    public List<Ingredient> prepareStatementForGetIngredientsList(PreparedStatement statement) throws SQLException {
-        try (ResultSet resultSet = statement.executeQuery()) {
-            List<Ingredient> result = new ArrayList<>();
-            while (resultSet.next()) {
-                Ingredient ingredient = new Ingredient();
-                ingredient.setId(resultSet.getInt("ingredient_id"));
-                ingredient.setName(resultSet.getString("name"));
-                ingredient.setDescription(resultSet.getString("description"));
-                result.add(ingredient);
+    public List<Ingredient> prepareStatementForGetIngredientsList(PreparedStatement statement) throws DaoException {
+        try {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<Ingredient> result = new ArrayList<>();
+                while (resultSet.next()) {
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setId(resultSet.getInt("ingredient_id"));
+                    ingredient.setName(resultSet.getString("name"));
+                    ingredient.setDescription(resultSet.getString("description"));
+                    result.add(ingredient);
+                }
+                return result;
             }
-            return result;
+        } catch (SQLException e){
+            throw new DaoException(e,"Cun`t run statement for get ingredient list");
         }
     }
 
-    private void statementPreparation(PreparedStatement statement, Ingredient ingredient) throws SQLException {
+    private void statementPreparation(PreparedStatement statement, Ingredient ingredient) throws DaoException {
         int i = 0;
-        statement.setString(++i, ingredient.getName());
-        statement.setString(++i, ingredient.getDescription());
+        try {
+            statement.setString(++i, ingredient.getName());
+            statement.setString(++i, ingredient.getDescription());
+        } catch (SQLException e){
+            throw new DaoException(e,"Can`t prepare ingredient statement for using!");
+        }
 
     }
 
 
     @Override
-    public void prepareStatementForSetCocktailIngredient(PreparedStatement statement) throws SQLException {
-        statement.executeUpdate();
+    public void prepareStatementForSetCocktailIngredient(PreparedStatement statement) throws DaoException {
+        try {
+            statement.executeUpdate();
+        } catch (SQLException e){
+            throw new DaoException(e,"Can`t run statement for set cocktail ingredient");
+        }
     }
 
     @Override
@@ -116,26 +138,34 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
 
     @AutoConnection
     @Override
-    public List<Ingredient> getIngredientByCocktail(Cocktail cocktaile) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getIngredientsByCocktailIdQuery())) {
-            statement.setInt(1, cocktaile.getId());
-            List<Ingredient> i = prepareStatementForGetIngredientsList(statement);
-            return prepareStatementForGetIngredientsList(statement);
+    public List<Ingredient> getIngredientByCocktail(Cocktail cocktaile) throws DaoException {
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(getIngredientsByCocktailIdQuery())) {
+                statement.setInt(1, cocktaile.getId());
+                List<Ingredient> i = prepareStatementForGetIngredientsList(statement);
+                return prepareStatementForGetIngredientsList(statement);
+            }
+        } catch (SQLException e){
+            throw new DaoException(e,"Can`t get ingredient by cocktail");
         }
     }
 
     @AutoConnection
     @Override
-    public Cocktail setCocktailIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(getSetIngredientsQuery())) {
-            statement.setInt(1, cocktail.getId());
-            for (Ingredient i : ingredients) {
-                statement.setInt(2, i.getId());
-                prepareStatementForSetCocktailIngredient(statement);
+    public Cocktail setCocktailIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws DaoException {
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(getSetIngredientsQuery())) {
+                statement.setInt(1, cocktail.getId());
+                for (Ingredient i : ingredients) {
+                    statement.setInt(2, i.getId());
+                    prepareStatementForSetCocktailIngredient(statement);
+                }
             }
+            cocktail.setIngredients(ingredients);
+            return cocktail;
+        } catch (SQLException e){
+            throw new DaoException(e,"Can`t set cocktail ingredient");
         }
-        cocktail.setIngredients(ingredients);
-        return cocktail;
     }
 
 

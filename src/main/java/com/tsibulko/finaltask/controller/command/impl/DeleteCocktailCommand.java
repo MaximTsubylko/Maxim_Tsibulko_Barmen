@@ -8,8 +8,10 @@ import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import java.sql.SQLException;
 
 public class DeleteCocktailCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws SQLException, PersistException, DaoException, InterruptedException, ServiceDateValidationException {
+    public ResponseContent process(HttpServletRequest request) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
         HttpSession session = request.getSession();

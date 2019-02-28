@@ -7,8 +7,10 @@ import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.util.TestUtil.parser.JSONParser;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,14 +43,14 @@ class CocktailServiceImplTest {
     }
 
     @Test
-    void create() throws SQLException, PersistException, DaoException, ServiceDateValidationException {
+    void create() throws SQLException, PersistException, DaoException, ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         Cocktail cocktail = new Cocktail();
         cocktail.setName("test");
         assertEquals(cocktailService.create(cocktail), cocktail);
     }
 
     @Test
-    void delete() throws SQLException, DaoException, PersistException, ServiceDateValidationException {
+    void delete() throws SQLException, DaoException, PersistException, ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         List<Cocktail> cocktails = cocktailService.getList();
         Cocktail cocktail = new Cocktail();
         cocktail.setId(3);
@@ -59,7 +61,7 @@ class CocktailServiceImplTest {
     }
 
     @Test
-    void getByPK() throws InterruptedException, SQLException, ServiceDateValidationException, DaoException, PersistException {
+    void getByPK() throws InterruptedException, SQLException, ServiceDateValidationException, DaoException, PersistException, ServiceException, LoginAndRegistrationException {
         Cocktail cocktail = new Cocktail();
         cocktail.setId(3);
         cocktail.setName("test");
@@ -68,7 +70,7 @@ class CocktailServiceImplTest {
     }
 
     @Test
-    void update() throws SQLException, PersistException, DaoException, ServiceDateValidationException, InterruptedException {
+    void update() throws SQLException, PersistException, DaoException, ServiceDateValidationException, InterruptedException, ServiceException, LoginAndRegistrationException {
         Cocktail cocktail = cocktJson.get(0);
         cocktail.setName("Test");
         cocktailService.update(cocktail);
@@ -76,12 +78,12 @@ class CocktailServiceImplTest {
     }
 
     @Test
-    void getCoctilList() throws SQLException, DaoException {
+    void getCoctilList() throws SQLException, DaoException, ServiceException {
         assertEquals(cocktJson,cocktailService.getList());
     }
 
     @Test
-    void createCocktailWithIngredients() throws SQLException, PersistException, DaoException, ServiceDateValidationException {
+    void createCocktailWithIngredients() throws SQLException, PersistException, DaoException, ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         Cocktail cocktail = new Cocktail();
         cocktail.setId(3);
         cocktail.setName("test");

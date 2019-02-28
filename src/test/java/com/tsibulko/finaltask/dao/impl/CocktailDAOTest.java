@@ -84,7 +84,7 @@ class CocktailDAOTest {
     }
 
     @Test
-    void getCocktaileByCustomer() throws SQLException {
+    void getCocktaileByCustomer() throws SQLException, DaoException {
         List<Cocktail> cocktaileList = new ArrayList<>();
         cocktaileList.add(cocktailes.get(0));
         cocktaileList.add(cocktailes.get(1));

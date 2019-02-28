@@ -5,12 +5,14 @@ import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
+import com.tsibulko.finaltask.service.exception.ServiceException;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface CocktailService extends CRUDService<Cocktail> {
-    Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws SQLException, DaoException, PersistException, ServiceDateValidationException;
-    List<Cocktail> getCocktailByCustomer(Customer customer) throws DaoException, SQLException;
+    Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException;
+    List<Cocktail> getCocktailByCustomer(Customer customer) throws ServiceException;
 }

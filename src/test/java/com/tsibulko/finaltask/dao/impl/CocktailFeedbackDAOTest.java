@@ -62,6 +62,7 @@ class CocktailFeedbackDAOTest {
     @Test
     void delete() throws SQLException, PersistException, DaoException {
         CocktaileFeedback cocktaileFeedback = new CocktaileFeedback(1, 2, 1, "test", "");
+        List<CocktaileFeedback> s =  dao.getAll();
         dao.persist(cocktaileFeedback);
         dao.delete(cocktaileFeedback);
         assertEquals(feedbacks,dao.getAll());

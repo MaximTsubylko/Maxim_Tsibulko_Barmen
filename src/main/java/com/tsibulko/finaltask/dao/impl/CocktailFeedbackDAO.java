@@ -1,8 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
-import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,35 +10,45 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Integer> implements GenericDAO<CocktaileFeedback, Integer> {
 
     @Override
-    protected List<CocktaileFeedback> parseResultSet(ResultSet resultSet) throws SQLException {
+    protected List<CocktaileFeedback> parseResultSet(ResultSet resultSet) throws DaoException {
         List<CocktaileFeedback> resultList = new ArrayList<>();
-        while (resultSet.next()) {
-            CocktaileFeedback cocktaileFeedback = new CocktaileFeedback();
-            cocktaileFeedback.setId(resultSet.getInt("id"));
-            cocktaileFeedback.setFromUserId(resultSet.getInt("user_id"));
-            cocktaileFeedback.setToCocktileId(resultSet.getInt("cocktail_id"));
-            cocktaileFeedback.setTitle(resultSet.getString("title"));
-            cocktaileFeedback.setMark(resultSet.getInt("mark"));
-            cocktaileFeedback.setComment(resultSet.getString("comment"));
-            resultList.add(cocktaileFeedback);
+        try {
+            while (resultSet.next()) {
+                while (resultSet.next()) {
+                    CocktaileFeedback cocktaileFeedback = new CocktaileFeedback();
+                    cocktaileFeedback.setId(resultSet.getInt("id"));
+                    cocktaileFeedback.setFromUserId(resultSet.getInt("user_id"));
+                    cocktaileFeedback.setToCocktileId(resultSet.getInt("cocktail_id"));
+                    cocktaileFeedback.setTitle(resultSet.getString("title"));
+                    cocktaileFeedback.setMark(resultSet.getInt("mark"));
+                    cocktaileFeedback.setComment(resultSet.getString("comment"));
+                    resultList.add(cocktaileFeedback);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t parse barman feedback result set!");
         }
         return resultList;
+
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws SQLException {
-        statementPreparation(statement,cocktaileFeedback);
-    }
-
-    @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws DaoException {
         statementPreparation(statement, cocktaileFeedback);
-        statement.setInt(statement.getParameterMetaData().getParameterCount(), cocktaileFeedback.getId());
+    }
+
+    @Override
+    protected void prepareStatementForUpdate(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws DaoException {
+        statementPreparation(statement, cocktaileFeedback);
+        try {
+            statement.setInt(statement.getParameterMetaData().getParameterCount(), cocktaileFeedback.getId());
+        } catch (SQLException e){
+            throw new DaoException(e,"Cun`t run statement for update cocktail feedback!");
+        }
     }
 
 
@@ -54,13 +64,18 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
     }
 
 
-    private void statementPreparation(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws SQLException {
+    private void statementPreparation(PreparedStatement statement, CocktaileFeedback cocktaileFeedback)
+            throws DaoException {
         int i = 0;
-        statement.setInt(++i, cocktaileFeedback.getFromUserId());
-        statement.setInt(++i, cocktaileFeedback.getToCocktileId());
-        statement.setString(++i, cocktaileFeedback.getTitle());
-        statement.setInt(++i, cocktaileFeedback.getMark());
-        statement.setString(++i, cocktaileFeedback.getComment());
+        try {
+            statement.setInt(++i, cocktaileFeedback.getFromUserId());
+            statement.setInt(++i, cocktaileFeedback.getToCocktileId());
+            statement.setString(++i, cocktaileFeedback.getTitle());
+            statement.setInt(++i, cocktaileFeedback.getMark());
+            statement.setString(++i, cocktaileFeedback.getComment());
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t prepare cocktail feedback statement for using!");
+        }
     }
 
     @Override

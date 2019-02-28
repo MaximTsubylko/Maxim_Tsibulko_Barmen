@@ -7,8 +7,10 @@ import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.CRUDService;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.util.TestUtil.parser.JSONParser;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,7 +42,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void create() throws SQLException, PersistException, DaoException, ServiceDateValidationException, NoSuchAlgorithmException {
+    void create() throws SQLException, PersistException, DaoException, ServiceDateValidationException, NoSuchAlgorithmException, ServiceException, LoginAndRegistrationException {
         Customer customer = customers.get(1);
         customer.setId(4);
         customer.setLogin("test");
@@ -49,7 +51,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void delete() throws SQLException, PersistException, DaoException, ServiceDateValidationException, NoSuchAlgorithmException {
+    void delete() throws SQLException, PersistException, DaoException, ServiceDateValidationException, NoSuchAlgorithmException, ServiceException, LoginAndRegistrationException {
         Customer customer = new Customer();
         customer.setLogin("TestLogin");
         customer.setEmail("TestEmail");
@@ -62,12 +64,12 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void getByPK() throws InterruptedException, SQLException, ServiceDateValidationException, DaoException {
+    void getByPK() throws InterruptedException, SQLException, ServiceDateValidationException, DaoException, ServiceException {
         assertEquals(customers.get(0),customerService.getByPK(1));
     }
 
     @Test
-    void update() throws SQLException, PersistException, DaoException, ServiceDateValidationException, InterruptedException {
+    void update() throws SQLException, PersistException, DaoException, ServiceDateValidationException, InterruptedException, ServiceException, LoginAndRegistrationException {
         Customer customer = customers.get(1);
         customer.setFirst_name("asdasd");
         customerService.update(customer);
@@ -75,7 +77,7 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    void getList() throws SQLException, DaoException {
+    void getList() throws SQLException, DaoException, ServiceException {
         assertEquals(customers,customerService.getList());
     }
 }

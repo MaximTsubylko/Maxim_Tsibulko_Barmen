@@ -1,8 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,36 +10,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> implements GenericDAO<BarmenFeedback, Integer> {
 
     @Override
-    protected List<BarmenFeedback> parseResultSet(ResultSet resultSet) throws SQLException {
+    protected List<BarmenFeedback> parseResultSet(ResultSet resultSet) throws DaoException {
         List<BarmenFeedback> resultList = new ArrayList<>();
         BarmenFeedback barmenFeedback = new BarmenFeedback();
-        while (resultSet.next()) {
-            barmenFeedback.setId(resultSet.getInt("id"));
-            barmenFeedback.setFromUserId(resultSet.getInt("from_user_id"));
-            barmenFeedback.setToUserId(resultSet.getInt("to_user_id"));
-            barmenFeedback.setTitle(resultSet.getString("title"));
-            barmenFeedback.setMark(resultSet.getInt("mark"));
-            barmenFeedback.setComment(resultSet.getString("comment"));
-            resultList.add(barmenFeedback);
+        try {
+            while (resultSet.next()) {
+                barmenFeedback.setId(resultSet.getInt("id"));
+                barmenFeedback.setFromUserId(resultSet.getInt("from_user_id"));
+                barmenFeedback.setToUserId(resultSet.getInt("to_user_id"));
+                barmenFeedback.setTitle(resultSet.getString("title"));
+                barmenFeedback.setMark(resultSet.getInt("mark"));
+                barmenFeedback.setComment(resultSet.getString("comment"));
+                resultList.add(barmenFeedback);
+            }
+        } catch (SQLException e){
+            throw new DaoException(e,"Can`t parse barman feedback result set!");
         }
         return resultList;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, BarmenFeedback barmenFeedback) throws DaoException {
         statementPreparation(statement,barmenFeedback);
     }
 
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, BarmenFeedback barmenFeedback) throws DaoException {
         statementPreparation(statement,barmenFeedback);
-        statement.setInt(statement.getParameterMetaData().getParameterCount(),barmenFeedback.getId());
+        try {
+            statement.setInt(statement.getParameterMetaData().getParameterCount(), barmenFeedback.getId());
+        } catch (SQLException e){
+            throw new DaoException(e,"Cun`t run statement for update barmen feedback!");
+        }
     }
 
     @Override
@@ -54,13 +61,17 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
     }
 
 
-    private void statementPreparation(PreparedStatement statement, BarmenFeedback barmenFeedback) throws SQLException {
+    private void statementPreparation(PreparedStatement statement, BarmenFeedback barmenFeedback) throws DaoException {
         int i = 0;
-        statement.setInt(++i, barmenFeedback.getFromUserId());
-        statement.setInt(++i, barmenFeedback.getToUserId());
-        statement.setString(++i, barmenFeedback.getTitle());
-        statement.setInt(++i, barmenFeedback.getMark());
-        statement.setString(++i, barmenFeedback.getComment());
+        try {
+            statement.setInt(++i, barmenFeedback.getFromUserId());
+            statement.setInt(++i, barmenFeedback.getToUserId());
+            statement.setString(++i, barmenFeedback.getTitle());
+            statement.setInt(++i, barmenFeedback.getMark());
+            statement.setString(++i, barmenFeedback.getComment());
+        } catch (SQLException e){
+            throw new DaoException(e,"Can`t prepare barmen feedback statement for using!");
+        }
     }
 
     @Override

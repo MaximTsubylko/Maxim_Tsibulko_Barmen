@@ -6,6 +6,7 @@ import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
 
 public class ViewCocktailDetailCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws SQLException, DaoException, InterruptedException, ServiceDateValidationException {
+    public ResponseContent process(HttpServletRequest request) throws ServiceException, ServiceDateValidationException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
         HttpSession session = request.getSession();

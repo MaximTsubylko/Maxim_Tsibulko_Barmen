@@ -91,7 +91,7 @@ public class JDBCConnectionPool implements ConnectionPool {
                 return createConnection();
             }
             return connectionDeque.pop();
-        } catch (InterruptedException | SQLException e) {
+        } catch (InterruptedException e) {
             throw new ConnectionPoolException(e);
         }
     }
@@ -103,28 +103,36 @@ public class JDBCConnectionPool implements ConnectionPool {
     }
 
     @Override
-    public void destroyPool() throws SQLException {
+    public void destroyPool() throws ConnectionPoolException {
         List<Connection> connectionList = new ArrayList<>();
-        connectionList.addAll(availableConnection);
-        connectionList.addAll(usedConnection);
-        for (Connection connection : connectionList) {
-            connection.close();
+        try {
+            connectionList.addAll(availableConnection);
+            connectionList.addAll(usedConnection);
+            for (Connection connection : connectionList) {
+                connection.close();
+            }
+        } catch (SQLException e){
+            throw new ConnectionPoolException("Destroy pool error",e);
         }
     }
 
-    private Connection createConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(url, user, password);
-        allConnections.add(connection);
-        InvocationHandler connectionHandler = (Object proxy, Method method, Object[] args) -> {
-            if (method.getName().equals("close")) {
-                putBackConnection((Connection) proxy);
-                return null;
-            }
-            return method.invoke(connection, args);
-        };
+    private Connection createConnection() throws ConnectionPoolException {
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            allConnections.add(connection);
+            InvocationHandler connectionHandler = (Object proxy, Method method, Object[] args) -> {
+                if (method.getName().equals("close")) {
+                    putBackConnection((Connection) proxy);
+                    return null;
+                }
+                return method.invoke(connection, args);
+            };
 
-        return (Connection) Proxy.newProxyInstance(connection.getClass().getClassLoader(),
-                connection.getClass().getInterfaces(), connectionHandler);
+            return (Connection) Proxy.newProxyInstance(connection.getClass().getClassLoader(),
+                    connection.getClass().getInterfaces(), connectionHandler);
+        } catch (SQLException e){
+            throw new ConnectionPoolException("Error connection get",e);
+        }
     }
 
 }

@@ -10,11 +10,13 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.MailSender;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.service.message.CustomMessage;
 import com.tsibulko.finaltask.service.message.CustomMessageFactory;
 import com.tsibulko.finaltask.service.message.CustomMessageType;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
 
@@ -26,7 +28,7 @@ import java.sql.SQLException;
 
 public class RegistrationCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServletException, IOException, SQLException, PersistException, DaoException, InterruptedException, ViewDateValidationException, ServiceDateValidationException, NoSuchAlgorithmException {
+    public ResponseContent process(HttpServletRequest request) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         CustomMessage customMessage = CustomMessageFactory.getInstance().getMessage(CustomMessageType.CONFIRM);
         Customer customer = new Customer();
         MailSender sender = new MailSender();
