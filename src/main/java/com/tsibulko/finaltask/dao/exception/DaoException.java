@@ -14,4 +14,7 @@ public class DaoException extends Exception {
     public DaoException(Exception e) {
 
     }
+
+    public DaoException(Exception e, String s) {
+    }
 }

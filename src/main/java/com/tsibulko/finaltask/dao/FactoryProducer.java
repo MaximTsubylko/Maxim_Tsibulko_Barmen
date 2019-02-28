@@ -27,7 +27,7 @@ public class FactoryProducer {
     }
 
     public static DaoFactory getDaoFactory(DaoFactoryType type) {
-        switch (type){
+        switch (type) {
             case JDBC:
                 return JdbcDaoFactory.getInstance();
         }

@@ -17,10 +17,9 @@ import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -50,7 +49,7 @@ class CustomerDAOTest {
 
     @Test
     void getAll() throws SQLException, DaoException {
-        assertEquals(customers,dao.getAll());
+        assertEquals(customers, dao.getAll());
     }
 
     @Test
@@ -60,7 +59,7 @@ class CustomerDAOTest {
         customer.setEmail("TestEmail");
         customer.setId(4);
         dao.persist(customer);
-        assertEquals(customer,dao.getByPK(4).get());
+        assertEquals(customer, dao.getByPK(4).get());
     }
 
     @Test
@@ -75,7 +74,7 @@ class CustomerDAOTest {
         dao.persist(customer);
         dao.delete(customer);
 
-        assertEquals(customers,dao.getAll());
+        assertEquals(customers, dao.getAll());
     }
 
     @Test
@@ -84,6 +83,6 @@ class CustomerDAOTest {
         Customer customer = customers.get(1);
         customer.setLogin("TestLogin");
         dao.update(customer);
-        assertEquals(customer,dao.getByPK(2).get());
+        assertEquals(customer, dao.getByPK(2).get());
     }
 }

@@ -3,7 +3,6 @@ package com.tsibulko.finaltask.dao;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Connection Pool
@@ -30,7 +29,7 @@ public interface ConnectionPool {
      *
      * @throws ConnectionPoolException should be clarify
      */
-    void destroyPool() throws ConnectionPoolException, SQLException;
+    void destroyPool() throws ConnectionPoolException;
 
     void init() throws ConnectionPoolException;
 }

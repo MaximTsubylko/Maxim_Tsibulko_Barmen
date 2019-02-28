@@ -8,6 +8,7 @@ import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.validation.ServiceValidator;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ServiceDateValidatorTest {
     ValidatorFactory validatorFactory = ValidatorFactory.getInstance();
@@ -36,14 +37,14 @@ class ServiceDateValidatorTest {
     }
 
     @Test
-    void isUniqueCocktil() throws SQLException, DaoException {
+    void isUniqueCocktil() throws SQLException, DaoException, LoginAndRegistrationException {
         Cocktail cocktaile = new Cocktail();
         cocktaile.setName("test name");
         assertTrue(validator.isUniqueCocktail(cocktaile));
     }
 
     @Test
-    void isExistCoctil() throws SQLException, DaoException {
+    void isExistCoctil() throws SQLException, DaoException, LoginAndRegistrationException {
         Cocktail cocktaile = new Cocktail();
         cocktaile.setId(1);
         cocktaile.setName("Blood Mary");
@@ -53,14 +54,14 @@ class ServiceDateValidatorTest {
     }
 
     @Test
-    void isUniqueCustomer() throws SQLException, DaoException {
+    void isUniqueCustomer() throws SQLException, DaoException, LoginAndRegistrationException {
         Customer customer = new Customer();
         customer.setLogin("test");
         assertTrue(validat.isUniqueCustomer(customer));
     }
 
     @Test
-    void isExistCustomer() throws SQLException, DaoException {
+    void isExistCustomer() throws SQLException, DaoException, LoginAndRegistrationException {
         Customer customer = new Customer();
         customer.setLogin("root");
         assertTrue(validat.isExistCustomer(customer.getLogin()));

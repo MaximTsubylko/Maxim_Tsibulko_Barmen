@@ -1,5 +1,5 @@
 package com.tsibulko.finaltask.validation;
 
 public enum ValidatorType {
-    SERVICE,VIEW, LOGANDREG
+    SERVICE, VIEW, LOGANDREG
 }
