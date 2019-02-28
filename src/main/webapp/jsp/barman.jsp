@@ -17,17 +17,14 @@
 </div>
 <!--close-Header-part-->
 
-
-
-
 <!--sidebar-menu-->
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-tint"></i>Buttons &amp; icons</a>
+<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-tint"></i>Barmen helper</a>
     <ul>
         <li><a href="?command=show_create_cocktail"><i class="icon icon-home"></i> <span>Create cocktail</span></a></li>
         <li><a href="?command=cocktail_list"><i class="icon icon-signal"></i> <span>Cocktail list</span></a></li>
         <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>User menu</span></a>
         <ul>
-            <li><a href="#">My profile</a></li>
+            <li><a href="barman?command=show_profile">My profile</a></li>
             <li><a href="#">Edit</a></li>
             <li><a href="barman?command=logout">Log out</a>
             </li>

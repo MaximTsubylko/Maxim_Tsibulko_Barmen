@@ -65,7 +65,7 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             Cocktail cocktaile = new Cocktail();
-            cocktaile.setId(resultSet.getInt("id"));
+            cocktaile.setId(resultSet.getInt("cocktail_id"));
             cocktaile.setName(resultSet.getString("name"));
             cocktaile.setDescription(resultSet.getString("description"));
             cocktaile.setPrice(resultSet.getInt("price"));

@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.service.impl;
 
 
 import com.tsibulko.finaltask.bean.Cocktail;
+import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.DaoException;
@@ -30,6 +31,12 @@ public class CocktailServiceImpl implements CocktailService {
         ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
         return ingredientDao.setCocktailIngredients(create(cocktail),ingredients);
 
+    }
+
+    @Override
+    public List<Cocktail> getCocktailByCustomer(Customer customer) throws DaoException, SQLException {
+        cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
+        return cocktailDao.getCocktailByCustomer(customer);
     }
 
     @Override
