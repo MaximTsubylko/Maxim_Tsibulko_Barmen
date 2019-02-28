@@ -6,7 +6,6 @@ import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.CocktailService;
 import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
@@ -15,10 +14,7 @@ import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.impl.ServiceDateValidator;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class CocktailServiceImpl implements CocktailService {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -86,8 +82,8 @@ public class CocktailServiceImpl implements CocktailService {
             } else {
                 throw new ServiceDateValidationException("Can`t find cocktail with id = " + id);
             }
-        } catch (DaoException e){
-            throw new ServiceException(e,"Get by PK cocktail error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Get by PK cocktail error");
         }
     }
 
@@ -100,8 +96,8 @@ public class CocktailServiceImpl implements CocktailService {
             } else {
                 throw new ServiceDateValidationException("This cocktail not exist!");
             }
-        } catch (DaoException e){
-            throw new ServiceException(e,"Update cocktail error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Update cocktail error");
         }
     }
 
@@ -110,8 +106,8 @@ public class CocktailServiceImpl implements CocktailService {
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             return cocktailDao.getAll();
-        } catch (DaoException e){
-            throw new ServiceException(e,"Get cocktail list error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Get cocktail list error");
         }
     }
 

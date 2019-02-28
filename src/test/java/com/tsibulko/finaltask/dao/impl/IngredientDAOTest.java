@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class IngredientDAOTest {
@@ -104,9 +104,9 @@ class IngredientDAOTest {
         ingredientList.add(ingredients.get(1));
 
         daoCocktail.persist(cocktaile);
-        dao.setCocktailIngredients(cocktaile,ingredientList);
+        dao.setCocktailIngredients(cocktaile, ingredientList);
 
 
-        assertEquals(ingredientList,dao.getIngredientByCocktail(cocktaile));
+        assertEquals(ingredientList, dao.getIngredientByCocktail(cocktaile));
     }
 }

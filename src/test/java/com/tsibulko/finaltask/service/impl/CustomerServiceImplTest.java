@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerServiceImplTest {
     CRUDService<Customer> customerService = ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
@@ -47,7 +47,7 @@ class CustomerServiceImplTest {
         customer.setId(4);
         customer.setLogin("test");
         customer.setEmail("test");
-        assertEquals(customerService.create(customer),customer);
+        assertEquals(customerService.create(customer), customer);
     }
 
     @Test
@@ -60,12 +60,12 @@ class CustomerServiceImplTest {
         customer.setState(1);
         customer.setId(4);
         customerService.delete(customerService.create(customer));
-        assertEquals(customerService.getList(),customers);
+        assertEquals(customerService.getList(), customers);
     }
 
     @Test
     void getByPK() throws InterruptedException, SQLException, ServiceDateValidationException, DaoException, ServiceException {
-        assertEquals(customers.get(0),customerService.getByPK(1));
+        assertEquals(customers.get(0), customerService.getByPK(1));
     }
 
     @Test
@@ -73,11 +73,11 @@ class CustomerServiceImplTest {
         Customer customer = customers.get(1);
         customer.setFirst_name("asdasd");
         customerService.update(customer);
-        assertEquals(customer,customerService.getByPK(2));
+        assertEquals(customer, customerService.getByPK(2));
     }
 
     @Test
     void getList() throws SQLException, DaoException, ServiceException {
-        assertEquals(customers,customerService.getList());
+        assertEquals(customers, customerService.getList());
     }
 }

@@ -3,7 +3,6 @@ package com.tsibulko.finaltask.dao;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 /**
  * Connection Pool

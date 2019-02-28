@@ -1,9 +1,10 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.DaoFactory;
+import com.tsibulko.finaltask.dao.DaoFactoryType;
+import com.tsibulko.finaltask.dao.FactoryProducer;
+import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
@@ -15,11 +16,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BarmenFeedbackDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -64,7 +64,7 @@ class BarmenFeedbackDAOTest {
         BarmenFeedback barmenFeedback = new BarmenFeedback(1, 2, 1, "test", "");
         dao.persist(barmenFeedback);
         dao.delete(barmenFeedback);
-        assertEquals(feedbacks,dao.getAll());
+        assertEquals(feedbacks, dao.getAll());
     }
 
     @Test
@@ -72,6 +72,6 @@ class BarmenFeedbackDAOTest {
         BarmenFeedback barmenFeedback = feedbacks.get(0);
         barmenFeedback.setMark(2);
         dao.update(barmenFeedback);
-        assertEquals(barmenFeedback,dao.getByPK(1).get());
+        assertEquals(barmenFeedback, dao.getByPK(1).get());
     }
 }

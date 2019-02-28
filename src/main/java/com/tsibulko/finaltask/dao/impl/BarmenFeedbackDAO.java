@@ -1,7 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
@@ -27,25 +28,25 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
                 barmenFeedback.setComment(resultSet.getString("comment"));
                 resultList.add(barmenFeedback);
             }
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t parse barman feedback result set!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t parse barman feedback result set!");
         }
         return resultList;
     }
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, BarmenFeedback barmenFeedback) throws DaoException {
-        statementPreparation(statement,barmenFeedback);
+        statementPreparation(statement, barmenFeedback);
     }
 
 
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, BarmenFeedback barmenFeedback) throws DaoException {
-        statementPreparation(statement,barmenFeedback);
+        statementPreparation(statement, barmenFeedback);
         try {
             statement.setInt(statement.getParameterMetaData().getParameterCount(), barmenFeedback.getId());
-        } catch (SQLException e){
-            throw new DaoException(e,"Cun`t run statement for update barmen feedback!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Cun`t run statement for update barmen feedback!");
         }
     }
 
@@ -69,8 +70,8 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
             statement.setString(++i, barmenFeedback.getTitle());
             statement.setInt(++i, barmenFeedback.getMark());
             statement.setString(++i, barmenFeedback.getComment());
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t prepare barmen feedback statement for using!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t prepare barmen feedback statement for using!");
         }
     }
 

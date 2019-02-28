@@ -2,7 +2,9 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
@@ -27,8 +29,8 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
                 resultList.add(cocktail);
             }
             return resultList;
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t parse cocktail result set!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t parse cocktail result set!");
         }
     }
 
@@ -44,8 +46,8 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
         statementPreparation(statement, cocktail);
         try {
             statement.setInt(statement.getParameterMetaData().getParameterCount(), cocktail.getId());
-        } catch (SQLException e){
-            throw new DaoException(e,"Cun`t run statement for update cocktail");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Cun`t run statement for update cocktail");
         }
     }
 
@@ -67,8 +69,8 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
             statement.setString(++i, cocktail.getName());
             statement.setString(++i, cocktail.getDescription());
             statement.setInt(++i, cocktail.getPrice());
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t prepare cocktail statement for using!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t prepare cocktail statement for using!");
         }
     }
 
@@ -123,8 +125,8 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
                 statment.setInt(1, customer.getId());
                 return preparedStatementForGetCocktailList(statment, customer);
             }
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t get cocktails by customer");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get cocktails by customer");
         }
     }
 

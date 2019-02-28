@@ -2,7 +2,10 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
+import com.tsibulko.finaltask.dao.DaoFactory;
+import com.tsibulko.finaltask.dao.DaoFactoryType;
+import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 import com.tsibulko.finaltask.dao.exception.PersistException;
@@ -11,14 +14,14 @@ import com.tsibulko.finaltask.util.TestUtil.parser.JSONParser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CocktailDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -32,7 +35,7 @@ class CocktailDAOTest {
     @BeforeEach
     void setUp() throws InterruptedException, SQLException, DaoException, IOException, ConnectionPoolException {
         InMemoryDBUtil.fill();
-        dao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class) ;
+        dao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
     }
 
     @AfterEach
@@ -43,12 +46,12 @@ class CocktailDAOTest {
     @Test
     void getByPK() throws DaoException, InterruptedException, SQLException {
         Cocktail cocktaile = cocktailes.get(0);
-        assertEquals(cocktaile,dao.getByPK(1).get());
+        assertEquals(cocktaile, dao.getByPK(1).get());
     }
 
     @Test
     void getAll() throws SQLException, DaoException {
-        assertEquals(cocktailes,dao.getAll());
+        assertEquals(cocktailes, dao.getAll());
     }
 
     @Test
@@ -58,7 +61,7 @@ class CocktailDAOTest {
         cocktaile.setPrice(1000);
         cocktaile.setDescription("TestPersist discription");
         dao.persist(cocktaile);
-        assertEquals(cocktaile,dao.getByPK(3).get());
+        assertEquals(cocktaile, dao.getByPK(3).get());
 
     }
 
@@ -72,7 +75,7 @@ class CocktailDAOTest {
         dao.persist(cocktaile1);
         dao.delete(cocktaile1);
         actualCocktailes = dao.getAll();
-        assertEquals(cocktailes,actualCocktailes);
+        assertEquals(cocktailes, actualCocktailes);
     }
 
     @Test
@@ -80,7 +83,7 @@ class CocktailDAOTest {
         Cocktail cocktaile = cocktailes.get(0);
         cocktaile.setPrice(1100);
         dao.update(cocktaile);
-        assertEquals(cocktaile,dao.getByPK(1).get());
+        assertEquals(cocktaile, dao.getByPK(1).get());
     }
 
     @Test
@@ -88,6 +91,6 @@ class CocktailDAOTest {
         List<Cocktail> cocktaileList = new ArrayList<>();
         cocktaileList.add(cocktailes.get(0));
         cocktaileList.add(cocktailes.get(1));
-        assertEquals(cocktaileList,dao.getCocktailByCustomer(customers.get(2)));
+        assertEquals(cocktaileList, dao.getCocktailByCustomer(customers.get(2)));
     }
 }

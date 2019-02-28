@@ -1,10 +1,11 @@
 package com.tsibulko.finaltask.service;
 
+import com.tsibulko.finaltask.service.message.CustomMessage;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import com.tsibulko.finaltask.service.message.CustomMessage;
 
 public class MailSender {
     private static final String USERNAME = "barmensupp@gmail.com";

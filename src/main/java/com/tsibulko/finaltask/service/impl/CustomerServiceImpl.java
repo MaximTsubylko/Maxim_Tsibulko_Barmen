@@ -2,9 +2,11 @@ package com.tsibulko.finaltask.service.impl;
 
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.CustomerDAO;
+import com.tsibulko.finaltask.dao.DaoFactory;
+import com.tsibulko.finaltask.dao.DaoFactoryType;
+import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.service.CustomerService;
 import com.tsibulko.finaltask.service.exception.ServiceException;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
@@ -13,12 +15,10 @@ import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 public class CustomerServiceImpl implements CustomerService {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CustomerDAO dao;
-    private static Map<String,Customer> authenticatedCustomer = new WeakHashMap<>();
+    private static Map<String, Customer> authenticatedCustomer = new WeakHashMap<>();
     private LoginAndRegistrationValidator validator = (LoginAndRegistrationValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);
 
     private void encryptPassword(Customer user) throws ServiceException {
@@ -38,43 +38,43 @@ public class CustomerServiceImpl implements CustomerService {
             String decimalHash = IntStream.range(0, hexHash.length).mapToObj(i -> Integer.toHexString(0xff & hexHash[i]))
                     .map(s -> (s.length() == 1) ? "0" + s : s).collect(Collectors.joining());
             user.setPassword(decimalHash);
-        } catch (NoSuchAlgorithmException e){
-            throw new ServiceException(e,"Encrypt password error");
+        } catch (NoSuchAlgorithmException e) {
+            throw new ServiceException(e, "Encrypt password error");
         }
     }
 
     public Customer authenticate(Customer user, HttpSession session) throws ServiceException {
         try {
-            dao = (CustomerDAO)daoFactory.getDao(Customer.class);
+            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             if (!dao.getStringsFromColumn("login").contains(user.getLogin())) {
                 throw new ServiceException("error");
             }
             encryptPassword(user);
             Customer validUser = dao.findByLogin(user);
-            if (!user.getPassword().equals(validUser.getPassword())){
+            if (!user.getPassword().equals(validUser.getPassword())) {
                 throw new ServiceException("error");
             }
-            session.setAttribute("sessionAttribute",validUser);
-            authenticatedCustomer.put(session.getId(),validUser);
+            session.setAttribute("sessionAttribute", validUser);
+            authenticatedCustomer.put(session.getId(), validUser);
             return validUser;
-        }catch (DaoException e){
-            throw new ServiceException(e,"Authenticate error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Authenticate error");
         }
     }
 
-    public static boolean isAuthenticated(HttpSession session){
-        if (session.getAttribute("sessionAttribute") == null){
+    public static boolean isAuthenticated(HttpSession session) {
+        if (session.getAttribute("sessionAttribute") == null) {
             return false;
         }
 
-        if (authenticatedCustomer.get(session.getId()).equals(session.getAttribute("sessionAttribute"))){
+        if (authenticatedCustomer.get(session.getId()).equals(session.getAttribute("sessionAttribute"))) {
             return true;
         }
 
         return false;
     }
 
-    public static void logout(HttpSession session){
+    public static void logout(HttpSession session) {
         session.removeAttribute("sessionAttribute");
         authenticatedCustomer.remove(session.getId());
     }
@@ -90,8 +90,8 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 throw new ServiceDateValidationException("Not unique user name");
             }
-        } catch (DaoException e){
-            throw new ServiceException(e,"Create customer error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Create customer error");
         }
     }
 
@@ -104,8 +104,8 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 throw new ServiceDateValidationException("This customer not exist!");
             }
-        } catch (DaoException e){
-            throw new ServiceException(e,"delete error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "delete error");
         }
     }
 
@@ -119,8 +119,8 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 throw new ServiceDateValidationException("Can`t find customer with id = " + id);
             }
-        } catch (DaoException e){
-            throw new ServiceException(e,"Get by PK customer error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Get by PK customer error");
         }
     }
 
@@ -133,8 +133,8 @@ public class CustomerServiceImpl implements CustomerService {
             } else {
                 throw new ServiceDateValidationException("This customer not exist!");
             }
-        } catch (DaoException e){
-            throw new ServiceException(e,"Update customer error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Update customer error");
         }
     }
 
@@ -143,8 +143,8 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             return dao.getAll();
-        } catch (DaoException e){
-            throw new ServiceException(e,"Get customer list error");
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Get customer list error");
         }
     }
 }

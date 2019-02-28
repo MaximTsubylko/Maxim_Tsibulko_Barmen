@@ -25,7 +25,7 @@ public class ShowProfilePage implements Command {
             request.setAttribute("cocktailList", cocktailService.getCocktailByCustomer(customer));
             request.setAttribute("customer", service.getByPK(customer.getId()));
             request.setAttribute("viewName", "profile");
-        }  else {
+        } else {
             responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
         }
         return responseContent;

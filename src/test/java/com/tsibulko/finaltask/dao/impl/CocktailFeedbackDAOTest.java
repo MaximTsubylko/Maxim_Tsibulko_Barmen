@@ -1,6 +1,5 @@
 package com.tsibulko.finaltask.dao.impl;
 
-import com.tsibulko.finaltask.bean.BarmenFeedback;
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.dao.DaoFactory;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CocktailFeedbackDAOTest {
     DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -62,10 +61,10 @@ class CocktailFeedbackDAOTest {
     @Test
     void delete() throws SQLException, PersistException, DaoException {
         CocktaileFeedback cocktaileFeedback = new CocktaileFeedback(1, 2, 1, "test", "");
-        List<CocktaileFeedback> s =  dao.getAll();
+        List<CocktaileFeedback> s = dao.getAll();
         dao.persist(cocktaileFeedback);
         dao.delete(cocktaileFeedback);
-        assertEquals(feedbacks,dao.getAll());
+        assertEquals(feedbacks, dao.getAll());
     }
 
     @Test
@@ -73,6 +72,6 @@ class CocktailFeedbackDAOTest {
         CocktaileFeedback cocktaileFeedback = feedbacks.get(0);
         cocktaileFeedback.setMark(2);
         dao.update(cocktaileFeedback);
-        assertEquals(cocktaileFeedback,dao.getByPK(1).get());
+        assertEquals(cocktaileFeedback, dao.getByPK(1).get());
     }
 }

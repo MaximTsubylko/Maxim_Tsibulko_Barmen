@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CocktailServiceImplTest {
     CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
@@ -66,7 +66,7 @@ class CocktailServiceImplTest {
         cocktail.setId(3);
         cocktail.setName("test");
         cocktailService.create(cocktail);
-        assertEquals(cocktailService.getByPK(3),cocktail);
+        assertEquals(cocktailService.getByPK(3), cocktail);
     }
 
     @Test
@@ -74,12 +74,12 @@ class CocktailServiceImplTest {
         Cocktail cocktail = cocktJson.get(0);
         cocktail.setName("Test");
         cocktailService.update(cocktail);
-        assertEquals(cocktail,cocktailService.getByPK(cocktail.getId()));
+        assertEquals(cocktail, cocktailService.getByPK(cocktail.getId()));
     }
 
     @Test
     void getCoctilList() throws SQLException, DaoException, ServiceException {
-        assertEquals(cocktJson,cocktailService.getList());
+        assertEquals(cocktJson, cocktailService.getList());
     }
 
     @Test
@@ -92,6 +92,6 @@ class CocktailServiceImplTest {
         ingr.add(ingredients.get(0));
         ingr.add(ingredients.get(1));
         cocktail.setIngredients(ingr);
-        assertEquals(cocktail,cocktailService.createCocktailWithIngredients(cocktail,ingredients));
+        assertEquals(cocktail, cocktailService.createCocktailWithIngredients(cocktail, ingredients));
     }
 }

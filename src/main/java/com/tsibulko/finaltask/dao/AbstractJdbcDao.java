@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.dao;
 
 import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -34,10 +33,10 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     @AutoConnection
     public Optional<T> getByPK(PK key) throws DaoException {
         try (PreparedStatement preparedStatement =
-                     connection.prepareStatement(getSelectQuery() + " WHERE id = " + key)){
+                     connection.prepareStatement(getSelectQuery() + " WHERE id = " + key)) {
             return Optional.of(parseResultSet(preparedStatement.executeQuery()).get(0));
         } catch (SQLException e) {
-            throw new DaoException(e,"Get by PK error");
+            throw new DaoException(e, "Get by PK error");
         }
     }
 
@@ -47,7 +46,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
         try (PreparedStatement preparedStatement = connection.prepareStatement(getSelectQuery())) {
             return parseResultSet(preparedStatement.executeQuery());
         } catch (SQLException e) {
-            throw new DaoException(e,"Get all error");
+            throw new DaoException(e, "Get all error");
         }
     }
 
@@ -69,7 +68,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
             }
 
         } catch (SQLException e) {
-            throw new DaoException(e,"Persist error");
+            throw new DaoException(e, "Persist error");
         }
     }
 
@@ -91,7 +90,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
             preparedStatement.setInt(1, (Integer) object.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new DaoException(e,"Delete error");
+            throw new DaoException(e, "Delete error");
         }
     }
 
@@ -110,7 +109,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
             }
             return strings;
         } catch (SQLException e) {
-            throw new DaoException(e,"Get string from column error");
+            throw new DaoException(e, "Get string from column error");
         }
     }
 }

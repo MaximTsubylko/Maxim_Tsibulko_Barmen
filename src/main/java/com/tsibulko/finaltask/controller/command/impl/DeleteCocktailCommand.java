@@ -3,8 +3,6 @@ package com.tsibulko.finaltask.controller.command.impl;
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.controller.command.Command;
 import com.tsibulko.finaltask.controller.command.Router;
-import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
@@ -16,7 +14,6 @@ import com.tsibulko.finaltask.validation.exception.ServiceDateValidationExceptio
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class DeleteCocktailCommand implements Command {
     @Override

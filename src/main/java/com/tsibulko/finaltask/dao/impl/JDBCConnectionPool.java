@@ -111,8 +111,8 @@ public class JDBCConnectionPool implements ConnectionPool {
             for (Connection connection : connectionList) {
                 connection.close();
             }
-        } catch (SQLException e){
-            throw new ConnectionPoolException("Destroy pool error",e);
+        } catch (SQLException e) {
+            throw new ConnectionPoolException("Destroy pool error", e);
         }
     }
 
@@ -130,8 +130,8 @@ public class JDBCConnectionPool implements ConnectionPool {
 
             return (Connection) Proxy.newProxyInstance(connection.getClass().getClassLoader(),
                     connection.getClass().getInterfaces(), connectionHandler);
-        } catch (SQLException e){
-            throw new ConnectionPoolException("Error connection get",e);
+        } catch (SQLException e) {
+            throw new ConnectionPoolException("Error connection get", e);
         }
     }
 

@@ -1,7 +1,5 @@
 package com.tsibulko.finaltask.service.message;
 
-import java.io.InputStream;
-
 public class CustomMessage {
     private String subject;
     private String text;

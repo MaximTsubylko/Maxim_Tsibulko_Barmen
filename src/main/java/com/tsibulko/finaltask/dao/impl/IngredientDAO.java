@@ -2,7 +2,9 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.IngredientSpecificDAO;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
@@ -20,13 +22,12 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
         List<Ingredient> result = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                while (resultSet.next()) {
-                    Ingredient ingredient = new Ingredient();
-                    ingredient.setId(resultSet.getInt("id"));
-                    ingredient.setName(resultSet.getString("name"));
-                    ingredient.setDescription(resultSet.getString("description"));
-                    result.add(ingredient);
-                }
+                Ingredient ingredient = new Ingredient();
+                ingredient.setId(resultSet.getInt("id"));
+                ingredient.setName(resultSet.getString("name"));
+                ingredient.setDescription(resultSet.getString("description"));
+                result.add(ingredient);
+
             }
         } catch (SQLException e) {
             throw new DaoException(e, "Can`t parse ingredient result set!");
@@ -37,7 +38,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Ingredient ingredient) throws DaoException {
         int i = 0;
-        statementPreparation(statement,ingredient);
+        statementPreparation(statement, ingredient);
     }
 
 
@@ -46,8 +47,8 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
         statementPreparation(statement, ingredient);
         try {
             statement.setInt(statement.getParameterMetaData().getParameterCount(), ingredient.getId());
-        } catch (SQLException e){
-            throw new DaoException(e,"Cun`t run statement for update ingredient feedback!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Cun`t run statement for update ingredient feedback!");
         }
     }
 
@@ -76,8 +77,8 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
                 }
                 return result;
             }
-        } catch (SQLException e){
-            throw new DaoException(e,"Cun`t run statement for get ingredient list");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Cun`t run statement for get ingredient list");
         }
     }
 
@@ -86,8 +87,8 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
         try {
             statement.setString(++i, ingredient.getName());
             statement.setString(++i, ingredient.getDescription());
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t prepare ingredient statement for using!");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t prepare ingredient statement for using!");
         }
 
     }
@@ -97,8 +98,8 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
     public void prepareStatementForSetCocktailIngredient(PreparedStatement statement) throws DaoException {
         try {
             statement.executeUpdate();
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t run statement for set cocktail ingredient");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t run statement for set cocktail ingredient");
         }
     }
 
@@ -145,8 +146,8 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
                 List<Ingredient> i = prepareStatementForGetIngredientsList(statement);
                 return prepareStatementForGetIngredientsList(statement);
             }
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t get ingredient by cocktail");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get ingredient by cocktail");
         }
     }
 
@@ -163,8 +164,8 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
             }
             cocktail.setIngredients(ingredients);
             return cocktail;
-        } catch (SQLException e){
-            throw new DaoException(e,"Can`t set cocktail ingredient");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t set cocktail ingredient");
         }
     }
 

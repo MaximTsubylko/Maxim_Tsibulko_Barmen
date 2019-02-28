@@ -1,7 +1,9 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.CustomerDAO;
 import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
@@ -48,8 +50,8 @@ public class CustomerDAOimpl extends AbstractJdbcDao<Customer, Integer> implemen
         statementPreparation(statement, customer);
         try {
             statement.setInt(statement.getParameterMetaData().getParameterCount(), customer.getId());
-        } catch (SQLException e){
-            throw new DaoException(e,"Cun`t run statement for update customer");
+        } catch (SQLException e) {
+            throw new DaoException(e, "Cun`t run statement for update customer");
         }
     }
 

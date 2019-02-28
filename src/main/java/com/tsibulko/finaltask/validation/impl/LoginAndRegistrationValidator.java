@@ -49,8 +49,8 @@ public class LoginAndRegistrationValidator implements LoginAndRegistrationValid 
                 return true;
             }
             return false;
-        } catch (DaoException e){
-            throw new LoginAndRegistrationException(e,"Error in validation of exist email");
+        } catch (DaoException e) {
+            throw new LoginAndRegistrationException(e, "Error in validation of exist email");
         }
     }
 
