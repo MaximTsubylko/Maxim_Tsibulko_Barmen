@@ -38,7 +38,7 @@ public class TryLoginCommand implements Command {
             throw new CommandRuningException();
         }
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("barman?command=main", "redirect"));
+        responseContent.setRouter(new Router("barman?command=main", Router.Type.REDIRECT));
         return responseContent;
     }
 }

@@ -29,12 +29,12 @@ public class CreateNewCocktailCommand implements Command {
                 cocktail.setDescription(request.getParameter("description"));
                 cocktail.setPrice(Integer.valueOf(request.getParameter("price")));
                 service.create(cocktail);
-                responseContent.setRouter(new Router("barman?command=cocktail_list", "redirect"));
+                responseContent.setRouter(new Router("barman?command=cocktail_list", Router.Type.REDIRECT));
             } else {
                 throw new ViewDateValidationException("Invalid date for create cocktail!");
             }
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
         }
         return responseContent;
     }

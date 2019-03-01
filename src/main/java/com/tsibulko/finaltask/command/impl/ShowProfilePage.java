@@ -23,12 +23,12 @@ public class ShowProfilePage implements Command {
         CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
         if (CustomerServiceImpl.isAuthenticated(session)) {
-            responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
             request.setAttribute("cocktailList", cocktailService.getCocktailByCustomer(customer));
             request.setAttribute("customer", service.getByPK(customer.getId()));
             request.setAttribute("viewName", "profile");
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
         }
         return responseContent;
     }

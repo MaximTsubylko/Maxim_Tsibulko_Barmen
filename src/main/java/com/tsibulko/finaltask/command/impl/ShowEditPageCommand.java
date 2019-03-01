@@ -26,12 +26,12 @@ public class ShowEditPageCommand implements Command {
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         if (CustomerServiceImpl.isAuthenticated(session)) {
-            responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
             request.setAttribute("cocktailList", cocktailService.getCocktailByCustomer(customer));
             request.setAttribute("customer", service.getByPK(customer.getId()));
             request.setAttribute("viewName", "edit");
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
         }
         return responseContent;
     }

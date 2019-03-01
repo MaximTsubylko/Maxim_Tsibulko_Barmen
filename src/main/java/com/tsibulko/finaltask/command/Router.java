@@ -13,18 +13,17 @@ public class Router {
         FORWARD, REDIRECT
     }
 
-    public Router(String route, String type) {
+    public Router(String route, Type type) {
         this.route = route;
-        this.type = Arrays.stream(Type.values()).filter(type1 ->
-                type1.name().toLowerCase().equals(type)).findFirst().orElseThrow(IllegalArgumentException::new);
+        this.type = type;
     }
 
     public String getRoute() {
         return route;
     }
 
-    public String getType() {
-        return type.name().toLowerCase();
+    public Type getType() {
+        return type;
     }
 
 }

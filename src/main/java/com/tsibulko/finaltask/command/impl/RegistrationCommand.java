@@ -30,7 +30,7 @@ public class RegistrationCommand implements Command {
         service.create(customer);
         sender.send(request.getParameter("email"), customMessage);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("jsp/success_registration.jsp", "redirect"));
+        responseContent.setRouter(new Router("jsp/success_registration.jsp", Router.Type.REDIRECT));
         return responseContent;
     }
 }

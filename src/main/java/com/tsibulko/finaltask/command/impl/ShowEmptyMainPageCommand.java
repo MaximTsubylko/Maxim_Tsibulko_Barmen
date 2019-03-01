@@ -14,10 +14,10 @@ public class ShowEmptyMainPageCommand implements Command {
         ResponseContent responseContent = new ResponseContent();
         HttpSession session = request.getSession();
         if (CustomerServiceImpl.isAuthenticated(session)) {
-            responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
             request.setAttribute("viewName", "empty");
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
         }
         return responseContent;
 

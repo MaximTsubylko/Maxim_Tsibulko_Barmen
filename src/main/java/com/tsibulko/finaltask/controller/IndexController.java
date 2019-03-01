@@ -1,9 +1,6 @@
 package com.tsibulko.finaltask.controller;
 
-import com.tsibulko.finaltask.command.Command;
-import com.tsibulko.finaltask.command.CommandEnum;
-import com.tsibulko.finaltask.command.CommandProvider;
-import com.tsibulko.finaltask.command.CommandRuningException;
+import com.tsibulko.finaltask.command.*;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
@@ -38,7 +35,7 @@ public class IndexController extends HttpServlet {
         ResponseContent responseContent;
         try {
             responseContent = command.process(request);
-            if (responseContent.getRouter().getType().equals("redirect")) {
+            if (responseContent.getRouter().getType() == Router.Type.REDIRECT) {
                 response.sendRedirect(responseContent.getRouter().getRoute());
             } else {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);

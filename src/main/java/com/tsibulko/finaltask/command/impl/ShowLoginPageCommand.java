@@ -15,10 +15,10 @@ public class ShowLoginPageCommand implements Command {
         ResponseContent responseContent = new ResponseContent();
         if (CustomerServiceImpl.isAuthenticated(session)) {
             System.out.println("aut");
-            responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
             request.setAttribute("viewName", "empty"); //ПЕРЕДЕЛАТЬ КАК ТОЛЬКО ТАК СРАЗУ!!
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
         }
         return responseContent;
     }

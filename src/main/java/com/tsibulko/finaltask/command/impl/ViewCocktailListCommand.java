@@ -20,10 +20,10 @@ public class ViewCocktailListCommand implements Command {
         if (CustomerServiceImpl.isAuthenticated(session)) {
             CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
             request.setAttribute("cocktailList", service.getList());
-            responseContent.setRouter(new Router("/jsp/barman.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
             request.setAttribute("viewName", "cocktail_list");
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", "forward"));
+            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
         }
         return responseContent;
     }

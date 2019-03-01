@@ -24,7 +24,7 @@ public class RecoverySendMessageCommand implements Command {
         if (validator.isExistEmail(request.getParameter("email"))) {
             sender.send(request.getParameter("email"), customMessage);
             ResponseContent responseContent = new ResponseContent();
-            responseContent.setRouter(new Router("?command=show_main_page", "redirect"));
+            responseContent.setRouter(new Router("?command=show_main_page", Router.Type.REDIRECT));
             return responseContent;
         } else {
             throw new CommandRuningException();

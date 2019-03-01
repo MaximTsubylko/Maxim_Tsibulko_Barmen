@@ -10,7 +10,7 @@ public class ShowSuccessPageCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) {
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("barman?command=show_success_page", "forward"));
+        responseContent.setRouter(new Router("barman?command=show_success_page", Router.Type.FORWARD));
         return responseContent;
     }
 }
