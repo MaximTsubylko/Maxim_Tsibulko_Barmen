@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.controller;
 
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.CommandProvider;
 import com.tsibulko.finaltask.command.CommandRuningException;
 import com.tsibulko.finaltask.dto.ResponseContent;
@@ -31,7 +32,9 @@ public class IndexController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = CommandProvider.getInstance().takeCommand(request.getParameter("command"));
+        String commandName = request.getParameter("command");
+        CommandEnum commandEnum = CommandEnum.getByName(commandName);
+        Command command = CommandProvider.getInstance().takeCommand(commandEnum);
         ResponseContent responseContent;
         try {
             responseContent = command.process(request);

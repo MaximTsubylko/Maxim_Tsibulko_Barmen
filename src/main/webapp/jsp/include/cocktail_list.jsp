@@ -33,7 +33,7 @@
                             <c:forEach items="${cocktailList}" var="cocktail">
                                 <tr>
                                     <td>
-                                        <a href="?command=view_cocktail_details&id=${cocktail.id}">
+                                        <a href="?command=show_cocktail_details&id=${cocktail.id}">
                                             <c:out value="${cocktail.id}"/>
                                         </a>
                                     </td>
