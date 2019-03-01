@@ -2,8 +2,8 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.GenericDAO;
-import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

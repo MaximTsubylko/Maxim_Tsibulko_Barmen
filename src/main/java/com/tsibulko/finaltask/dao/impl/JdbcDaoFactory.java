@@ -2,7 +2,6 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.*;
 import com.tsibulko.finaltask.dao.*;
-import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;

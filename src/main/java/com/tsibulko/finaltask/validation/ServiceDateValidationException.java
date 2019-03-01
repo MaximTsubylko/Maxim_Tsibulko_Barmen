@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.validation.exception;
+package com.tsibulko.finaltask.validation;
 
 public class ServiceDateValidationException extends Exception {
     public ServiceDateValidationException(String message) {

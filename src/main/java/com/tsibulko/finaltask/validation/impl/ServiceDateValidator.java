@@ -1,13 +1,9 @@
 package com.tsibulko.finaltask.validation.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.dao.DaoFactory;
-import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
-import com.tsibulko.finaltask.dao.GenericDAO;
-import com.tsibulko.finaltask.dao.exception.DaoException;
+import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.ServiceValidator;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 
 public class ServiceDateValidator implements ServiceValidator {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -31,7 +27,7 @@ public class ServiceDateValidator implements ServiceValidator {
         try {
             dao = daoFactory.getDao(Cocktail.class);
             if (dao.getStringsFromColumn("id").contains(String.valueOf(cocktail.getId()))) {
-                return true;
+                 return true;
             }
             return false;
         } catch (DaoException e) {

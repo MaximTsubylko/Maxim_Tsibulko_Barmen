@@ -1,13 +1,13 @@
 package com.tsibulko.finaltask.controller;
 
-import com.tsibulko.finaltask.controller.command.Command;
-import com.tsibulko.finaltask.controller.command.CommandProvider;
-import com.tsibulko.finaltask.controller.command.exception.CommandRuningException;
+import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.CommandProvider;
+import com.tsibulko.finaltask.command.CommandRuningException;
 import com.tsibulko.finaltask.dto.ResponseContent;
-import com.tsibulko.finaltask.service.exception.ServiceException;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
-import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
+import com.tsibulko.finaltask.service.ServiceException;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
+import com.tsibulko.finaltask.validation.ServiceDateValidationException;
+import com.tsibulko.finaltask.validation.ViewDateValidationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

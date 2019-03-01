@@ -1,9 +1,9 @@
 package com.tsibulko.finaltask.util.DBUtil;
 
 import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.ConnectionPoolFactory;
-import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
-import com.tsibulko.finaltask.dao.exception.DaoException;
+import com.tsibulko.finaltask.dao.DaoException;
 import org.apache.commons.io.FileUtils;
 
 import java.io.IOException;

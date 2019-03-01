@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.controller.command;
+package com.tsibulko.finaltask.command;
 
 import java.util.Arrays;
 

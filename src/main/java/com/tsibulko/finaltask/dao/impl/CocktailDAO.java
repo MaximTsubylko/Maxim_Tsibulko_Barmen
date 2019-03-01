@@ -5,7 +5,7 @@ import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.AbstractJdbcDao;
 import com.tsibulko.finaltask.dao.AutoConnection;
 import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
-import com.tsibulko.finaltask.dao.exception.DaoException;
+import com.tsibulko.finaltask.dao.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

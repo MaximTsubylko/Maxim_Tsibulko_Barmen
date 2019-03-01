@@ -1,7 +1,7 @@
-package com.tsibulko.finaltask.controller.command.impl;
+package com.tsibulko.finaltask.command.impl;
 
-import com.tsibulko.finaltask.controller.command.Command;
-import com.tsibulko.finaltask.controller.command.Router;
+import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 

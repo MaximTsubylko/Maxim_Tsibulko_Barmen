@@ -1,6 +1,6 @@
 package com.tsibulko.finaltask.dto;
 
-import com.tsibulko.finaltask.controller.command.Router;
+import com.tsibulko.finaltask.command.Router;
 
 /**
  * Provide response content to View layer

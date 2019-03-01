@@ -2,17 +2,13 @@ package com.tsibulko.finaltask.service.impl;
 
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.CustomerDAO;
-import com.tsibulko.finaltask.dao.DaoFactory;
-import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
-import com.tsibulko.finaltask.dao.exception.DaoException;
+import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.service.CustomerService;
-import com.tsibulko.finaltask.service.exception.ServiceException;
+import com.tsibulko.finaltask.service.ServiceException;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
+import com.tsibulko.finaltask.validation.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 
 import javax.servlet.http.HttpSession;
@@ -114,7 +110,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             if (dao.getByPK(id).isPresent()) {
-                Customer customer = (Customer) dao.getByPK(id).get();
+                Customer customer = dao.getByPK(id).get();
                 return customer;
             } else {
                 throw new ServiceDateValidationException("Can`t find customer with id = " + id);

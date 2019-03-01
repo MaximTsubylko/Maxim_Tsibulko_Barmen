@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.dao.exception;
+package com.tsibulko.finaltask.dao;
 
 public class ConnectionPoolException extends Exception {
 

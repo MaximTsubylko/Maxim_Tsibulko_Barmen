@@ -1,7 +1,7 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.dao.ConnectionPool;
-import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
+import com.tsibulko.finaltask.dao.ConnectionPoolException;
 
 import java.io.IOException;
 import java.io.InputStream;

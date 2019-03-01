@@ -1,7 +1,5 @@
 package com.tsibulko.finaltask.dao;
 
-import com.tsibulko.finaltask.dao.exception.DaoException;
-
 import java.io.Serializable;
 
 public interface TransactionalDaoFactory {

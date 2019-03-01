@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.dao;
 
 
-import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.impl.JDBCConnectionPool;
 
 import java.util.concurrent.locks.Lock;

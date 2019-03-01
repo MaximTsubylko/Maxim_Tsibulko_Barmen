@@ -4,8 +4,8 @@ import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.AbstractJdbcDao;
 import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.IngredientSpecificDAO;
-import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.service.exception;
+package com.tsibulko.finaltask.service;
 
 
 public class ServiceException extends Exception {

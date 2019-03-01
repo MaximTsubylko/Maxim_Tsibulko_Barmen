@@ -3,9 +3,9 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
-import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
-import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
+import com.tsibulko.finaltask.dao.ConnectionPoolException;
+import com.tsibulko.finaltask.dao.DaoException;
+import com.tsibulko.finaltask.dao.PersistException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.util.TestUtil.parser.JSONParser;
 import org.junit.jupiter.api.AfterEach;
@@ -39,7 +39,7 @@ class IngredientDAOTest {
     }
 
     @AfterEach
-    void tearDown() throws SQLException, IOException, ConnectionPoolException, InterruptedException {
+    void tearDown() throws SQLException, IOException, ConnectionPoolException {
         InMemoryDBUtil.drop();
     }
 
@@ -76,7 +76,7 @@ class IngredientDAOTest {
     }
 
     @Test
-    void update() throws SQLException, PersistException, InterruptedException, DaoException {
+    void update() throws DaoException {
         Ingredient ingredient = ingredients.get(1);
         ingredient.setName("Test");
         dao.update(ingredient);

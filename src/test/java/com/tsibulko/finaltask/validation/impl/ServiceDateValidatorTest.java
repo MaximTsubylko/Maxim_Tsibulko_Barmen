@@ -2,13 +2,13 @@ package com.tsibulko.finaltask.validation.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.exception.ConnectionPoolException;
-import com.tsibulko.finaltask.dao.exception.DaoException;
+import com.tsibulko.finaltask.dao.ConnectionPoolException;
+import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.validation.ServiceValidator;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

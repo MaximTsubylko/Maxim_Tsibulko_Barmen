@@ -1,16 +1,16 @@
-package com.tsibulko.finaltask.controller.command.impl;
+package com.tsibulko.finaltask.command.impl;
 
-import com.tsibulko.finaltask.controller.command.Command;
-import com.tsibulko.finaltask.controller.command.Router;
-import com.tsibulko.finaltask.controller.command.exception.CommandRuningException;
+import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.CommandRuningException;
+import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.MailSender;
 import com.tsibulko.finaltask.service.message.CustomMessage;
 import com.tsibulko.finaltask.service.message.CustomMessageFactory;
 import com.tsibulko.finaltask.service.message.CustomMessageType;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 
 import javax.servlet.http.HttpServletRequest;

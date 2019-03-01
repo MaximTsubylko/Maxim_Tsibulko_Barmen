@@ -1,6 +1,6 @@
-package com.tsibulko.finaltask.controller.command;
+package com.tsibulko.finaltask.command;
 
-import com.tsibulko.finaltask.controller.command.impl.*;
+import com.tsibulko.finaltask.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;

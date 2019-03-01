@@ -2,7 +2,6 @@ package com.tsibulko.finaltask.dao;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.util.List;

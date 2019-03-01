@@ -1,13 +1,9 @@
 package com.tsibulko.finaltask.validation.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.DaoFactory;
-import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
-import com.tsibulko.finaltask.dao.GenericDAO;
-import com.tsibulko.finaltask.dao.exception.DaoException;
+import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.LoginAndRegistrationValid;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 
 public class LoginAndRegistrationValidator implements LoginAndRegistrationValid {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
@@ -18,7 +14,7 @@ public class LoginAndRegistrationValidator implements LoginAndRegistrationValid 
         try {
             dao = daoFactory.getDao(Customer.class);
             if (dao.getStringsFromColumn("login").contains(customer.getLogin())
-                    || dao.getStringsFromColumn("email").equals(customer.getEmail())) {
+                    || dao.getStringsFromColumn("email").contains(customer.getEmail())) {
                 return false;
             }
             return true;

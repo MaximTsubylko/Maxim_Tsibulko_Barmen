@@ -1,8 +1,6 @@
 package com.tsibulko.finaltask.dao;
 
 
-import com.tsibulko.finaltask.dao.exception.DaoException;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;

@@ -1,8 +1,7 @@
 package com.tsibulko.finaltask.service;
 
-import com.tsibulko.finaltask.service.exception.ServiceException;
-import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
+import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
+import com.tsibulko.finaltask.validation.ServiceDateValidationException;
 
 import java.util.List;
 
