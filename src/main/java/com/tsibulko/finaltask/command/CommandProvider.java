@@ -23,9 +23,9 @@ public class CommandProvider {
         commandMap.put("cocktail_list", new ViewCocktailListCommand());
         commandMap.put("view_cocktail_details", new ViewCocktailDetailCommand());
         commandMap.put("delete_cocktail", new DeleteCocktailCommand());
-        commandMap.put("loginmain", new TryLoginCommand());
+        commandMap.put("try_login", new TryLoginCommand());
         commandMap.put("registration", new RegistrationCommand());
-        commandMap.put("show_main_page", new ShowLoginPageCommand());
+        commandMap.put("show_login_page", new ShowLoginPageCommand());
         commandMap.put("show_success_page", new ShowSuccessPageCommand());
         commandMap.put("send_recovery_message", new RecoverySendMessageCommand());
         commandMap.put("logout", new LogoutCommand());

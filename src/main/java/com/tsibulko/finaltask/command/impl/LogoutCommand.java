@@ -14,7 +14,7 @@ public class LogoutCommand implements Command {
         HttpSession session = request.getSession();
         CustomerServiceImpl.logout(session);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("barman?command=show_main_page", "redirect"));
+        responseContent.setRouter(new Router("barman?command=show_login_page", "redirect"));
         return responseContent;
     }
 }

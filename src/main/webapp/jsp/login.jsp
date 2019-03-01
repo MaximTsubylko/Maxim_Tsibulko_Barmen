@@ -41,7 +41,7 @@
             <div class="center-pill">
                 <div class="row-fluid">
                     <div class="span4">
-                        <input type="hidden" name="command" value="loginmain">
+                        <input type="hidden" name="command" value="try_login">
                         <button type="submit" class="btn btn-success btn btn-block">Log in</button>
                     </div>
                     <div class="span4">
