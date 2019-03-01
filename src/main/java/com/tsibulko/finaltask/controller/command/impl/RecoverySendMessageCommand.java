@@ -10,13 +10,14 @@ import com.tsibulko.finaltask.service.message.CustomMessageFactory;
 import com.tsibulko.finaltask.service.message.CustomMessageType;
 import com.tsibulko.finaltask.validation.ValidatorFactory;
 import com.tsibulko.finaltask.validation.ValidatorType;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class RecoverySendMessageCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws Exception {
+    public ResponseContent process(HttpServletRequest request) throws LoginAndRegistrationException, CommandRuningException {
         CustomMessage customMessage = CustomMessageFactory.getInstance().getMessage(CustomMessageType.RECOVERY);
         MailSender sender = new MailSender();
         LoginAndRegistrationValidator validator = (LoginAndRegistrationValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);

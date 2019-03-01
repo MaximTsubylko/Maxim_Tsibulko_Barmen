@@ -2,9 +2,10 @@ package com.tsibulko.finaltask.controller;
 
 import com.tsibulko.finaltask.controller.command.Command;
 import com.tsibulko.finaltask.controller.command.CommandProvider;
-import com.tsibulko.finaltask.dao.exception.DaoException;
-import com.tsibulko.finaltask.dao.exception.PersistException;
+import com.tsibulko.finaltask.controller.command.exception.CommandRuningException;
 import com.tsibulko.finaltask.dto.ResponseContent;
+import com.tsibulko.finaltask.service.exception.ServiceException;
+import com.tsibulko.finaltask.validation.exception.LoginAndRegistrationException;
 import com.tsibulko.finaltask.validation.exception.ServiceDateValidationException;
 import com.tsibulko.finaltask.validation.exception.ViewDateValidationException;
 
@@ -14,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 
 @WebServlet(urlPatterns = "/barman")
@@ -41,24 +40,16 @@ public class IndexController extends HttpServlet {
             } else {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
-        } catch (SQLException e) {
+        } catch (ServiceException e) {
             e.printStackTrace();
-        } catch (PersistException e) {
+        } catch (ServiceDateValidationException e) {
             e.printStackTrace();
-        } catch (DaoException e) {
+        } catch (CommandRuningException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (LoginAndRegistrationException e) {
             e.printStackTrace();
         } catch (ViewDateValidationException e) {
-            //тут должно выводиться сообщение
-        } catch (ServiceDateValidationException e) {
-            response.sendRedirect("/jsp/error.jsp");
-            //тут должно выводиться сообщение
-        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-//            response.sendRedirect("/jsp/error.jsp");
         }
     }
 }

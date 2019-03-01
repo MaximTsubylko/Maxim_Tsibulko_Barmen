@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 public class LogoutCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws Exception {
+    public ResponseContent process(HttpServletRequest request){
         HttpSession session = request.getSession();
         CustomerServiceImpl.logout(session);
         ResponseContent responseContent = new ResponseContent();

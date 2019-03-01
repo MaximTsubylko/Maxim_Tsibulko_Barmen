@@ -30,6 +30,7 @@ public class CommandProvider {
         commandMap.put("send_recovery_message", new RecoverySendMessageCommand());
         commandMap.put("logout", new LogoutCommand());
         commandMap.put("show_profile", new ShowProfilePage());
+        commandMap.put("show_edit_page", new ShowEditPageCommand());
     }
 
     /**

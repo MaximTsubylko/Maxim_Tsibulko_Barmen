@@ -25,7 +25,7 @@
         <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>User menu</span></a>
         <ul>
             <li><a href="barman?command=show_profile">My profile</a></li>
-            <li><a href="#">Edit</a></li>
+            <li><a href="barman?command=show_edit_page">Edit</a></li>
             <li><a href="barman?command=logout">Log out</a>
             </li>
 
