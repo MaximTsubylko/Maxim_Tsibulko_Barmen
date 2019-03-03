@@ -4,32 +4,36 @@ public enum CommandEnum {
     //    ADD_TRANSPORT_TYPE("add_transport_type", RequestMethod.POST, new AccessLevel[]{AccessLevel.ADMINISTRATOR}),
 
 
-    SHOW_CREATE_COCKTAIL("show_create_cocktail"),
-    MAIN("main"),
-    REGISTER_COCKTAIL("register_cocktail"),
-    COCKTAIL_LIST("cocktail_list"),
-    SHOW_COCKTAIL_DETAILS("show_cocktail_details"),
-    DELETE_COCKTAIL("delete_cocktail"),
-    TRY_LOGIN("try_login"),
-    REGISTRATION("registration"),
-    SHOW_LOGIN_PAGE("show_login_page"),
-    SHOW_SUCCESS_PAGE("show_success_page"),
-    SEND_RECOVERY_MESSAGE("send_recovery_message"),
-    LOGOUT("logout"),
-    SHOW_PROFILE("show_profile"),
-    SHOW_EDIT_PAGE("show_edit_page");
-
-
-
+    SHOW_CREATE_COCKTAIL("show_create_cocktail", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    MAIN("main", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    REGISTER_COCKTAIL("register_cocktail", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    COCKTAIL_LIST("cocktail_list", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    SHOW_COCKTAIL_DETAILS("show_cocktail_details", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    DELETE_COCKTAIL("delete_cocktail", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    TRY_LOGIN("try_login", new AccessLevel[]{AccessLevel.ALL}),
+    REGISTRATION("registration", new AccessLevel[]{AccessLevel.ALL}),
+    SHOW_LOGIN_PAGE("show_login_page", new AccessLevel[]{AccessLevel.ALL}),
+    SHOW_SUCCESS_PAGE("show_success_page", new AccessLevel[]{AccessLevel.ALL}),
+    SEND_RECOVERY_MESSAGE("send_recovery_message", new AccessLevel[]{AccessLevel.ALL}),
+    LOGOUT("logout", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    SHOW_PROFILE("show_profile",new AccessLevel[]{AccessLevel.CUSTOMER}),
+    SHOW_EDIT_PAGE("show_edit_page",new AccessLevel[]{AccessLevel.CUSTOMER});
 
 
     private final String name;
+    private final AccessLevel[] levels;
+
+
+    CommandEnum(String name, AccessLevel[] levels) {
+        this.levels = levels;
+        this.name = name;
+    }
 
     public static CommandEnum getByName(String name) {
         return CommandEnum.valueOf(name.toUpperCase());
     }
 
-    CommandEnum(String name) {
-        this.name = name;
+    public AccessLevel[] getLevels() {
+        return levels;
     }
 }

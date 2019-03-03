@@ -51,9 +51,9 @@
 <!--end-Footer-part-->
 <!--end-Footer-part-->
 
-<script src="static/js/jquery.min.js"></script>
-<script src="static/js/jquery.ui.custom.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/matrix.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
 </body>
 </html>

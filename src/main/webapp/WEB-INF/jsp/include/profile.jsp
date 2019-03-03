@@ -9,7 +9,7 @@
 <div class="container con container-fluid">
     <div class="row-fluid">
         <div class="span3">
-            <img src="static/img/usericon.png">
+            <img src="${pageContext.request.contextPath}/static/img/usericon.png">
             <div class="">
                 <h1><c:out value="${customer.login}"/></h1>
             </div>

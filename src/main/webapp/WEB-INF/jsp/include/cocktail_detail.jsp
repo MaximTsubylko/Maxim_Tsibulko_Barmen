@@ -2,11 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="static/bootstrap.min.css" />
-    <link rel="stylesheet" href="static/bootstrap-responsive.min.css" />
-    <link rel="stylesheet" href="static/fullcalendar.css" />
-    <link rel="stylesheet" href="static/matrix-style.css" />
-    <link rel="stylesheet" href="static/matrix-media.css" />
+    <%@include file="/WEB-INF/resources.jsp" %>
+
 </head>
 <div>
     <div>

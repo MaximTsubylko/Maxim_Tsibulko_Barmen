@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
@@ -28,7 +29,7 @@ public class DeleteCocktailCommand implements Command {
             service.delete(cocktaile);
             responseContent.setRouter(new Router("barman?command=cocktail_list", Router.Type.REDIRECT));
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
+            responseContent.setRouter(new Router(Page.LOG_IN.getRout(), Router.Type.FORWARD));
         }
         return responseContent;
     }

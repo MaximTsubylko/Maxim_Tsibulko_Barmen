@@ -12,13 +12,13 @@
     <title>Matrix Admin</title>
     <meta charset="UTF-8"/>
     <%@include file="/WEB-INF/resources.jsp" %>
-    <link rel="stylesheet" href="static/css/matrix-login.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 
 </head>
 <body>
 <div id="loginbox">
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
-        <div class="control-group normal_text"><h3><img src="static/img/logo.png" alt="Logo"/></h3></div>
+        <div class="control-group normal_text"><h3><img src="${pageContext.request.contextPath}/static/img/logo.png" alt="Logo"/></h3></div>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
@@ -134,8 +134,8 @@
 
 </div>
 
-<script src="static/js/jquery.min.js"></script>
-<script src="static/js/matrix.login.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
 
 </body>
 

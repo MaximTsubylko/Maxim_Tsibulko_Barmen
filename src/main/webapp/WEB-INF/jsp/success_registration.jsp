@@ -12,7 +12,7 @@
     <title>Success!</title>
     <meta charset="UTF-8"/>
     <%@include file="/WEB-INF/resources.jsp" %>
-    <link rel="stylesheet" href="static/css/matrix-login.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 
 </head>
 <body>
@@ -34,8 +34,8 @@
 </div>
 
 
-<script src="static/js/jquery.min.js"></script>
-<script src="static/js/matrix.login.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
 
 </body>
 

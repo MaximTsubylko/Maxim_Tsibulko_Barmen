@@ -29,14 +29,14 @@ create table user
   first_name varchar(50) null,
   last_name varchar(50) null,
   registr_date date null,
-  role_id tinyint default 1 not null,
+  role tinyint default 1 not null,
   state_id tinyint default 1 not null,
   constraint email_UNIQUE
     unique (email),
   constraint login_UNIQUE
     unique (login),
   constraint fk_user_role1
-    foreign key (role_id) references role (id),
+    foreign key (role) references role (id),
   constraint fk_user_user_state1
     foreign key (state_id) references user_state (id)
 );

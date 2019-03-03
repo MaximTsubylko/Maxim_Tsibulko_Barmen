@@ -6,13 +6,13 @@ insert into role (name) value ("administrator");
 insert into user_state (name) value ("active");
 insert into user_state (name) value ("banned");
 
-insert into user (login, password, email, first_name, last_name, registr_date,role_id,state_id)
+insert into user (login, password, email, first_name, last_name, registr_date,role,state_id)
 VALUES ("root","root","test@email.com","testFirstName","testLastName","2000-09-09",3,1);
 
-insert into user (login, password, email, first_name, last_name, registr_date,role_id,state_id)
+insert into user (login, password, email, first_name, last_name, registr_date,role,state_id)
 VALUES ("customer","customer","test2@email.com","test2FirstName","test2LastName","2000-09-09",1,1);
 
-insert into user (login, password, email, first_name, last_name, registr_date,role_id,state_id)
+insert into user (login, password, email, first_name, last_name, registr_date,role,state_id)
 VALUES ("barmen","barmen","test3@email.com","test3FirstName","test3LastName","2000-09-09",2,1);
 
 insert into ingredient (name, description) VALUES ("Tomato juice","tomato juice description"),

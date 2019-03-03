@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
@@ -20,10 +21,10 @@ public class ViewCocktailListCommand implements Command {
         if (CustomerServiceImpl.isAuthenticated(session)) {
             CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
             request.setAttribute("cocktailList", service.getList());
-            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
+            responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
             request.setAttribute("viewName", "cocktail_list");
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
+            responseContent.setRouter(new Router(Page.LOG_IN.getRout(), Router.Type.FORWARD));
         }
         return responseContent;
     }

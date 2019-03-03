@@ -3,6 +3,7 @@ package com.tsibulko.finaltask.command.impl;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.CommandRuningException;
+import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
@@ -26,12 +27,12 @@ public class ShowEditPageCommand implements Command {
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         if (CustomerServiceImpl.isAuthenticated(session)) {
-            responseContent.setRouter(new Router("/jsp/barman.jsp", Router.Type.FORWARD));
+            responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
             request.setAttribute("cocktailList", cocktailService.getCocktailByCustomer(customer));
             request.setAttribute("customer", service.getByPK(customer.getId()));
             request.setAttribute("viewName", "edit");
         } else {
-            responseContent.setRouter(new Router("/jsp/login.jsp", Router.Type.FORWARD));
+            responseContent.setRouter(new Router(Page.LOG_IN.getRout(), Router.Type.FORWARD));
         }
         return responseContent;
     }

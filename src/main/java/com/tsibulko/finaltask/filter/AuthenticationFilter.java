@@ -1,0 +1,38 @@
+//package com.tsibulko.finaltask.filter;
+//
+//import com.tsibulko.finaltask.bean.Customer;
+//import com.tsibulko.finaltask.command.AccessLevel;
+//import com.tsibulko.finaltask.command.CommandEnum;
+//import com.tsibulko.finaltask.command.Page;
+//import com.tsibulko.finaltask.dao.CustomerDAO;
+//
+//import javax.servlet.*;
+//import javax.servlet.http.HttpServletRequest;
+//import java.io.IOException;
+//import java.util.Arrays;
+//
+//public class AuthenticationFilter implements Filter {
+//    private static final String USER_SESSION_ATTRIBUTE  = "user";
+//    private static final String COMMAND_PARAMETER = "command";
+//    @Override
+//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+//        Customer customer = (Customer) httpServletRequest.getSession().getAttribute(USER_SESSION_ATTRIBUTE);
+//        String command = request.getParameter(COMMAND_PARAMETER);
+//        if (command == null && customer != null) {
+//            request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
+//        } else if (command == null) {
+//            request.getRequestDispatcher(Page.START_PAGE.getRout()).forward(request, response);
+//
+//        } else if (customer == null && Arrays.stream(CommandEnum.getByName(command).
+//                getLevels()).
+//                noneMatch((ob) -> ob == AccessLevel.ALL)) {
+//            request.getRequestDispatcher(Page.START_PAGE.getRout()).forward(request, response);
+//        } else if (customer != null && Arrays.stream
+//                (CommandEnum.getByName(command).getLevels()).
+////                noneMatch((ob) -> customer.getRole().toString().equals(ob.toString()) || ob == AccessLevel.ALL)) {
+////            request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
+//        }
+//        chain.doFilter(request, response);
+//    }
+//}

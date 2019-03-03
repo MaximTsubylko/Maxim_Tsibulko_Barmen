@@ -17,6 +17,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/barman")
 public class IndexController extends HttpServlet {
+    private static final String COMMAND_PARAMETER = "command";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +30,7 @@ public class IndexController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandName = request.getParameter("command");
+        String commandName = request.getParameter(COMMAND_PARAMETER);
         CommandEnum commandEnum = CommandEnum.getByName(commandName);
         Command command = CommandProvider.getInstance().takeCommand(commandEnum);
         ResponseContent responseContent;
