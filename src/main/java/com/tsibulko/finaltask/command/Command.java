@@ -11,5 +11,5 @@ import javax.servlet.http.HttpServletRequest;
 
 @FunctionalInterface
 public interface Command {
-    ResponseContent process(HttpServletRequest request) throws ServiceException, CommandRuningException, ServiceDateValidationException, LoginAndRegistrationException, ViewDateValidationException;
+    ResponseContent process(HttpServletRequest request) throws ServiceException;
 }

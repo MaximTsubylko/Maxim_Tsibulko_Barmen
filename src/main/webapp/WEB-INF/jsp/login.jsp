@@ -23,6 +23,7 @@
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
+                                                                                       id="loginField"
                                                                                        name="login"
                                                                                        placeholder="Username"/>
                 </div>
@@ -42,7 +43,8 @@
                 <div class="row-fluid">
                     <div class="span4">
                         <input type="hidden" name="command" value="try_login">
-                        <button type="submit" class="btn btn-success btn btn-block">Log in</button>
+                        <button type="submit" class="btn btn-success btn btn-block"
+                                onclick="return validLogin(document.getElementById('loginform'))">Log in</button>
                     </div>
                     <div class="span4">
                         <a href="#" class="flip-link btn btn-danger" id="to-recover">Forgot password?</a>
@@ -92,6 +94,7 @@
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
+                                                                                       id="login"
                                                                                        name="login"
                                                                                        placeholder="Username"/>
                 </div>
@@ -101,6 +104,7 @@
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required"
+                                                                                               id="email"
                                                                                                type="email" name="email"
                                                                                                placeholder="E-mail"/>
                 </div>
@@ -110,8 +114,19 @@
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password"
+                                                                                     id="password"
                                                                                      name="password"
                                                                                      placeholder="Password"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_lr"><i class="icon-key"></i></span><input required="required" type="password"
+                                                                                     name="confirm_password"
+                                                                                     placeholder="Confirm password"/>
                 </div>
             </div>
         </div>
@@ -121,7 +136,8 @@
                 <div class="row-fluid">
                     <div class="pull-right span4">
                         <input type="hidden" name="command" value="registration">
-                        <button type="submit" class="btn btn-success btn btn-block">Register</button>
+                        <button type="submit" class="btn btn-success btn btn-block"
+                                onclick="return validRegistration(document.getElementById('registrationform'))">Register</button>
                     </div>
                     <div class="pull-left span4">
                         <a href="#" class="flip-link btn btn-success"
@@ -136,6 +152,8 @@
 
 <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/validation.js"></script>
+<script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 
 </body>
 

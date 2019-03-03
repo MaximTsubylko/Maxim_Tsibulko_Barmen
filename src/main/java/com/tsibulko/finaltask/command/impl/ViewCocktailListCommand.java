@@ -18,14 +18,11 @@ public class ViewCocktailListCommand implements Command {
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
         ResponseContent responseContent = new ResponseContent();
-        if (CustomerServiceImpl.isAuthenticated(session)) {
             CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
             request.setAttribute("cocktailList", service.getList());
             responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
             request.setAttribute("viewName", "cocktail_list");
-        } else {
-            responseContent.setRouter(new Router(Page.LOG_IN.getRout(), Router.Type.FORWARD));
-        }
+
         return responseContent;
     }
 }

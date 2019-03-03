@@ -51,4 +51,7 @@ public class LoginAndRegistrationValidator implements LoginAndRegistrationValid 
     }
 
 
+    @Override
+    public void doValidation(Object entity) {
+    }
 }

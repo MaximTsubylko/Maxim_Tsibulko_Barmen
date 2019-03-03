@@ -35,4 +35,9 @@ public class ServiceDateValidator implements ServiceValidator {
         }
     }
 
+
+
+    @Override
+    public void doValidation(Object entity) {
+    }
 }

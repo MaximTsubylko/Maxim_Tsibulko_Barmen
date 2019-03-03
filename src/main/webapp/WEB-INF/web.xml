@@ -5,5 +5,10 @@
          version="3.1">
     <display-name>Example project name</display-name>
 
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/barman</url-pattern>
+    </filter-mapping>
+
 
 </web-app>

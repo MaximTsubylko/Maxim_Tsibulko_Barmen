@@ -20,16 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 
 public class RegistrationCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
-        CustomMessage customMessage = CustomMessageFactory.getInstance().getMessage(CustomMessageType.CONFIRM);
-        Customer customer = new Customer();
-        MailSender sender = new MailSender();
+    public ResponseContent process(HttpServletRequest request) throws ServiceException {
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
-        customer.setLogin(request.getParameter("login"));
-        customer.setPassword(request.getParameter("password"));
-        customer.setEmail(request.getParameter("email"));
-        service.create(customer);
-        sender.send(request.getParameter("email"), customMessage);
+        service.signUp(request);
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(Page.SUCCESS_REGISTRATION.getRout(), Router.Type.REDIRECT));
         return responseContent;

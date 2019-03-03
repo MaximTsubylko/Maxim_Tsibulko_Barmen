@@ -2,15 +2,23 @@ package com.tsibulko.finaltask.service.impl;
 
 
 import com.tsibulko.finaltask.bean.Customer;
+import com.tsibulko.finaltask.bean.UserRole;
+import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 import com.tsibulko.finaltask.service.CustomerService;
+import com.tsibulko.finaltask.service.MailSender;
 import com.tsibulko.finaltask.service.ServiceException;
+import com.tsibulko.finaltask.service.message.CustomMessage;
+import com.tsibulko.finaltask.service.message.CustomMessageFactory;
+import com.tsibulko.finaltask.service.message.CustomMessageType;
 import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
+import com.tsibulko.finaltask.validation.NewValid.CustomerValidator;
+import com.tsibulko.finaltask.validation.NewValid.FieldValidator;
+import com.tsibulko.finaltask.validation.NewValid.ValidationException;
 import com.tsibulko.finaltask.validation.ServiceDateValidationException;
-import com.tsibulko.finaltask.validation.ValidatorFactory;
-import com.tsibulko.finaltask.validation.ValidatorType;
-import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -22,10 +30,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class CustomerServiceImpl implements CustomerService {
+    private static final String SESSION_ATTRIBUTE = "user";
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CustomerDAO dao;
     private static Map<String, Customer> authenticatedCustomer = new WeakHashMap<>();
-    private LoginAndRegistrationValidator validator = (LoginAndRegistrationValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);
+
+
+    public static void logout(HttpSession session) {
+        session.setAttribute(SESSION_ATTRIBUTE, null);
+    }
 
     private void encryptPassword(Customer user) throws ServiceException {
         try {
@@ -39,81 +52,95 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    public Customer authenticate(Customer user, HttpSession session) throws ServiceException {
+    public Customer signUp(HttpServletRequest request) throws ServiceException {
+        JdbcDaoFactory daoFactory = (JdbcDaoFactory) FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+        Customer customer = new Customer();
+        MailSender sender = new MailSender();
+        CustomMessage customMessage = CustomMessageFactory.getInstance().getMessage(CustomMessageType.CONFIRM);
+        customer.setLogin(request.getParameter("login"));
+        customer.setPassword(request.getParameter("password"));
+        customer.setEmail(request.getParameter("email"));
+        try {
+            CustomerValidator validator = new CustomerValidator();
+            validator.doValidation(customer);
+
+            customer.setRole_id(UserRole.CUSTOMER.getId());
+            customer.setState(UserState.WAITING_CONFIRMATION.getId());
+
+            GenericDAO<Customer, Integer> userDao = daoFactory.getDao(Customer.class);
+            sender.send(request, customMessage);
+            encryptPassword(customer);
+            return userDao.persist(customer);
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Failed  with DAO. ");
+        } catch (ValidationException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public Customer logIn(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
+        Customer customer = new Customer();
+        customer.setLogin(request.getParameter("login"));
+        customer.setPassword(request.getParameter("password"));
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-            if (!dao.getStringsFromColumn("login").contains(user.getLogin())) {
-                throw new ServiceException("error");
+            if (!dao.getStringsFromColumn("login").contains(customer.getLogin())) {
+                throw new ServiceException("Not match customer with this login");
             }
-            encryptPassword(user);
-            Customer validUser = dao.findByLogin(user);
-            if (!user.getPassword().equals(validUser.getPassword())) {
-                throw new ServiceException("error");
+            encryptPassword(customer);
+            Customer validUser = dao.findByLogin(customer);
+            if (!customer.getPassword().equals(validUser.getPassword())) {
+                throw new ServiceException("Incorrect password!");
             }
-            session.setAttribute("sessionAttribute", validUser);
+            session.setAttribute(SESSION_ATTRIBUTE, validUser);
             authenticatedCustomer.put(session.getId(), validUser);
             return validUser;
         } catch (DaoException e) {
-            throw new ServiceException(e, "Authenticate error");
+            throw new ServiceException("Incorrect login or password", e);
         }
-    }
-
-    public static boolean isAuthenticated(HttpSession session) {
-        if (session.getAttribute("sessionAttribute") == null) {
-            return false;
-        }
-
-        if (authenticatedCustomer.get(session.getId()).equals(session.getAttribute("sessionAttribute"))) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static void logout(HttpSession session) {
-        session.removeAttribute("sessionAttribute");
-        authenticatedCustomer.remove(session.getId());
     }
 
     @Override
-    public Customer create(Customer customer) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public Customer create(Customer customer) throws ServiceException {
         try {
-            if (validator.isUniqueCustomer(customer)) {
-                dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-                encryptPassword(customer);
-                dao.persist(customer);
-                return customer;
-            } else {
-                throw new ServiceDateValidationException("Not unique user name");
-            }
+            FieldValidator fieldValidator = FieldValidator.getInstance();
+            fieldValidator.isUnique(new String[]{"login,email"}, customer.getLogin(), customer.getEmail());
+            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
+            encryptPassword(customer);
+            dao.persist(customer);
+            return customer;
         } catch (DaoException e) {
             throw new ServiceException(e, "Create customer error");
+        } catch (ValidationException e) {
+            throw new ServiceException("This user not unique");
         }
     }
 
     @Override
     public void delete(Customer customer) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         try {
-            if (validator.isExistCustomer(customer.getLogin())) {
-                dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-                dao.delete(customer);
-            } else {
-                throw new ServiceDateValidationException("This customer not exist!");
-            }
+            FieldValidator fieldValidator = FieldValidator.getInstance();
+            fieldValidator.isExist("login", customer.getLogin());
+            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
+            dao.delete(customer);
+
         } catch (DaoException e) {
             throw new ServiceException(e, "delete error");
+        } catch (ValidationException e) {
+            throw new ServiceException("This customer not exist");
         }
     }
 
     @Override
-    public Customer getByPK(Integer id) throws ServiceDateValidationException, ServiceException {
+    public Customer getByPK(Integer id) throws ServiceException {
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             if (dao.getByPK(id).isPresent()) {
                 Customer customer = dao.getByPK(id).get();
                 return customer;
             } else {
-                throw new ServiceDateValidationException("Can`t find customer with id = " + id);
+                throw new ServiceException("Can`t find customer with id = " + id);
             }
         } catch (DaoException e) {
             throw new ServiceException(e, "Get by PK customer error");
@@ -123,14 +150,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void update(Customer customer) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
         try {
-            if (validator.isExistCustomer(customer.getLogin())) {
-                dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-                dao.update(customer);
-            } else {
-                throw new ServiceDateValidationException("This customer not exist!");
-            }
+            FieldValidator fieldValidator = FieldValidator.getInstance();
+            fieldValidator.isExist("login",customer.getLogin());
+            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
+            dao.update(customer);
+
         } catch (DaoException e) {
             throw new ServiceException(e, "Update customer error");
+        } catch (ValidationException e) {
+            throw new ServiceException("This customer not exist");
         }
     }
 

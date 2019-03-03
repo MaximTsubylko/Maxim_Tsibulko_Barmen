@@ -18,4 +18,10 @@ public class ViewDateValidator implements ViewValidator {
         return false;
     }
 
+
+
+    @Override
+    public void doValidation(Object entity) {
+
+    }
 }

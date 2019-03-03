@@ -1,8 +1,4 @@
-package com.tsibulko.finaltask.validation;
-
-import com.tsibulko.finaltask.validation.impl.LoginAndRegistrationValidator;
-import com.tsibulko.finaltask.validation.impl.ServiceDateValidator;
-import com.tsibulko.finaltask.validation.impl.ViewDateValidator;
+package com.tsibulko.finaltask.validation.NewValid;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -25,13 +21,12 @@ public class ValidatorFactory {
     }
 
     public Validator getValidator(ValidatorType type) {
+        Validator validator;
         switch (type) {
-            case SERVICE:
-                return new ServiceDateValidator();
-            case VIEW:
-                return new ViewDateValidator();
-            case LOGANDREG:
-                return new LoginAndRegistrationValidator();
+            case COCKTAIL:
+                return new CocktailValidator();
+            case CUSTOMER:
+                return new CustomerValidator();
         }
         throw new UnsupportedOperationException();
     }

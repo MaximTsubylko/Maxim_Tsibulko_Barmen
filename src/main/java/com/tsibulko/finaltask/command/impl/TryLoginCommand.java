@@ -1,8 +1,7 @@
 package com.tsibulko.finaltask.command.impl;
 
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.command.Command;
-import com.tsibulko.finaltask.command.CommandRuningException;
+import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dao.DaoFactory;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
@@ -13,32 +12,21 @@ import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
-import com.tsibulko.finaltask.validation.LoginAndRegistrationValid;
-import com.tsibulko.finaltask.validation.ValidatorFactory;
-import com.tsibulko.finaltask.validation.ValidatorType;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class TryLoginCommand implements Command {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static GenericDAO dao;
 
     @Override
-    public ResponseContent process(HttpServletRequest request) throws CommandRuningException {
-        HttpSession session = request.getSession();
-        LoginAndRegistrationValid validator = (LoginAndRegistrationValid) ValidatorFactory.getInstance().getValidator(ValidatorType.LOGANDREG);
+    public ResponseContent process(HttpServletRequest request) throws ServiceException {
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
-        Customer customer = new Customer();
-        customer.setLogin(request.getParameter("login"));
-        customer.setPassword(request.getParameter("password"));
-        try {
-            service.authenticate(customer, session);
-        } catch (ServiceException e) {
-            throw new CommandRuningException();
-        }
+
+        service.logIn(request);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("barman?command=main", Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
+        request.setAttribute("viewName", "empty");
         return responseContent;
     }
 }

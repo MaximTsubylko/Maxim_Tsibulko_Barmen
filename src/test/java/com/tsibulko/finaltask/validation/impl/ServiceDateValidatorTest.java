@@ -6,8 +6,8 @@ import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.validation.ServiceValidator;
-import com.tsibulko.finaltask.validation.ValidatorFactory;
-import com.tsibulko.finaltask.validation.ValidatorType;
+import com.tsibulko.finaltask.validation.NewValid.ValidatorFactory;
+import com.tsibulko.finaltask.validation.NewValid.ValidatorType;
 import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,8 +26,6 @@ class ServiceDateValidatorTest {
     @BeforeEach
     void setUp() throws InterruptedException, SQLException, ConnectionPoolException, DaoException, IOException {
         InMemoryDBUtil.fill();
-        validator = (ServiceValidator) validatorFactory.getValidator(ValidatorType.SERVICE);
-        validat = (LoginAndRegistrationValidator) validatorFactory.getValidator(ValidatorType.LOGANDREG);
 
     }
 

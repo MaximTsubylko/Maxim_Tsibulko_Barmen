@@ -4,8 +4,8 @@ import com.tsibulko.finaltask.dao.Identified;
 
 public enum UserRole implements Identified<Integer> {
     ADMINISTRATOR(1,"Administrator"),
-    COURIER(2,"Barman"),
-    CLIENT(3,"Customer");
+    BARMAN(2,"Barman"),
+    CUSTOMER(3,"Customer");
     private Integer id;
     private  String role;
 
@@ -14,6 +14,21 @@ public enum UserRole implements Identified<Integer> {
         this.role = role;
 
     }
+
+
+    public static UserRole getRoleById(Integer id){
+        switch (id){
+            default:
+                return UserRole.CUSTOMER;
+            case 3:
+                return UserRole.CUSTOMER;
+            case 2:
+                return UserRole.BARMAN;
+            case 1:
+                return UserRole.ADMINISTRATOR;
+        }
+    }
+
 
     public String getRole() {
         return role;
@@ -25,7 +40,7 @@ public enum UserRole implements Identified<Integer> {
 
     @Override
     public Integer getId() {
-        return null;
+        return id;
     }
 
     @Override

@@ -42,15 +42,7 @@ public class IndexController extends HttpServlet {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
         } catch (ServiceException e) {
-            e.printStackTrace();
-        } catch (ServiceDateValidationException e) {
-            e.printStackTrace();
-        } catch (CommandRuningException e) {
-            e.printStackTrace();
-        } catch (LoginAndRegistrationException e) {
-            e.printStackTrace();
-        } catch (ViewDateValidationException e) {
-            e.printStackTrace();
+            response.sendRedirect(Page.ERROR.getRout());
         }
     }
 }

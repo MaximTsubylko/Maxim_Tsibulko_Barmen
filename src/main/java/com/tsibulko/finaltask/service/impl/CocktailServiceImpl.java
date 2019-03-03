@@ -8,21 +8,20 @@ import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.service.CocktailService;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
+import com.tsibulko.finaltask.validation.NewValid.*;
 import com.tsibulko.finaltask.validation.ServiceDateValidationException;
-import com.tsibulko.finaltask.validation.ValidatorFactory;
-import com.tsibulko.finaltask.validation.ValidatorType;
-import com.tsibulko.finaltask.validation.impl.ServiceDateValidator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class CocktailServiceImpl implements CocktailService {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CocktailSpecificDAO cocktailDao;
     private static IngredientSpecificDAO ingredientDao;
-    private ServiceDateValidator validator = (ServiceDateValidator) ValidatorFactory.getInstance().getValidator(ValidatorType.SERVICE);
+    Validator<Cocktail> validator = ValidatorFactory.getInstance().getValidator(ValidatorType.COCKTAIL);
 
     @Override
-    public Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws ServiceException {
         try {
             ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             return ingredientDao.setCocktailIngredients(create(cocktail), ingredients);
@@ -41,16 +40,27 @@ public class CocktailServiceImpl implements CocktailService {
         }
     }
 
-    @Override
-    public Cocktail create(Cocktail cocktaile) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public Cocktail createNewCocktail(HttpServletRequest request) throws ServiceException {
+        Cocktail cocktail = new Cocktail();
         try {
-            if (validator.isUniqueCocktail(cocktaile)) {
-                cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
-                cocktailDao.persist(cocktaile);
-                return cocktaile;
-            } else {
-                throw new ServiceDateValidationException("Not unique cocktail name");
-            }
+            cocktail.setName(request.getParameter("name"));
+            cocktail.setDescription(request.getParameter("description"));
+            cocktail.setPrice(Integer.valueOf(request.getParameter("price")));
+            validator.doValidation(cocktail);
+        } catch (ValidationException e) {
+            throw new ServiceException(e);
+        }
+        return cocktail;
+
+    }
+
+    @Override
+    public Cocktail create(Cocktail cocktaile) throws ServiceException {
+        try {
+
+            cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
+            cocktailDao.persist(cocktaile);
+            return cocktaile;
         } catch (DaoException e) {
             throw new ServiceException(e, "Create cocktail error");
         }
@@ -58,28 +68,30 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     @Override
-    public void delete(Cocktail cocktaile) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public void delete(Cocktail cocktaile) throws ServiceException {
+        FieldValidator fieldValidator = FieldValidator.getInstance();
+
         try {
-            if (validator.isExistCocktail(cocktaile)) {
-                cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
-                cocktailDao.delete(cocktaile);
-            } else {
-                throw new ServiceDateValidationException("This cocktail not exist!");
-            }
+            fieldValidator.isExist("name", cocktaile.getName());
+            cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
+            cocktailDao.delete(cocktaile);
+
         } catch (DaoException e) {
             throw new ServiceException(e, "Delete cocktail error");
+        } catch (ValidationException e) {
+            throw new ServiceException(e, "This cocktail not exist");
         }
     }
 
     @Override
-    public Cocktail getByPK(Integer id) throws ServiceException, ServiceDateValidationException {
+    public Cocktail getByPK(Integer id) throws ServiceException  {
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             if (cocktailDao.getByPK(id).isPresent()) {
                 Cocktail cocktaile = (Cocktail) cocktailDao.getByPK(id).get();
                 return cocktaile;
             } else {
-                throw new ServiceDateValidationException("Can`t find cocktail with id = " + id);
+                throw new ServiceException("This cocktail doesn`t exist");
             }
         } catch (DaoException e) {
             throw new ServiceException(e, "Get by PK cocktail error");
@@ -87,16 +99,16 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     @Override
-    public void update(Cocktail cocktaile) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public void update(Cocktail cocktaile) throws ServiceException {
+        FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
-            if (validator.isExistCocktail(cocktaile)) {
+            fieldValidator.isExist("name", cocktaile.getName());
                 cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
                 cocktailDao.update(cocktaile);
-            } else {
-                throw new ServiceDateValidationException("This cocktail not exist!");
-            }
         } catch (DaoException e) {
             throw new ServiceException(e, "Update cocktail error");
+        } catch (ValidationException e) {
+            throw new ServiceException(e, "This cocktail not exist");
         }
     }
 
