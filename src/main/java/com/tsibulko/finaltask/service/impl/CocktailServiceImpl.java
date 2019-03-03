@@ -7,9 +7,7 @@ import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.service.CocktailService;
 import com.tsibulko.finaltask.service.ServiceException;
-import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.NewValid.*;
-import com.tsibulko.finaltask.validation.ServiceDateValidationException;
+import com.tsibulko.finaltask.validation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -84,7 +82,7 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     @Override
-    public Cocktail getByPK(Integer id) throws ServiceException  {
+    public Cocktail getByPK(Integer id) throws ServiceException {
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             if (cocktailDao.getByPK(id).isPresent()) {
@@ -103,8 +101,8 @@ public class CocktailServiceImpl implements CocktailService {
         FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
             fieldValidator.isExist("name", cocktaile.getName());
-                cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
-                cocktailDao.update(cocktaile);
+            cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
+            cocktailDao.update(cocktaile);
         } catch (DaoException e) {
             throw new ServiceException(e, "Update cocktail error");
         } catch (ValidationException e) {

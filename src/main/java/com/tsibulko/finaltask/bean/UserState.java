@@ -19,7 +19,7 @@ public enum UserState implements Identified<Integer> {
         throw new UnsupportedOperationException();
     }
 
-    UserState(int id){
+    UserState(int id) {
         this.id = id;
     }
 }

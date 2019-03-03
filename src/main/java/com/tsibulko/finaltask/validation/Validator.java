@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.validation.NewValid;
+package com.tsibulko.finaltask.validation;
 
 public interface Validator<T> {
     void doValidation(T entity) throws ValidationException;

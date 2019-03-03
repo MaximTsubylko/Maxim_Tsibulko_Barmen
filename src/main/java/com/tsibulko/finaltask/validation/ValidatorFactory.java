@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.validation.NewValid;
+package com.tsibulko.finaltask.validation;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

@@ -2,8 +2,8 @@ package com.tsibulko.finaltask.service;
 
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.service.message.CustomMessage;
-import com.tsibulko.finaltask.validation.NewValid.FieldValidator;
-import com.tsibulko.finaltask.validation.NewValid.ValidationException;
+import com.tsibulko.finaltask.validation.FieldValidator;
+import com.tsibulko.finaltask.validation.ValidationException;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -51,7 +51,7 @@ public class MailSender {
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (ValidationException e) {
-            throw new ServiceException(e,"Not exist email!");
+            throw new ServiceException(e, "Not exist email!");
         }
     }
 }

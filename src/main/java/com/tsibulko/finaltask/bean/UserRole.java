@@ -3,21 +3,21 @@ package com.tsibulko.finaltask.bean;
 import com.tsibulko.finaltask.dao.Identified;
 
 public enum UserRole implements Identified<Integer> {
-    ADMINISTRATOR(1,"Administrator"),
-    BARMAN(2,"Barman"),
-    CUSTOMER(3,"Customer");
+    ADMINISTRATOR(1, "Administrator"),
+    BARMAN(2, "Barman"),
+    CUSTOMER(3, "Customer");
     private Integer id;
-    private  String role;
+    private String role;
 
-    UserRole(int id, String role){
+    UserRole(int id, String role) {
         this.id = id;
         this.role = role;
 
     }
 
 
-    public static UserRole getRoleById(Integer id){
-        switch (id){
+    public static UserRole getRoleById(Integer id) {
+        switch (id) {
             default:
                 return UserRole.CUSTOMER;
             case 3:

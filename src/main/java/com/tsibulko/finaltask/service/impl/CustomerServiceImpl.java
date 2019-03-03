@@ -12,11 +12,9 @@ import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.message.CustomMessage;
 import com.tsibulko.finaltask.service.message.CustomMessageFactory;
 import com.tsibulko.finaltask.service.message.CustomMessageType;
-import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.NewValid.CustomerValidator;
-import com.tsibulko.finaltask.validation.NewValid.FieldValidator;
-import com.tsibulko.finaltask.validation.NewValid.ValidationException;
-import com.tsibulko.finaltask.validation.ServiceDateValidationException;
+import com.tsibulko.finaltask.validation.CustomerValidator;
+import com.tsibulko.finaltask.validation.FieldValidator;
+import com.tsibulko.finaltask.validation.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -118,7 +116,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(Customer customer) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public void delete(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
             fieldValidator.isExist("login", customer.getLogin());
@@ -148,10 +146,10 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void update(Customer customer) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException {
+    public void update(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist("login",customer.getLogin());
+            fieldValidator.isExist("login", customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.update(customer);
 

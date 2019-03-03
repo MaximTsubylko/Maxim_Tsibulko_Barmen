@@ -1,18 +1,15 @@
 package com.tsibulko.finaltask.service;
 
-import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.ServiceDateValidationException;
-
 import java.util.List;
 
 public interface CRUDService<T> {
-    T create(T obj) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException;
+    T create(T obj) throws ServiceException;
 
-    void delete(T obj) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException;
+    void delete(T obj) throws ServiceException;
 
-    T getByPK(Integer id) throws ServiceDateValidationException, ServiceException;
+    T getByPK(Integer id) throws ServiceException;
 
-    void update(T obj) throws ServiceDateValidationException, ServiceException, LoginAndRegistrationException;
+    void update(T obj) throws ServiceException;
 
     List<T> getList() throws ServiceException;
 

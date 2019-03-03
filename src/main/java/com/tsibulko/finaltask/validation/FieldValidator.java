@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.validation.NewValid;
+package com.tsibulko.finaltask.validation;
 
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoException;
@@ -6,7 +6,6 @@ import com.tsibulko.finaltask.dao.DaoFactoryType;
 import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.GenericDAO;
 
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class FieldValidator {
@@ -64,8 +63,8 @@ public class FieldValidator {
 
     public void isUnique(String[] fieldName, String... value) throws DaoException, ValidationException {
         GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(Customer.class);
-        for (int i=0;i<fieldName.length-1;i++) {
-            if (dao.getStringsFromColumn(fieldName[i]).contains(value[i])){
+        for (int i = 0; i < fieldName.length - 1; i++) {
+            if (dao.getStringsFromColumn(fieldName[i]).contains(value[i])) {
                 throw new ValidationException(value + " in " + fieldName[i] + "doesn`t exist!");
             }
         }

@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.validation.NewValid;
+package com.tsibulko.finaltask.validation;
 
 import com.tsibulko.finaltask.bean.Customer;
 

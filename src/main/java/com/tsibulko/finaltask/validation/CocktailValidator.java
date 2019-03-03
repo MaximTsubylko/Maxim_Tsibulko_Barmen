@@ -1,14 +1,14 @@
-package com.tsibulko.finaltask.validation.NewValid;
+package com.tsibulko.finaltask.validation;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 
 public class CocktailValidator implements Validator<Cocktail> {
     @Override
-    public void doValidation(Cocktail entity){
-       FieldValidator validator = FieldValidator.getInstance();
+    public void doValidation(Cocktail entity) {
+        FieldValidator validator = FieldValidator.getInstance();
         try {
-            validator.simpleStingMatches(entity.getName(),20,"name");
-            validator.simpleStingMatches(entity.getDescription(),500,"description");
+            validator.simpleStingMatches(entity.getName(), 20, "name");
+            validator.simpleStingMatches(entity.getDescription(), 500, "description");
             validator.isMatchesInt(String.valueOf(entity.getPrice()), new int[]{1, 1000});
 
         } catch (ValidationException e) {

@@ -5,16 +5,16 @@ import com.tsibulko.finaltask.bean.UserRole;
 import com.tsibulko.finaltask.command.AccessLevel;
 import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Page;
-import com.tsibulko.finaltask.dao.CustomerDAO;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
-@WebFilter(filterName="AuthenticationFilter")
+
+@WebFilter(filterName = "AuthenticationFilter")
 public class AuthenticationFilter implements Filter {
-    private static final String USER_SESSION_ATTRIBUTE  = "user";
+    private static final String USER_SESSION_ATTRIBUTE = "user";
     private static final String COMMAND_PARAMETER = "command";
 
     @Override

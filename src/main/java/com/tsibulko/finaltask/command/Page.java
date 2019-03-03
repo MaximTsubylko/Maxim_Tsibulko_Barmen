@@ -10,7 +10,6 @@ public enum Page {
     START_PAGE("index.jsp");
 
 
-
     private final String rout;
 
 
@@ -21,4 +20,4 @@ public enum Page {
     public String getRout() {
         return rout;
     }
-    }
+}

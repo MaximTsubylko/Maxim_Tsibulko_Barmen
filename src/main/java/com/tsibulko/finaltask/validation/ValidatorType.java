@@ -1,4 +1,4 @@
-package com.tsibulko.finaltask.validation.NewValid;
+package com.tsibulko.finaltask.validation;
 
 public enum ValidatorType {
     CUSTOMER, COCKTAIL

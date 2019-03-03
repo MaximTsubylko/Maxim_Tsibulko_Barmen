@@ -7,12 +7,6 @@ import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
-import com.tsibulko.finaltask.validation.LoginAndRegistrationException;
-import com.tsibulko.finaltask.validation.NewValid.ValidatorFactory;
-import com.tsibulko.finaltask.validation.NewValid.ValidatorType;
-import com.tsibulko.finaltask.validation.ServiceDateValidationException;
-import com.tsibulko.finaltask.validation.ViewDateValidationException;
-import com.tsibulko.finaltask.validation.impl.ViewDateValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

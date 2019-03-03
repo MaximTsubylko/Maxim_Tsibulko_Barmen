@@ -15,8 +15,8 @@ public enum CommandEnum {
     SHOW_SUCCESS_PAGE("show_success_page", new AccessLevel[]{AccessLevel.VISITOR}),
     SEND_RECOVERY_MESSAGE("send_recovery_message", new AccessLevel[]{AccessLevel.VISITOR}),
     LOGOUT("logout", new AccessLevel[]{AccessLevel.CUSTOMER}),
-    SHOW_PROFILE("show_profile",new AccessLevel[]{AccessLevel.CUSTOMER}),
-    SHOW_EDIT_PAGE("show_edit_page",new AccessLevel[]{AccessLevel.CUSTOMER});
+    SHOW_PROFILE("show_profile", new AccessLevel[]{AccessLevel.CUSTOMER}),
+    SHOW_EDIT_PAGE("show_edit_page", new AccessLevel[]{AccessLevel.CUSTOMER});
 
 
     private final String name;

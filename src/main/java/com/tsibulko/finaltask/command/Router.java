@@ -1,7 +1,5 @@
 package com.tsibulko.finaltask.command;
 
-import java.util.Arrays;
-
 /**
  * Provide route to jsp page
  */
