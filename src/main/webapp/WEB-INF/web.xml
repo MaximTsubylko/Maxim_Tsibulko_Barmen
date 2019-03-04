@@ -10,5 +10,9 @@
         <url-pattern>/barman</url-pattern>
     </filter-mapping>
 
+    <filter-mapping>
+        <filter-name>UserStatusFilter</filter-name>
+        <url-pattern>/barman</url-pattern>
+    </filter-mapping>
 
 </web-app>

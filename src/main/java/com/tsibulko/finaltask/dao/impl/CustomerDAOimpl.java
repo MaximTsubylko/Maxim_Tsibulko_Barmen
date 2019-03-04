@@ -109,10 +109,10 @@ public class CustomerDAOimpl extends AbstractJdbcDao<Customer, Integer> implemen
 
     @AutoConnection
     @Override
-    public Customer findByLogin(Customer user) throws DaoException {
+    public Customer getdByLogin(String login) throws DaoException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(getSelectQuery() + " WHERE login = ?")) {
-            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(1, login);
             return parseResultSet(preparedStatement.executeQuery()).get(0);
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     private static Map<String, Customer> authenticatedCustomer = new WeakHashMap<>();
 
 
-    public static void logout(HttpSession session) {
+    public void logout(HttpSession session) {
         session.setAttribute(SESSION_ATTRIBUTE, null);
     }
 
@@ -87,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
                 throw new ServiceException("Not match customer with this login");
             }
             encryptPassword(customer);
-            Customer validUser = dao.findByLogin(customer);
+            Customer validUser = dao.getdByLogin(customer.getLogin());
             if (!customer.getPassword().equals(validUser.getPassword())) {
                 throw new ServiceException("Incorrect password!");
             }
@@ -97,6 +97,17 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (DaoException e) {
             throw new ServiceException("Incorrect login or password", e);
         }
+    }
+
+    public Customer findByLogin(String login) throws ServiceException {
+        JdbcDaoFactory daoFactory = (JdbcDaoFactory) FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+        try {
+            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
+            return dao.getdByLogin(login);
+        } catch (DaoException e) {
+            throw new ServiceException("Incorrect login", e);
+        }
+
     }
 
     @Override
