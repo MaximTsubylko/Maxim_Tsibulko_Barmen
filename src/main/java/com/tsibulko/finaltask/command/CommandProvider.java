@@ -32,6 +32,7 @@ public class CommandProvider {
         commandMap.put(CommandEnum.LOGOUT, new LogoutCommand());
         commandMap.put(CommandEnum.SHOW_PROFILE, new ShowProfilePage());
         commandMap.put(CommandEnum.SHOW_EDIT_PAGE, new ShowEditPageCommand());
+        commandMap.put(CommandEnum.SHOW_INDEX_PAGE, new ShowIndexCommand());
     }
 
     /**

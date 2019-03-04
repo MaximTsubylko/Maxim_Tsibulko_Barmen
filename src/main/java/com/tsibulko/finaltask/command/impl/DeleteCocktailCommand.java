@@ -11,10 +11,10 @@ import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class DeleteCocktailCommand implements Command {
     private static final String PARAMETR_NAME = "cocktailId";
+
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);

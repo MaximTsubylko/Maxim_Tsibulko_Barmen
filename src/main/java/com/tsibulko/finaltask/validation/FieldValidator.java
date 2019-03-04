@@ -1,6 +1,5 @@
 package com.tsibulko.finaltask.validation;
 
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
 import com.tsibulko.finaltask.dao.FactoryProducer;
@@ -68,7 +67,7 @@ public class FieldValidator {
         }
     }
 
-    public void isUnique(String[] fieldName,Class curentClass, String... value) throws DaoException, ValidationException {
+    public void isUnique(String[] fieldName, Class curentClass, String... value) throws DaoException, ValidationException {
         GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
         for (int i = 0; i < fieldName.length - 1; i++) {
             if (dao.getStringsFromColumn(fieldName[i]).contains(value[i])) {

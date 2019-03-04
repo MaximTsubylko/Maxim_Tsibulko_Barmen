@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,14 +21,14 @@
     <ul>
         <li><a href="?command=show_create_cocktail"><i class="icon icon-home"></i> <span>Create cocktail</span></a></li>
         <li><a href="?command=cocktail_list"><i class="icon icon-signal"></i> <span>Cocktail list</span></a></li>
-        <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>User menu</span></a>
-        <ul>
-            <li><a href="barman?command=show_profile">My profile</a></li>
-            <li><a href="barman?command=show_edit_page">Edit</a></li>
-            <li><a href="barman?command=logout">Log out</a>
-            </li>
+        <li class="submenu"><a href="#"><i class="icon icon-file"></i> <span>User menu</span></a>
+            <ul>
+                <li><a href="barman?command=show_profile">My profile</a></li>
+                <li><a href="barman?command=show_edit_page">Edit</a></li>
+                <li><a href="barman?command=logout">Log out</a>
+                </li>
 
-        </ul>
+            </ul>
         </li>
 
     </ul>

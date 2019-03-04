@@ -114,7 +114,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer create(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isUnique(new String[]{"login,email"},Customer.class, customer.getLogin(), customer.getEmail());
+            fieldValidator.isUnique(new String[]{"login,email"}, Customer.class, customer.getLogin(), customer.getEmail());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             encryptPassword(customer);
             dao.persist(customer);

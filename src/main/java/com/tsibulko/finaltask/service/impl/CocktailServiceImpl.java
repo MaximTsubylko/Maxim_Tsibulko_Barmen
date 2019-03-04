@@ -103,7 +103,7 @@ public class CocktailServiceImpl implements CocktailService {
     public void update(Cocktail cocktaile) throws ServiceException {
         FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
-            fieldValidator.isExist("name",Cocktail.class,cocktaile.getName());
+            fieldValidator.isExist("name", Cocktail.class, cocktaile.getName());
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.update(cocktaile);
         } catch (DaoException e) {

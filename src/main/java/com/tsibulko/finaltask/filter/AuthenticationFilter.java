@@ -35,12 +35,12 @@ public class AuthenticationFilter implements Filter {
         if (command == null && customer != null) {
             request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
         } else if (command == null) {
-            request.getRequestDispatcher(Page.START_PAGE.getRout()).forward(request, response);
+            request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
 
         } else if (customer == null && Arrays.stream(CommandEnum.getByName(command).
                 getLevels()).
                 noneMatch((ob) -> ob == AccessLevel.VISITOR || ob == AccessLevel.ALL)) {
-            request.getRequestDispatcher(Page.START_PAGE.getRout()).forward(request, response);
+            request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
         } else if (customer != null && Arrays.stream
                 (CommandEnum.getByName(command).getLevels()).
                 noneMatch((ob) -> UserRole.getRoleById(customer.getRole_id()).toString().equals(ob.toString())

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%@include file="/WEB-INF/resources.jsp" %>
 
 </head>
@@ -18,9 +18,9 @@
                         <p><strong>Price: </strong><c:out value="${cocktail.price}"/></p>
                     </div>
                     <%--<form action="${pageContext.request.contextPath}/demo" method="post">--%>
-                        <%--<input type="hidden" name="command" value="update_cocktil">--%>
-                        <%--<input type="hidden" name="cocktilId" value="${cocktil.id}">--%>
-                        <%--<input class="button is-light" type="submit" value="Update cocktil">--%>
+                    <%--<input type="hidden" name="command" value="update_cocktil">--%>
+                    <%--<input type="hidden" name="cocktilId" value="${cocktil.id}">--%>
+                    <%--<input class="button is-light" type="submit" value="Update cocktil">--%>
                     <%--</form>--%>
                     <form action="${pageContext.request.contextPath}/barman" method="post">
                         <input type="hidden" name="command" value="delete_cocktail">

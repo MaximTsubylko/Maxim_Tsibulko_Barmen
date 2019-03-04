@@ -19,6 +19,7 @@ public class ShowEditPageCommand implements Command {
     private static final String SESSION_ATTRIBUTE = "user";
     private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
     private static final String CUSTOMER_ATTRIBUTE_NAME = "customer";
+
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();

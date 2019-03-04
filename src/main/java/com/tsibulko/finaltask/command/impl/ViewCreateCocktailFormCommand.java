@@ -7,7 +7,6 @@ import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class ViewCreateCocktailFormCommand implements Command {
     @Override

@@ -11,7 +11,6 @@ import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class ViewCocktailListCommand implements Command {
     private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
