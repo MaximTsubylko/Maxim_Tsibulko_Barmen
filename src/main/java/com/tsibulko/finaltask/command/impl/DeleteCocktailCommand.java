@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
@@ -13,15 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class DeleteCocktailCommand implements Command {
+    private static final String PARAMETR_NAME = "cocktailId";
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
-        HttpSession session = request.getSession();
-        Integer id = Integer.parseInt(request.getParameter("cocktailId"));
+        Integer id = Integer.parseInt(request.getParameter(PARAMETR_NAME));
         Cocktail cocktaile = service.getByPK(id);
         service.delete(cocktaile);
-        responseContent.setRouter(new Router("barman?command=cocktail_list", Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

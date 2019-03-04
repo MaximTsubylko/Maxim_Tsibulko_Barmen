@@ -25,7 +25,7 @@
         <div class="form-actions">
             <div class="center-pill">
                 <div class="row-fluid">
-                    <input type="hidden" name="command" value="show_main_page">
+                    <input type="hidden" name="command" value="show_login_page">
                     <button type="submit" class="btn btn-success btn btn-block">&laquo; Back to login</button>
                 </div>
             </div>

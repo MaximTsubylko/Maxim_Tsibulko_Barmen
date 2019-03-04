@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.MailSender;
@@ -18,7 +19,7 @@ public class RecoverySendMessageCommand implements Command {
         MailSender sender = new MailSender();
         sender.send(request, customMessage);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router("?command=show_main_page", Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_LOGIN_PAGE.useCommand(), Router.Type.REDIRECT));
         return responseContent;
 
     }

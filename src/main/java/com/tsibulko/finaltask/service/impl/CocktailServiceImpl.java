@@ -40,12 +40,16 @@ public class CocktailServiceImpl implements CocktailService {
 
     public Cocktail createNewCocktail(HttpServletRequest request) throws ServiceException {
         Cocktail cocktail = new Cocktail();
+
         try {
+            cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
+
             cocktail.setName(request.getParameter("name"));
             cocktail.setDescription(request.getParameter("description"));
             cocktail.setPrice(Integer.valueOf(request.getParameter("price")));
             validator.doValidation(cocktail);
-        } catch (ValidationException e) {
+            cocktailDao.persist(cocktail);
+        } catch (ValidationException | DaoException e) {
             throw new ServiceException(e);
         }
         return cocktail;
@@ -56,7 +60,6 @@ public class CocktailServiceImpl implements CocktailService {
     public Cocktail create(Cocktail cocktaile) throws ServiceException {
         try {
 
-            cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.persist(cocktaile);
             return cocktaile;
         } catch (DaoException e) {
@@ -70,7 +73,7 @@ public class CocktailServiceImpl implements CocktailService {
         FieldValidator fieldValidator = FieldValidator.getInstance();
 
         try {
-            fieldValidator.isExist("name", cocktaile.getName());
+            fieldValidator.isExist("name", Cocktail.class, cocktaile.getName());
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.delete(cocktaile);
 
@@ -100,7 +103,7 @@ public class CocktailServiceImpl implements CocktailService {
     public void update(Cocktail cocktaile) throws ServiceException {
         FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
-            fieldValidator.isExist("name", cocktaile.getName());
+            fieldValidator.isExist("name",Cocktail.class,cocktaile.getName());
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.update(cocktaile);
         } catch (DaoException e) {

@@ -45,7 +45,7 @@ public class AuthenticationFilter implements Filter {
                 (CommandEnum.getByName(command).getLevels()).
                 noneMatch((ob) -> UserRole.getRoleById(customer.getRole_id()).toString().equals(ob.toString())
                         || ob == AccessLevel.ALL)) {
-            request.getRequestDispatcher(Page.MAIN_PAGE.getRout()).forward(request, response);
+            request.getRequestDispatcher(CommandEnum.MAIN.useCommand()).forward(request, response);
         }
 
         chain.doFilter(request, response);

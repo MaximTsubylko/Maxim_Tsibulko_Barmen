@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.Include;
 import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 public class ShowProfilePage implements Command {
     private static final String SESSION_ATTRIBUTE = "user";
+    private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
+    private static final String CUSTOMER_ATTRIBUTE_NAME = "customer";
 
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
@@ -25,9 +28,9 @@ public class ShowProfilePage implements Command {
         CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
-        request.setAttribute("cocktailList", cocktailService.getCocktailByCustomer(customer));
-        request.setAttribute("customer", service.getByPK(customer.getId()));
-        request.setAttribute("viewName", "profile");
+        request.setAttribute(COCKTAIL_LIST_ATTRIBUTE_NAME, cocktailService.getCocktailByCustomer(customer));
+        request.setAttribute(CUSTOMER_ATTRIBUTE_NAME, service.getByPK(customer.getId()));
+        request.setAttribute(Include.VIEW_NAME.getName(), Include.PROFILE_INCLUDE.getName());
         return responseContent;
     }
 }

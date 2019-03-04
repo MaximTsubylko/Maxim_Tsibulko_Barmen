@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.Include;
 import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
@@ -13,14 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ViewCocktailListCommand implements Command {
+    private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
+
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
-        HttpSession session = request.getSession();
         ResponseContent responseContent = new ResponseContent();
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
-        request.setAttribute("cocktailList", service.getList());
+        request.setAttribute(COCKTAIL_LIST_ATTRIBUTE_NAME, service.getList());
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
-        request.setAttribute("viewName", "cocktail_list");
+        request.setAttribute(Include.VIEW_NAME.getName(), Include.COCKTAIL_LIST_INCLUDE.getName());
 
         return responseContent;
     }

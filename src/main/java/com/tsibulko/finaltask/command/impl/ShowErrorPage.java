@@ -8,11 +8,11 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ShowSuccessPageCommand implements Command {
+public class ShowErrorPage implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) {
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(Page.SUCCESS_REGISTRATION.getRout(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(Page.ERROR.getRout(), Router.Type.FORWARD));
         return responseContent;
     }
 }

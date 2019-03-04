@@ -39,7 +39,7 @@ public class IndexController extends HttpServlet {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
         } catch (ServiceException e) {
-            response.sendRedirect(Page.ERROR.getRout());
+            request.getRequestDispatcher(CommandEnum.SHOW_ERROR_PAGE.useCommand()).forward(request, response);
         }
     }
 }

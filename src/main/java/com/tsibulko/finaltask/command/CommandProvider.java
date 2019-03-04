@@ -25,6 +25,7 @@ public class CommandProvider {
         commandMap.put(CommandEnum.DELETE_COCKTAIL, new DeleteCocktailCommand());
         commandMap.put(CommandEnum.TRY_LOGIN, new TryLoginCommand());
         commandMap.put(CommandEnum.REGISTRATION, new RegistrationCommand());
+        commandMap.put(CommandEnum.SHOW_ERROR_PAGE, new ShowErrorPage());
         commandMap.put(CommandEnum.SHOW_LOGIN_PAGE, new ShowLoginPageCommand());
         commandMap.put(CommandEnum.SHOW_SUCCESS_PAGE, new ShowSuccessPageCommand());
         commandMap.put(CommandEnum.SEND_RECOVERY_MESSAGE, new RecoverySendMessageCommand());

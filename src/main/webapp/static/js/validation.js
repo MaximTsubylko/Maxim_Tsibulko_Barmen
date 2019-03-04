@@ -12,8 +12,8 @@ function validLogin(form) {
 
 function validRegistration(form) {
     var email = form.email.value;
-    var password = form.password;
-    var confirm_password = form.confirm_password;
+    var password = form.password.value;
+    var confirm_password = form.confirm_password.value;
 
     if (validEmailByPattern(email) && validConfirmingPassword(password, confirm_password)) {
         return true;
@@ -34,7 +34,7 @@ function validEmailByPattern(email) {
 }
 
 function validConfirmingPassword(password, confirm_password) {
-    if (password.equals(confirm_password)) {
+    if (password == confirm_password) {
         return true;
     } else {
         swal("Ooopss..", "Passwords you entered do not match", "error");

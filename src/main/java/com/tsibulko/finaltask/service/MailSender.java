@@ -1,5 +1,6 @@
 package com.tsibulko.finaltask.service;
 
+import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.service.message.CustomMessage;
 import com.tsibulko.finaltask.validation.FieldValidator;
@@ -35,7 +36,7 @@ public class MailSender {
                 });
 
         try {
-            validator.isExist(FILD, request.getParameter(FILD));
+            validator.isNotExist(FILD, Customer.class, request.getParameter(FILD));
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(USERNAME));

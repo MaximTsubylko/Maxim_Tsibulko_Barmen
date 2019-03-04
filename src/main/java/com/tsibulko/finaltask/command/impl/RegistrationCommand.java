@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.command.Command;
+import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
@@ -17,7 +18,7 @@ public class RegistrationCommand implements Command {
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         service.signUp(request);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(Page.SUCCESS_REGISTRATION.getRout(), Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_SUCCESS_PAGE.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

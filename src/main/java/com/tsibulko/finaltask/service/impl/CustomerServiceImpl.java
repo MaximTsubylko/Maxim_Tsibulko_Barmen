@@ -103,7 +103,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer create(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isUnique(new String[]{"login,email"}, customer.getLogin(), customer.getEmail());
+            fieldValidator.isUnique(new String[]{"login,email"},Customer.class, customer.getLogin(), customer.getEmail());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             encryptPassword(customer);
             dao.persist(customer);
@@ -119,7 +119,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist("login", customer.getLogin());
+            fieldValidator.isExist("login", Customer.class, customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.delete(customer);
 
@@ -149,7 +149,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void update(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist("login", customer.getLogin());
+            fieldValidator.isExist("login", Customer.class, customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.update(customer);
 

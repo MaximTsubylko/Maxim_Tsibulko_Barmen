@@ -3,9 +3,9 @@ package com.tsibulko.finaltask.bean;
 import com.tsibulko.finaltask.dao.Identified;
 
 public enum UserRole implements Identified<Integer> {
-    ADMINISTRATOR(1, "Administrator"),
+    ADMINISTRATOR(3, "Administrator"),
     BARMAN(2, "Barman"),
-    CUSTOMER(3, "Customer");
+    CUSTOMER(1, "Customer");
     private Integer id;
     private String role;
 
@@ -20,11 +20,11 @@ public enum UserRole implements Identified<Integer> {
         switch (id) {
             default:
                 return UserRole.CUSTOMER;
-            case 3:
+            case 1:
                 return UserRole.CUSTOMER;
             case 2:
                 return UserRole.BARMAN;
-            case 1:
+            case 3:
                 return UserRole.ADMINISTRATOR;
         }
     }
