@@ -6,12 +6,8 @@ import com.tsibulko.finaltask.bean.UserRole;
 import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
-import com.tsibulko.finaltask.service.CustomerService;
-import com.tsibulko.finaltask.service.MailSender;
-import com.tsibulko.finaltask.service.ServiceException;
-import com.tsibulko.finaltask.service.message.CustomMessage;
-import com.tsibulko.finaltask.service.message.CustomMessageFactory;
-import com.tsibulko.finaltask.service.message.CustomMessageType;
+import com.tsibulko.finaltask.service.*;
+import com.tsibulko.finaltask.util.StringGenerator;
 import com.tsibulko.finaltask.validation.CustomerValidator;
 import com.tsibulko.finaltask.validation.FieldValidator;
 import com.tsibulko.finaltask.validation.ValidationException;
@@ -29,6 +25,15 @@ import java.util.stream.IntStream;
 
 public class CustomerServiceImpl implements CustomerService {
     private static final String SESSION_ATTRIBUTE = "user";
+    private static final String VALUE_PARAMETR = "value";
+    private static final String ID_PARAMETR = "user_id";
+    private static final String EMAIL_PARAMETR = "email";
+    private static final String NEW_PASSWORD_PARAMETR = "new_password";
+    private static final String ACTIV_LINK = "Your activation link: %s/barman?command=activate_user&user_id=%d&value=%s";
+    private static final String ACTIV_TITLE = "Activation message from barmen helper!";
+    private static final String RESTORE_LINK = "Your restore link: %s/barman?command=change_password&user_id=%d&value=%s";
+    private static final String RESTORE_TITLE = "Restore password message from barmen helper!";
+
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CustomerDAO dao;
     private static Map<String, Customer> authenticatedCustomer = new WeakHashMap<>();
@@ -53,8 +58,6 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer signUp(HttpServletRequest request) throws ServiceException {
         JdbcDaoFactory daoFactory = (JdbcDaoFactory) FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
         Customer customer = new Customer();
-        MailSender sender = new MailSender();
-        CustomMessage customMessage = CustomMessageFactory.getInstance().getMessage(CustomMessageType.CONFIRM);
         customer.setLogin(request.getParameter("login"));
         customer.setPassword(request.getParameter("password"));
         customer.setEmail(request.getParameter("email"));
@@ -66,9 +69,10 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setState(UserState.WAITING_CONFIRMATION.getId());
 
             GenericDAO<Customer, Integer> userDao = daoFactory.getDao(Customer.class);
-            sender.send(request, customMessage);
             encryptPassword(customer);
-            return userDao.persist(customer);
+            customer = userDao.persist(customer);
+            sendActivationLinkEmail(customer, request, ACTIV_TITLE, ACTIV_LINK);
+            return customer;
         } catch (DaoException e) {
             throw new ServiceException(e, "Failed  with DAO. ");
         } catch (ValidationException e) {
@@ -87,7 +91,7 @@ public class CustomerServiceImpl implements CustomerService {
                 throw new ServiceException("Not match customer with this login");
             }
             encryptPassword(customer);
-            Customer validUser = dao.getdByLogin(customer.getLogin());
+            Customer validUser = dao.getByLogin(customer.getLogin());
             if (!customer.getPassword().equals(validUser.getPassword())) {
                 throw new ServiceException("Incorrect password!");
             }
@@ -99,22 +103,80 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-    public Customer findByLogin(String login) throws ServiceException {
-        JdbcDaoFactory daoFactory = (JdbcDaoFactory) FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
-        try {
-            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-            return dao.getdByLogin(login);
-        } catch (DaoException e) {
-            throw new ServiceException("Incorrect login", e);
-        }
 
+    public String buildActivationLink(String randomString, Integer userId, String url, String link) {
+        return String.format(link, url, userId, randomString);
     }
+
+
+    private void sendActivationLinkEmail(Customer customer, HttpServletRequest request, String title, String link) throws ServiceException {
+        StringGenerator generator = new StringGenerator();
+        UserKey userKey = UserKey.getInstance();
+        String randomString = generator.generate();
+        userKey.add(customer.getId(), randomString);
+        MailSender sender = MailSender.getInstance();
+        Integer port = request.getLocalPort();
+        String url;
+        url = "http://207.154.220.222" + ":" + port + request.getContextPath();
+        String buildLink = buildActivationLink(randomString, customer.getId(), url, link);
+        CustomMessage activationMessage = new CustomMessage(title, buildLink);
+        sender.send(request, activationMessage);
+    }
+
+    public void sendRestoreEmail(HttpServletRequest request) throws ServiceException {
+        FieldValidator validator = FieldValidator.getInstance();
+        try {
+            validator.emailMatches(request.getParameter(EMAIL_PARAMETR));
+            validator.isExist(EMAIL_PARAMETR,Customer.class, request.getParameter(EMAIL_PARAMETR));
+            String customerEmail = request.getParameter(EMAIL_PARAMETR);
+            Customer customer = getByEmail(customerEmail);
+            sendActivationLinkEmail(customer, request, RESTORE_TITLE, RESTORE_LINK);
+        } catch (ValidationException e) {
+            throw new ServiceException("Some error in validation date");
+        } catch (DaoException e) {
+            throw new ServiceException(e,"");
+        }
+    }
+
+
+    public void setNewState(HttpServletRequest request, String name) throws ServiceException {
+        Integer userID = Integer.valueOf(request.getParameter(ID_PARAMETR));
+        String reaquestKey = request.getParameter(VALUE_PARAMETR);
+        UserKey userKey = UserKey.getInstance();
+        if (reaquestKey.equals(userKey.get(userID))) {
+            Customer customer = getByPK(userID);
+            customer.setState(UserState.getByName(name).getId());
+            update(customer);
+        } else {
+            throw new ServiceException("Error in change state!");
+        }
+    }
+
+    public void restorePassword(HttpServletRequest request) throws ServiceException {
+        StringGenerator generator = new StringGenerator();
+        HttpSession session = request.getSession();
+        String newPassword = generator.generate();
+        Integer userID = Integer.valueOf(request.getParameter(ID_PARAMETR));
+        String reaquestKey = request.getParameter(VALUE_PARAMETR);
+        UserKey userKey = UserKey.getInstance();
+        if (reaquestKey.equals(userKey.get(userID))) {
+            Customer customer = getByPK(userID);
+            customer.setPassword(newPassword);
+            request.setAttribute(NEW_PASSWORD_PARAMETR, newPassword);
+            encryptPassword(customer);
+            update(customer);
+            session.setAttribute(SESSION_ATTRIBUTE, customer);
+        } else {
+            throw new ServiceException("Error in change password!");
+        }
+    }
+
 
     @Override
     public Customer create(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isUnique(new String[]{"login,email"}, Customer.class, customer.getLogin(), customer.getEmail());
+            fieldValidator.isUnique(new String[]{"login", "email"}, Customer.class, customer.getLogin(), customer.getEmail());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             encryptPassword(customer);
             dao.persist(customer);
@@ -176,6 +238,16 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             return dao.getAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Get customer list error");
+        }
+    }
+
+    @Override
+    public Customer getByEmail(String email) throws ServiceException {
+        try {
+            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
+            return dao.getByEmail(email);
         } catch (DaoException e) {
             throw new ServiceException(e, "Get customer list error");
         }

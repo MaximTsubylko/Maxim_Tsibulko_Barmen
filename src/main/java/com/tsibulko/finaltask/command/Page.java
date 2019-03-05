@@ -6,6 +6,8 @@ public enum Page {
     MAIN_PAGE("/WEB-INF/jsp/barman.jsp"),
     EMPTY_MAIN_INCLUDE("/WEB-INF/jsp/include/empty.jsp"),
     ERROR("/WEB-INF/jsp/error.jsp"),
+    ACTIVATE_USER("/WEB-INF/jsp/activate_user.jsp"),
+    CHANGE_PASSWORD("/WEB-INF/jsp/change_password.jsp"),
     BLOCKED_ERROR_PAGE("/WEB-INF/jsp/bloced_error_page.jsp"),
     WAITING_CONFIRMATION("/WEB-INF/jsp/waiting_confirmation_error_page.jsp"),
     SUCCESS_REGISTRATION("/WEB-INF/jsp/success_registration.jsp"),

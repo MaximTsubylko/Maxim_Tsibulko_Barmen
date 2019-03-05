@@ -2,7 +2,6 @@ package com.tsibulko.finaltask.service;
 
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoException;
-import com.tsibulko.finaltask.service.message.CustomMessage;
 import com.tsibulko.finaltask.validation.FieldValidator;
 import com.tsibulko.finaltask.validation.ValidationException;
 
@@ -11,11 +10,33 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MailSender {
     private static final String FILD = "email";
     private static final String USERNAME = "barmensupp@gmail.com";
     private static final String PASSWORD = "asdfG3421";
+    private static MailSender instance;
+    private static Lock lock = new ReentrantLock();
+
+
+    public static MailSender getInstance() {
+        lock.lock();
+        try {
+            if (instance == null) {
+                instance = new MailSender();
+            }
+
+        } finally {
+            lock.unlock();
+        }
+
+        return instance;
+    }
+
+    private MailSender() {
+    }
 
     public void send(HttpServletRequest request, CustomMessage m) throws ServiceException {
         Properties props = new Properties();
@@ -36,7 +57,7 @@ public class MailSender {
                 });
 
         try {
-            validator.isNotExist(FILD, Customer.class, request.getParameter(FILD));
+            validator.isExist(FILD, Customer.class, request.getParameter(FILD));
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(USERNAME));

@@ -5,9 +5,9 @@ import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.PersistException;
 import com.tsibulko.finaltask.service.CRUDService;
+import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
-import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.util.DBUtil.InMemoryDBUtil;
 import com.tsibulko.finaltask.util.TestUtil.parser.JSONParser;
 import org.junit.jupiter.api.AfterEach;
@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.List;
 

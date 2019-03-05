@@ -1,8 +1,11 @@
-package com.tsibulko.finaltask.service.message;
+package com.tsibulko.finaltask.service;
 
 public class CustomMessage {
     private String subject;
     private String text;
+
+    public CustomMessage() {
+    }
 
     public String getSubject() {
         return subject;
@@ -21,4 +24,8 @@ public class CustomMessage {
     }
 
 
+    public CustomMessage(String subject, String text) {
+        this.subject = subject;
+        this.text = text;
+    }
 }
