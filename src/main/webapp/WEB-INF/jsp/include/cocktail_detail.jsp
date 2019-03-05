@@ -1,32 +1,57 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <%@include file="/WEB-INF/resources.jsp" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div id="content-header">
+    <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
+        Home</a><a href="#" class="current"><c:out value="${cocktail.name}"/></a></div>
+</div>
 
-</head>
-<div>
-    <div>
-        <div>
-            <div>
-                <div>
-                    <div>
-                        <p><c:out value="${cocktail.name}"/></p>
+
+<div class="container con container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            <img src="${pageContext.request.contextPath}/static/img/cocktailIcon.jpg">
+            <div class="pagination-centered">
+                <h3><c:out value="${cocktail.name}"/></h3>
+            </div>
+        </div>
+
+        <div class="span4">
+            <div class="widget-content nopadding">
+                <h2 class="pagination-centered">Cocktail information:</h2>
+                <hr>
+                <p><h5>Description : <c:out value="${cocktail.description}"/></h5></p>
+                <p><h5>Price : <c:out value="${cocktail.price}"/> $</h5></p>
+            </div>
+        </div>
+
+
+        <div class="span4">
+            <div class="widget-content nopadding">
+                <h2 class="pagination-centered">Cocktail ingredient</h2>
+                <hr>
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"> <i class="icon-th"></i> </span>
+                        <h5>Ingredients</h5>
                     </div>
-                    <div class="content">
-                        <p><strong>Description: </strong><c:out value="${cocktail.description}"/></p>
-                        <p><strong>Price: </strong><c:out value="${cocktail.price}"/></p>
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${ingredients}" var="ingredients">
+                                <tr>
+                                    <td><c:out value="${ingredients.name}"/></td>
+                                    <td><c:out value="${ingredients.description}"/></td>
+
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
                     </div>
-                    <%--<form action="${pageContext.request.contextPath}/demo" method="post">--%>
-                    <%--<input type="hidden" name="command" value="update_cocktil">--%>
-                    <%--<input type="hidden" name="cocktilId" value="${cocktil.id}">--%>
-                    <%--<input class="button is-light" type="submit" value="Update cocktil">--%>
-                    <%--</form>--%>
-                    <form action="${pageContext.request.contextPath}/barman" method="post">
-                        <input type="hidden" name="command" value="delete_cocktail">
-                        <input type="hidden" name="cocktailId" value="${cocktail.id}">
-                        <input class="button is-danger" type="submit" value="Delete">
-                    </form>
                 </div>
             </div>
         </div>

@@ -28,6 +28,10 @@ public class CustomerServiceImpl implements CustomerService {
     private static final String VALUE_PARAMETR = "value";
     private static final String ID_PARAMETR = "user_id";
     private static final String EMAIL_PARAMETR = "email";
+    private static final String LOGIN_PARAMENR = "login";
+    private static final String PASSWORD_PARAMETR = "password";
+    private static final String FIRST_NAME_PARAMETR = "first_name";
+    private static final String SECOND_NAME_PARAMETR = "second_name";
     private static final String NEW_PASSWORD_PARAMETR = "new_password";
     private static final String ACTIV_LINK = "Your activation link: %s/barman?command=activate_user&user_id=%d&value=%s";
     private static final String ACTIV_TITLE = "Activation message from barmen helper!";
@@ -58,9 +62,9 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer signUp(HttpServletRequest request) throws ServiceException {
         JdbcDaoFactory daoFactory = (JdbcDaoFactory) FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
         Customer customer = new Customer();
-        customer.setLogin(request.getParameter("login"));
-        customer.setPassword(request.getParameter("password"));
-        customer.setEmail(request.getParameter("email"));
+        customer.setLogin(request.getParameter(LOGIN_PARAMENR));
+        customer.setPassword(request.getParameter(PASSWORD_PARAMETR));
+        customer.setEmail(request.getParameter(EMAIL_PARAMETR));
         try {
             CustomerValidator validator = new CustomerValidator();
             validator.doValidation(customer);
@@ -83,11 +87,11 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer logIn(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
         Customer customer = new Customer();
-        customer.setLogin(request.getParameter("login"));
-        customer.setPassword(request.getParameter("password"));
+        customer.setLogin(request.getParameter(LOGIN_PARAMENR));
+        customer.setPassword(request.getParameter(PASSWORD_PARAMETR));
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-            if (!dao.getStringsFromColumn("login").contains(customer.getLogin())) {
+            if (!dao.getStringsFromColumn(LOGIN_PARAMENR).contains(customer.getLogin())) {
                 throw new ServiceException("Not match customer with this login");
             }
             encryptPassword(customer);
@@ -152,6 +156,16 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
+    public void editUserProfile(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
+        Customer customer = (Customer) session.getAttribute(SESSION_ATTRIBUTE);
+        customer.setFirst_name(request.getParameter(FIRST_NAME_PARAMETR));
+        customer.setSecond_name(request.getParameter(SECOND_NAME_PARAMETR));
+        customer.setEmail(request.getParameter(EMAIL_PARAMETR));
+        update(customer);
+        session.setAttribute(SESSION_ATTRIBUTE,getByPK(customer.getId()));
+    }
+
     public void restorePassword(HttpServletRequest request) throws ServiceException {
         StringGenerator generator = new StringGenerator();
         HttpSession session = request.getSession();
@@ -176,7 +190,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer create(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isUnique(new String[]{"login", "email"}, Customer.class, customer.getLogin(), customer.getEmail());
+            fieldValidator.isUnique(new String[]{LOGIN_PARAMENR, EMAIL_PARAMETR}, Customer.class, customer.getLogin(), customer.getEmail());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             encryptPassword(customer);
             dao.persist(customer);
@@ -192,7 +206,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist("login", Customer.class, customer.getLogin());
+            fieldValidator.isExist(LOGIN_PARAMENR, Customer.class, customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.delete(customer);
 
@@ -222,7 +236,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void update(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist("login", Customer.class, customer.getLogin());
+            fieldValidator.isExist(LOGIN_PARAMENR, Customer.class, customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.update(customer);
 

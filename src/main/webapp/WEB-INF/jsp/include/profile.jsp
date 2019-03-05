@@ -8,14 +8,14 @@
 
 <div class="container con container-fluid">
     <div class="row-fluid">
-        <div class="span3">
+        <div class="span2">
             <img src="${pageContext.request.contextPath}/static/img/usericon.png">
-            <div class="">
+            <div class="pagination-centered">
                 <h1><c:out value="${customer.login}"/></h1>
             </div>
         </div>
 
-        <div class="span3">
+        <div class="span4">
             <div class="widget-content nopadding">
                 <h1>User information:</h1>
                 <p><h5>First name : <c:out value="${customer.first_name}"/></h5></p>
@@ -27,9 +27,10 @@
         </div>
 
 
-        <div class="span4">
+        <div class="span5">
             <div class="widget-content nopadding">
-
+                <h2 class="pagination-centered">Your cocktails</h2>
+                <hr>
                 <div class="widget-box">
                     <div class="widget-title"><span class="icon"> <i class="icon-th"></i> </span>
                         <h5>Cocktails</h5>

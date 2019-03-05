@@ -38,6 +38,15 @@ public class CocktailServiceImpl implements CocktailService {
         }
     }
 
+    public List<Ingredient> getIngredientByCocktail(Cocktail cocktail) throws ServiceException {
+        try {
+            ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
+            return ingredientDao.getIngredientByCocktail(cocktail);
+        } catch (DaoException e) {
+            throw new ServiceException(e, "Geting cocktail ingredient error with ingredients error");
+        }
+    }
+
     public Cocktail createNewCocktail(HttpServletRequest request) throws ServiceException {
         Cocktail cocktail = new Cocktail();
 

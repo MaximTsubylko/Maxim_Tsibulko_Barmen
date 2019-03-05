@@ -21,6 +21,7 @@ public enum CommandEnum {
             AccessLevel.ADMINISTRATOR}),
     SHOW_EDIT_PAGE("show_edit_page", new AccessLevel[]{AccessLevel.CUSTOMER, AccessLevel.BARMEN,
             AccessLevel.ADMINISTRATOR}),
+    EDIT_PROFILE("edit_profile", new AccessLevel[]{AccessLevel.CUSTOMER}),
     ACTIVATE_USER("activate_user", new AccessLevel[]{AccessLevel.ALL}),
     CHANGE_PASSWORD("change_password", new AccessLevel[]{AccessLevel.ALL}),
     SHOW_INDEX_PAGE("show_index_page", new AccessLevel[]{AccessLevel.ALL}),

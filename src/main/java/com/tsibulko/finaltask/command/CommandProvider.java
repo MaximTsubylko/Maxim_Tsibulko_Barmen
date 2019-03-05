@@ -35,6 +35,7 @@ public class CommandProvider {
         commandMap.put(CommandEnum.SHOW_INDEX_PAGE, new ShowIndexCommand());
         commandMap.put(CommandEnum.ACTIVATE_USER, new UserActivationCommand());
         commandMap.put(CommandEnum.CHANGE_PASSWORD, new ChangePasswordCommand());
+        commandMap.put(CommandEnum.EDIT_PROFILE, new EditProfileCommand());
     }
 
     /**
