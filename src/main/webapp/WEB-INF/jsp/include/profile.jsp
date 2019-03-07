@@ -4,12 +4,13 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+
+<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
-        Home</a><a href="#" class="current">User profile</a></div>
+        <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message key="link.profile" bundle="${bundle}"/></a></div>
 </div>
 
 
@@ -25,11 +26,11 @@
         <div class="span4">
             <div class="widget-content nopadding">
                 <h1>User information:</h1>
-                <p><h5>First name : <c:out value="${customer.first_name}"/></h5></p>
-                <p><h5>Second name : <c:out value="${customer.second_name}"/></h5></p>
+                <p><h5><fmt:message key="user.firstname" bundle="${bundle}"/> : <c:out value="${customer.first_name}"/></h5></p>
+                <p><h5><fmt:message key="user.lastname" bundle="${bundle}"/> : <c:out value="${customer.second_name}"/></h5></p>
                 <p><h5>E-mail : <c:out value="${customer.email}"/></h5></p>
-                <p><h5>Role : <c:out value="${customer.role_id}"/></h5></p>
-                <p><h5>State : <c:out value="${customer.state}"/></h5></p>
+                <p><h5><fmt:message key="user.role" bundle="${bundle}"/> : <c:out value="${customer.role_id}"/></h5></p>
+                <p><h5><fmt:message key="user.state" bundle="${bundle}"/> : <c:out value="${customer.state}"/></h5></p>
             </div>
         </div>
 
@@ -47,9 +48,9 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
+                                <th><fmt:message key="cocktail.name" bundle="${bundle}"/></th>
+                                <th><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/></th>
+                                <th><fmt:message key="cocktail.price" bundle="${bundle}"/></th>
                             </tr>
                             </thead>
                             <tbody>

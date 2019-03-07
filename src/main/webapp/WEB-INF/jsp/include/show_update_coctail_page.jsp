@@ -4,20 +4,21 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+
+<fmt:setLocale value="${cookie['locale'].value}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div>
     <form action="${pageContext.request.contextPath}/barman" method="post">
-        <p><strong>Name: </strong>
+        <p><strong><fmt:message key="cocktail.name" bundle="${bundle}"/>: </strong>
             <input type="text" id="name" class="text-field" name="name" required="required"
                    placeholder="name"/></p>
 
-        <p><strong>Description: </strong>
+        <p><strong><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>: </strong>
             <input type="text" id="description" class="text-field" name="description" required="required"
                    placeholder="description"/></p>
 
-        <p><strong>Price: </strong>
+        <p><strong><fmt:message key="cocktail.price" bundle="${bundle}"/>: </strong>
             <input type="text" id="price" class="text-field" name="price" required="required"
                    placeholder="price"/></p>
 

@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "Localfilter")
-public class LocalFilter implements Filter {
+@WebFilter(filterName = "LocalChangeFilter")
+public class LocalChangeFilter implements Filter {
     private static final String LOCALE_ATTRIBUTE = "locale";
     private static final String ENGLISH_LANGUAGE = "en_EN";
     private static final String RUSSIAN_LANGUAGE = "ru_RU";
+    private static final String CHANGE_LANG_PARAMETR = "change_lang";
+
     @Override
-    public void init(FilterConfig filterConfig)   {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -23,16 +25,21 @@ public class LocalFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
-
-        String locale = request.getParameter("change_lang");
-        if( locale == null || locale.equals("en")){
+        String locale = (String) session.getAttribute(LOCALE_ATTRIBUTE);
+//        String locale = httpServletRequest.getParameter(CHANGE_LANG_PARAMETR);
+        if (locale == null || locale.equals("en")) {
             session.setAttribute(LOCALE_ATTRIBUTE, ENGLISH_LANGUAGE);
             Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "en");
+            httpServletRequest.removeAttribute(CHANGE_LANG_PARAMETR);
+            httpServletResponse.addCookie(cookie);
 
-        } else if (locale.equals("ru")){
+        } else if (locale.equals("ru")) {
             session.setAttribute(LOCALE_ATTRIBUTE, RUSSIAN_LANGUAGE);
             Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "ru");
+            httpServletRequest.removeAttribute(CHANGE_LANG_PARAMETR);
+            httpServletResponse.addCookie(cookie);
         }
+
         chain.doFilter(request, response);
     }
 

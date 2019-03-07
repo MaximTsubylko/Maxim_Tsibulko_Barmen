@@ -4,7 +4,8 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+
+<fmt:setLocale value="${cookie['locale'].value}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <head>
@@ -13,7 +14,7 @@
 </head>
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
-        Home</a><a href="#" class="current">Create cocktail</a></div>
+        <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message key="link.createcocktil" bundle="${bundle}"/></a></div>
     <h1>Create new cocktail</h1>
 </div>
 <div class="container-fluid">
@@ -26,31 +27,31 @@
 
 
                     <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
-                        <h5>Fill the form</h5>
+                        <h5><fmt:message key="fill" bundle="${bundle}"/></h5>
                     </div>
                     <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
                         <div class="control-group">
-                            <label class="control-label">Name :</label>
+                            <label class="control-label"><fmt:message key="cocktail.name" bundle="${bundle}"/> :</label>
                             <div class="controls">
                                 <input type="text" class="span11" placeholder="Name" name="name">
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">Description :</label>
+                            <label class="control-label"><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/> :</label>
                             <div class="controls">
                                 <input type="text" class="span11" placeholder="Description" name="description">
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">Price :</label>
+                            <label class="control-label"><fmt:message key="cocktail.price" bundle="${bundle}"/> :</label>
                             <div class="controls">
                                 <input type="text" class="span11" placeholder="Price" name="price">
                             </div>
                         </div>
                         <input type="hidden" name="command" value="register_cocktail">
-                        <button type="submit" class="btn btn-success btn btn-large btn-block">Create</button>
+                        <button type="submit" class="btn btn-success btn btn-large btn-block"><fmt:message key="button.create" bundle="${bundle}"/></button>
                     </form>
                 </div>
 

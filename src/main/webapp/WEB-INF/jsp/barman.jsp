@@ -4,7 +4,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en_EN'}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <html>
@@ -92,7 +92,7 @@
 <!--Footer-part-->
 <!--Footer-part-->
 <div class="row-fluid">
-    <div id="footer" class="span12"> 2019 &copy; Maxim Tsibulko by Epam courses.
+    <div id="footer" class="span12"><fmt:message key="footer" bundle="${bundle}"/>
     </div>
 </div>
 <!--end-Footer-part-->

@@ -4,14 +4,20 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setLocale value="${cookie['locale'].value}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
-
 
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
-        Home</a><a href="#" class="current">Cocktail list</a></div>
-    <h1 class="pagination-centered">Cocktail list</h1>
+        <fmt:message key="link.home" bundle="${bundle}"/>
+    </a>
+        <a href="#" class="current">
+            <fmt:message key="main.cocktaillist" bundle="${bundle}"/>
+        </a>
+    </div>
+    <h1 class="pagination-centered">
+        <fmt:message key="main.cocktaillist" bundle="${bundle}"/>
+    </h1>
 
 </div>
 <div class="container-fluid">
@@ -30,9 +36,15 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Price</th>
+                                <th>
+                                    <fmt:message key="cocktail.name" bundle="${bundle}"/>
+                                </th>
+                                <th>
+                                    <fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>
+                                </th>
+                                <th>
+                                    <fmt:message key="cocktail.price" bundle="${bundle}"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
