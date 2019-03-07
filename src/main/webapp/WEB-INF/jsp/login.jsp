@@ -11,7 +11,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${cookie['locale'].value}"/>
+<%--<fmt:setLocale value="${cookie['locale'].value}"/>--%>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <html>
@@ -25,20 +26,40 @@
 </head>
 <body>
 
+
+<div id="user-nav" class="navbar">
+    <div class="btn-group ">
+        <ul class="nav" style="width: auto; margin-left: 150vh;">
+            <li>
+                <button data-toggle="dropdown" class="btn btn-inverse dropdown-toggle"><fmt:message key="main.language"
+                                                                                                    bundle="${bundle}"/>
+                    <span
+                            class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <input type="hidden" name="command" value="show_login_page">
+                            <input type="hidden" name="change_lang" value="ru">
+                            <button type="submit" class="btn btn-info btn btn-block">Ru</button>
+                        </form>
+                    </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <input type="hidden" name="command" value="show_login_page">
+                            <input type="hidden" name="change_lang" value="en">
+                            <button type="submit" class="btn btn-info btn btn-block ">En</button>
+                        </form>
+                    </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
 <div id="loginbox">
-    <form action="${pageContext.request.contextPath}/barman" method="post">
-        <input type="hidden" name="command" value="show_login_page">
-        <input type="hidden" name="change_lang" value="ru">
-        <button type="submit" class="btn btn-success btn btn-block">Ru</button>
-    </form>
-
-
-    <form action="${pageContext.request.contextPath}/barman" method="post">
-        <input type="hidden" name="command" value="show_login_page">
-        <input type="hidden" name="change_lang" value="en">
-        <button type="submit" class="btn btn-success btn btn-block">En</button>
-    </form>
-
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
 
         <div class="control-group normal_text"><h3><img src="${pageContext.request.contextPath}/static/img/logo.png"
@@ -49,7 +70,7 @@
                     <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
                                                                                        id="loginField"
                                                                                        name="login"
-                                                                                       placeholder="Username"/>
+                                                                                       placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -58,7 +79,7 @@
                 <div class="main_input_box">
                     <span class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required"
                                                                                       type="password" name="password"
-                                                                                      placeholder="Password"/>
+                                                                                      placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -81,7 +102,7 @@
 
                     <div class="span4">
                         <a href="#" class="flip-link btn btn-warning" id="to-registration">
-                            <fmt:message key="login.registrationbutton" bundle="${bundle}"/></a>
+                            <fmt:message key="button.registration" bundle="${bundle}"/></a>
                     </div>
                 </div>
             </div>
@@ -90,14 +111,13 @@
 
 
     <form id="recoverform" action="${pageContext.request.contextPath}/barman" method="post" class="form-vertical">
-        <p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a
-            password.</p>
+        <p class="normal_text"><fmt:message key="message.recovery" bundle="${bundle}"/></p>
 
         <div class="controls">
             <div class="main_input_box">
                 <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input required="required" type="email"
                                                                                       name="email"
-                                                                                      placeholder="E-mail address"/>
+                                                                                      placeholder="E-mail"/>
             </div>
         </div>
 
@@ -106,11 +126,11 @@
                 <div class="row-fluid">
                     <div class="pull-right span4">
                         <input type="hidden" name="command" value="send_recovery_message">
-                        <button type="submit" class="btn btn-info btn btn-block">Recovery</button>
+                        <button type="submit" class="btn btn-info btn btn-block"><fmt:message key="button.recovery" bundle="${bundle}"/></button>
                     </div>
                     <div class="pull-left span4">
                         <a href="#" class="flip-link btn btn-success"
-                           id="to-login">&laquo; Back to login</a>
+                           id="to-login"><fmt:message key="button.backtologin" bundle="${bundle}"/></a>
                     </div>
                 </div>
             </div>
@@ -120,14 +140,14 @@
 
     <form id="registrationform" action="${pageContext.request.contextPath}/barman" method="post" class="form-vertical">
 
-        <p class="normal_text">Fil this form and let`s start!</p>
+        <p class="normal_text"><fmt:message key="message.registration" bundle="${bundle}"/></p>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
                                                                                        id="login"
                                                                                        name="login"
-                                                                                       placeholder="Username"/>
+                                                                                       placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -147,7 +167,7 @@
                     <span class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password"
                                                                                      id="password"
                                                                                      name="password"
-                                                                                     placeholder="Password"/>
+                                                                                     placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -157,7 +177,7 @@
                 <div class="main_input_box">
                     <span class="add-on bg_lr"><i class="icon-key"></i></span><input required="required" type="password"
                                                                                      name="confirm_password"
-                                                                                     placeholder="Confirm password"/>
+                                                                                     placeholder="<fmt:message key="user.confirmpassword" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -168,12 +188,12 @@
                     <div class="pull-right span4">
                         <input type="hidden" name="command" value="registration">
                         <button type="submit" class="btn btn-success btn btn-block"
-                                onclick="return validRegistration(document.getElementById('registrationform'))">Register
+                                onclick="return validRegistration(document.getElementById('registrationform'))"><fmt:message key="button.registration" bundle="${bundle}"/>
                         </button>
                     </div>
                     <div class="pull-left span4">
                         <a href="#" class="flip-link btn btn-success"
-                           id="registrationform-login">&laquo; Back to login</a></div>
+                           id="registrationform-login"><fmt:message key="button.backtologin" bundle="${bundle}"/></a></div>
                 </div>
             </div>
         </div>
@@ -187,6 +207,11 @@
 <script src="${pageContext.request.contextPath}/static/js/login_and_reg_validation.js"></script>
 <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 
+<ul class="typeahead dropdown-menu"></ul>
+<script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
 </body>
 
 </html>

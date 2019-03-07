@@ -5,7 +5,7 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'ru_RU'}"/>
+<fmt:setLocale value="${cookie['locale'].value}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
@@ -25,7 +25,9 @@
 
         <div class="span4">
             <div class="widget-content nopadding">
-                <h1>User information:</h1>
+                <h1>
+                    <fmt:message key="user.information" bundle="${bundle}"/>
+                </h1>
                 <p><h5><fmt:message key="user.firstname" bundle="${bundle}"/> : <c:out value="${customer.first_name}"/></h5></p>
                 <p><h5><fmt:message key="user.lastname" bundle="${bundle}"/> : <c:out value="${customer.second_name}"/></h5></p>
                 <p><h5>E-mail : <c:out value="${customer.email}"/></h5></p>
@@ -37,11 +39,15 @@
 
         <div class="span5">
             <div class="widget-content nopadding">
-                <h2 class="pagination-centered">Your cocktails</h2>
+                <h2 class="pagination-centered">
+                    <fmt:message key="user.cocktails" bundle="${bundle}"/>
+                </h2>
                 <hr>
                 <div class="widget-box">
                     <div class="widget-title"><span class="icon"> <i class="icon-th"></i> </span>
-                        <h5>Cocktails</h5>
+                        <h5>
+                            <fmt:message key="cocktail.cocktails" bundle="${bundle}"/>
+                        </h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-bordered table-striped">

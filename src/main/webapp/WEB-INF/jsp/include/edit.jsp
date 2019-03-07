@@ -41,14 +41,16 @@
                             <label class="control-label"> <fmt:message key="user.firstname" bundle="${bundle}"/>
                                 :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="First name"
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="user.firstname" bundle="${bundle}"/>"
                                        value="<c:out value="${customer.first_name}"/>" name="first_name">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label"> <fmt:message key="user.lastname" bundle="${bundle}"/>:</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Second name"
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="user.lastname" bundle="${bundle}"/>"
                                        value="<c:out value="${customer.second_name}"/>" name="second_name">
                             </div>
                         </div>
@@ -61,7 +63,8 @@
                         </div>
                         <div class="form-actions">
                             <input type="hidden" name="command" value="edit_profile">
-                            <button type="submit" class="btn btn-success"><fmt:message key="edit.savebutton" bundle="${bundle}"/>
+                            <button type="submit" class="btn btn-success"><fmt:message key="edit.savebutton"
+                                                                                       bundle="${bundle}"/>
                             </button>
                         </div>
                     </form>
@@ -74,34 +77,47 @@
         <div class="span6">
             <div class="widget-box">
                 <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
-                    <h5>Change password</h5>
+                    <h5>
+                        <fmt:message key="edit.changepassword" bundle="${bundle}"/>
+                    </h5>
                 </div>
                 <div class="widget-content nopadding">
                     <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
 
                         <div class="control-group">
-                            <label class="control-label">Old password :</label>
+                            <label class="control-label">
+                                <fmt:message key="edit.oldpassword" bundle="${bundle}"/>
+                                :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Old password" name="old_password">
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="edit.oldpassword" bundle="${bundle}"/>"
+                                       name="old_password">
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">Password :</label>
+                            <label class="control-label"> <fmt:message key="edit.newpassword" bundle="${bundle}"/>
+                                :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Password" name="password">
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="edit.newpassword" bundle="${bundle}"/>"
+                                       name="password">
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">Confirm password :</label>
+                            <label class="control-label">
+                                <fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>
+                                :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Confirm password"
+                                <input type="text" class="span11" placeholder="<fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>"
                                        name="confirm_password">
                             </div>
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="submit" class="btn btn-success">
+                                <fmt:message key="edit.savebutton" bundle="${bundle}"/>
+                            </button>
                         </div>
                     </form>
                 </div>

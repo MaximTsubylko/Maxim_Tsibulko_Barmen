@@ -5,7 +5,7 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en_EN'}"/>
+<fmt:setLocale value="${cookie['locale'].value}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>

@@ -15,7 +15,9 @@
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message key="link.createcocktil" bundle="${bundle}"/></a></div>
-    <h1>Create new cocktail</h1>
+    <h1>
+        <fmt:message key="cocktail.createnew" bundle="${bundle}"/>
+    </h1>
 </div>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -33,21 +35,24 @@
                         <div class="control-group">
                             <label class="control-label"><fmt:message key="cocktail.name" bundle="${bundle}"/> :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Name" name="name">
+                                <input type="text" class="span11" placeholder="<fmt:message key="cocktail.name" bundle="${bundle}"/>"
+                                       name="name">
                             </div>
                         </div>
 
                         <div class="control-group">
                             <label class="control-label"><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/> :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Description" name="description">
+                                <input type="text" class="span11" placeholder="<fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>"
+                                       name="description">
                             </div>
                         </div>
 
                         <div class="control-group">
                             <label class="control-label"><fmt:message key="cocktail.price" bundle="${bundle}"/> :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Price" name="price">
+                                <input type="text" class="span11" placeholder="<fmt:message key="cocktail.price" bundle="${bundle}"/>"
+                                       name="price">
                             </div>
                         </div>
                         <input type="hidden" name="command" value="register_cocktail">

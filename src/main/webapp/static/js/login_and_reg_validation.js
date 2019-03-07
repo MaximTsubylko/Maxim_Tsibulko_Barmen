@@ -26,7 +26,7 @@ function validRegistration(form) {
 function validEmailByPattern(email) {
     var email_pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (email_pattern.test(email) == false) {
-        swal("Ooopss..", "Wrong email!", "error");
+        swal("Ooopss..", "Wrong email!", "error",);
         return false;
     } else {
         return true;

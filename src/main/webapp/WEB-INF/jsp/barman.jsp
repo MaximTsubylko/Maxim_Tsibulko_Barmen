@@ -22,35 +22,38 @@
 <!--close-Header-part-->
 
 <div id="user-nav" class="navbar">
-    <ul class="nav" style="width: auto; margin: 0px;">
-        <li class="dropdown" id="profile-messages">
-            <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
-                <i class="icon icon-user"></i> <span class="normal_text">
-                <fmt:message key="main.language" bundle="${bundle}"/></span><b class="caret"></b></a>
-            <ul class="dropdown-menu">
-                <li><a>
-                    <form action="${pageContext.request.contextPath}/barman" method="post">
-                        <input type="hidden" name="command" value="main">
-                        <input type="hidden" name="change_lang" value="ru">
-                        <button type="submit" class="btn btn-info btn btn-block">Ru</button>
-                    </form>
-                </a>
-                </li>
-                <li class="divider"></li>
-                <li><a>
-                    <form action="${pageContext.request.contextPath}/barman" method="post">
-                        <input type="hidden" name="command" value="main">
-                        <input type="hidden" name="change_lang" value="en">
-                        <button type="submit" class="btn btn-info btn btn-block ">En</button>
-                    </form>
-                </a>
-                </li>
-                <li class="divider"></li>
-            </ul>
-        </li>
-
-    </ul>
+    <div class="btn-group ">
+        <ul class="nav" style="width: auto; margin-left: 150vh;">
+            <li>
+                <button data-toggle="dropdown" class="btn btn-inverse dropdown-toggle"><fmt:message key="main.language"
+                                                                                                    bundle="${bundle}"/>
+                    <span
+                            class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <input type="hidden" name="command" value="main">
+                            <input type="hidden" name="change_lang" value="ru">
+                            <button type="submit" class="btn btn-info btn btn-block">Ru</button>
+                        </form>
+                    </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <input type="hidden" name="command" value="main">
+                            <input type="hidden" name="change_lang" value="en">
+                            <button type="submit" class="btn btn-info btn btn-block ">En</button>
+                        </form>
+                    </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
+
 
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-tint"></i>

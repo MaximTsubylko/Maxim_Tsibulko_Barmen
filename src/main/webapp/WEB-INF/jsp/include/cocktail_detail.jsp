@@ -29,8 +29,11 @@
                     <fmt:message key="cocktail.information" bundle="${bundle}"/>
                 </h2>
                 <hr>
-                <p><h5>Description : <c:out value="${cocktail.description}"/></h5></p>
-                <p><h5>Price : <c:out value="${cocktail.price}"/> $</h5></p>
+                <p><h5><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>
+                : <c:out value="${cocktail.description}"/></h5></p>
+                <p><h5>
+                <fmt:message key="cocktail.price" bundle="${bundle}"/>
+                : <c:out value="${cocktail.price}"/> $</h5></p>
             </div>
         </div>
 
@@ -43,7 +46,8 @@
                 <hr>
                 <div class="widget-box">
                     <div class="widget-title"><span class="icon"> <i class="icon-th"></i> </span>
-                        <h5>Ingredients</h5>
+                        <h5><fmt:message key="ingredient.ingredients" bundle="${bundle}"/>
+                        </h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-bordered table-striped">

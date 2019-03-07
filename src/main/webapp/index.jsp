@@ -11,7 +11,7 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 <html>
 
@@ -19,24 +19,59 @@
     <title>Matrix Admin</title>
     <meta charset="UTF-8"/>
     <%@include file="/WEB-INF/resources.jsp" %>
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 
 </head>
-<body>
-<div id="loginbox">
-    <a href="?change_lang=ru" class="flip-link btn btn-danger">ru</a>
-    <a href="?change_lang=en" class="flip-link btn btn-danger">en</a>
 
+<body>
+<div id="user-nav" class="navbar">
+    <div class="btn-group ">
+        <ul class="nav" style="width: auto; margin-left: 150vh;">
+            <li>
+                <button data-toggle="dropdown" class="btn btn-inverse dropdown-toggle"><fmt:message key="main.language"
+                                                                                                    bundle="${bundle}"/>
+                    <span
+                            class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <input type="hidden" name="command" value="show_index_page">
+                            <input type="hidden" name="change_lang" value="ru">
+                            <button type="submit" class="btn btn-info btn btn-block">Ru</button>
+                        </form>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <input type="hidden" name="command" value="show_index_page">
+                            <input type="hidden" name="change_lang" value="en">
+                            <button type="submit" class="btn btn-info btn btn-block ">En</button>
+                        </form>
+                    </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="loginbox">
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
         <p class="normal_text"><fmt:message key="index.welcomemessage" bundle="${bundle}"/></p>
         <input type="hidden" name="command" value="show_login_page">
-        <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="index.startbutton" bundle="${bundle}"/></button>
+        <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="index.startbutton"
+                                                                                 bundle="${bundle}"/></button>
     </form>
 </div>
-
+<ul class="typeahead dropdown-menu"></ul>
 <script src="static/js/jquery.min.js"></script>
 <script src="static/js/matrix.login.js"></script>
-
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/matrix.js"></script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/jquery.ui.custom.js"></script>
 </body>
 
 </html>

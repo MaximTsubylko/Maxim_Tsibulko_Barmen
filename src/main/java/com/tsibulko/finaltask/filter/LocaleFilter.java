@@ -27,25 +27,15 @@ public class LocaleFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
+        Optional<String> locale = CookieFinder.getValueByName(LOCALE_ATTRIBUTE,httpServletRequest.getCookies());
 
-        Optional<String> coockiValue = CookieFinder.getValueByName(LOCALE_ATTRIBUTE,(Cookie[]) httpServletRequest.getAttribute("cookie"));
-        String atribute = "en";
+        if (locale.isPresent()){
 
+        } else  {
 
-            switch (atribute){
-            case RUSSIAN_LANGUAGE :
-                Cookie RuCookie = new Cookie(LOCALE_ATTRIBUTE, "ru");
-                httpServletResponse.addCookie(RuCookie);
-                session.setAttribute(LOCALE_ATTRIBUTE, ENGLISH_LANGUAGE);
-                break;
-            case ENGLISH_LANGUAGE :
-                Cookie EnCookie = new Cookie(LOCALE_ATTRIBUTE, "en");
-                httpServletResponse.addCookie(EnCookie);
-                session.setAttribute(LOCALE_ATTRIBUTE, ENGLISH_LANGUAGE);
-                break;
         }
 
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
 
     }
 

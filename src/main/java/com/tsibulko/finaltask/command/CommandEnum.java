@@ -47,7 +47,8 @@ public enum CommandEnum {
 
     }
 
-    public static CommandEnum getByName(String name) {
+    public static CommandEnum getByName(String name)
+    {
         return CommandEnum.valueOf(name.toUpperCase());
     }
 

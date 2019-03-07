@@ -25,8 +25,11 @@ public class LocalChangeFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession session = httpServletRequest.getSession();
-        String locale = (String) session.getAttribute(LOCALE_ATTRIBUTE);
-//        String locale = httpServletRequest.getParameter(CHANGE_LANG_PARAMETR);
+        String locale;
+        locale = httpServletRequest.getParameter(CHANGE_LANG_PARAMETR);
+        if (locale == null) {
+            locale = (String) session.getAttribute(LOCALE_ATTRIBUTE);
+        }
         if (locale == null || locale.equals("en")) {
             session.setAttribute(LOCALE_ATTRIBUTE, ENGLISH_LANGUAGE);
             Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "en");
