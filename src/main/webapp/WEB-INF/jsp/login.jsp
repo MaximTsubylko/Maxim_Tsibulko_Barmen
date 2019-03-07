@@ -5,8 +5,16 @@
   Time: 20:48
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:requestEncoding value="utf-8"/>
+
+<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
+<html>
 
 <head>
     <title>Matrix Admin</title>
@@ -16,8 +24,23 @@
 
 </head>
 <body>
+
 <div id="loginbox">
+    <form action="${pageContext.request.contextPath}/barman" method="post">
+        <input type="hidden" name="command" value="show_login_page">
+        <input type="hidden" name="change_lang" value="ru">
+        <button type="submit" class="btn btn-success btn btn-block">Ru</button>
+    </form>
+
+
+    <form action="${pageContext.request.contextPath}/barman" method="post">
+        <input type="hidden" name="command" value="show_login_page">
+        <input type="hidden" name="change_lang" value="en">
+        <button type="submit" class="btn btn-success btn btn-block">En</button>
+    </form>
+
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
+
         <div class="control-group normal_text"><h3><img src="${pageContext.request.contextPath}/static/img/logo.png"
                                                         alt="Logo"/></h3></div>
         <div class="control-group">
@@ -45,14 +68,20 @@
                     <div class="span4">
                         <input type="hidden" name="command" value="try_login">
                         <button type="submit" class="btn btn-success btn btn-block"
-                                onclick="return validLogin(document.getElementById('loginform'))">Log in
+                                onclick="return validLogin(document.getElementById('loginform'))">
+                            <fmt:message key="index.startbutton" bundle="${bundle}"/>
                         </button>
+
+
                     </div>
                     <div class="span4">
-                        <a href="#" class="flip-link btn btn-danger" id="to-recover">Forgot password?</a>
+                        <a href="#" class="flip-link btn btn-danger" id="to-recover">
+                            <fmt:message key="login.forgotpassword" bundle="${bundle}"/></a>
                     </div>
+
                     <div class="span4">
-                        <a href="#" class="flip-link btn btn-warning" id="to-registration">Registration</a>
+                        <a href="#" class="flip-link btn btn-warning" id="to-registration">
+                            <fmt:message key="login.registrationbutton" bundle="${bundle}"/></a>
                     </div>
                 </div>
             </div>
@@ -155,7 +184,7 @@
 
 <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/validation.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/login_and_reg_validation.js"></script>
 <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 
 </body>

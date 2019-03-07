@@ -5,8 +5,15 @@
   Time: 0:31
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:requestEncoding value="utf-8"/>
+
+<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
         Home</a><a href="#" class="current">User edit</a></div>
@@ -17,7 +24,7 @@
     <div class="row-fluid">
         <div class="span6">
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
                     <h5>Personal info</h5>
                 </div>
                 <div class="widget-content nopadding">
@@ -56,7 +63,7 @@
 
         <div class="span6">
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
                     <h5>Change password</h5>
                 </div>
                 <div class="widget-content nopadding">
@@ -78,7 +85,8 @@
                         <div class="control-group">
                             <label class="control-label">Confirm password :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="Confirm password" name="confirm_password">
+                                <input type="text" class="span11" placeholder="Confirm password"
+                                       name="confirm_password">
                             </div>
                         </div>
 

@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 public class EditProfileCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request) throws ServiceException {
+        CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
+        service.editUserProfile(request);
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.FORWARD));
         return responseContent;

@@ -5,8 +5,15 @@
   Time: 20:48
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:requestEncoding value="utf-8"/>
+
+
+<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
+<html>
 
 <head>
     <title>Matrix Admin</title>
@@ -17,10 +24,13 @@
 </head>
 <body>
 <div id="loginbox">
+    <a href="?change_lang=ru" class="flip-link btn btn-danger">ru</a>
+    <a href="?change_lang=en" class="flip-link btn btn-danger">en</a>
+
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
-        <p class="normal_text">Welcome! It`s very demo version, push button!</p>
+        <p class="normal_text"><fmt:message key="index.welcomemessage" bundle="${bundle}"/></p>
         <input type="hidden" name="command" value="show_login_page">
-        <button type="submit" class="btn btn-success btn btn-block">Start</button>
+        <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="index.startbutton" bundle="${bundle}"/></button>
     </form>
 </div>
 

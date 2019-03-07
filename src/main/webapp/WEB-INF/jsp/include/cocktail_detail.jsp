@@ -1,8 +1,16 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:requestEncoding value="utf-8"/>
+
+<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
-        Home</a><a href="#" class="current"><c:out value="${cocktail.name}"/></a></div>
+        <fmt:message key="link.home" bundle="${bundle}"/>
+    </a><a href="#" class="current"><c:out value="${cocktail.name}"/></a></div>
 </div>
 
 
@@ -17,7 +25,9 @@
 
         <div class="span4">
             <div class="widget-content nopadding">
-                <h2 class="pagination-centered">Cocktail information:</h2>
+                <h2 class="pagination-centered">
+                    <fmt:message key="cocktail.information" bundle="${bundle}"/>
+                </h2>
                 <hr>
                 <p><h5>Description : <c:out value="${cocktail.description}"/></h5></p>
                 <p><h5>Price : <c:out value="${cocktail.price}"/> $</h5></p>
@@ -27,7 +37,9 @@
 
         <div class="span4">
             <div class="widget-content nopadding">
-                <h2 class="pagination-centered">Cocktail ingredient</h2>
+                <h2 class="pagination-centered">
+                    <fmt:message key="cocktail.ingredient" bundle="${bundle}"/>
+                </h2>
                 <hr>
                 <div class="widget-box">
                     <div class="widget-title"><span class="icon"> <i class="icon-th"></i> </span>
@@ -37,8 +49,12 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
+                                <th>
+                                    <fmt:message key="cocktail.name" bundle="${bundle}"/>
+                                </th>
+                                <th>
+                                    <fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
