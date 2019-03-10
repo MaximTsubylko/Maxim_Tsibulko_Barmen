@@ -10,10 +10,11 @@ import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class CreateNewCocktailCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServiceException {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         service.createNewCocktail(request);

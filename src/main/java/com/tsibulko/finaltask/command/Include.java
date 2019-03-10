@@ -7,7 +7,9 @@ public enum Include {
     PROFILE_INCLUDE("profile"),
     COCKTAIL_DETAILS_INCLUDE("cocktail_detail"),
     COCKTAIL_LIST_INCLUDE("cocktail_list"),
-    CREATE_COCKTAIL_CREATE("show_create_cocktail");
+    CREATE_COCKTAIL_CREATE("show_create_cocktail"),
+    EDIT_COCKTAIL_PAGE("show_update_cocktail_page");
+
 
 
     private final String name;

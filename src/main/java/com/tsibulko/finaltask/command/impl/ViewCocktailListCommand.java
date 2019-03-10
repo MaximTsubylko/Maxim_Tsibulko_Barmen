@@ -11,12 +11,13 @@ import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class ViewCocktailListCommand implements Command {
     private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
 
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServiceException {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         request.setAttribute(COCKTAIL_LIST_ATTRIBUTE_NAME, service.getList());

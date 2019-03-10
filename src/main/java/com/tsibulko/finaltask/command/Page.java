@@ -13,7 +13,6 @@ public enum Page {
     SUCCESS_REGISTRATION("/WEB-INF/jsp/success_registration.jsp"),
     START_PAGE("index.jsp");
 
-
     private final String rout;
 
 

@@ -13,6 +13,7 @@ import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ViewCocktailDetailCommand implements Command {
@@ -22,7 +23,7 @@ public class ViewCocktailDetailCommand implements Command {
 
 
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServiceException {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
         Cocktail cocktail = service.getByPK(Integer.parseInt(request.getParameter(COCKTAIL_PARAMETR_NAME)));

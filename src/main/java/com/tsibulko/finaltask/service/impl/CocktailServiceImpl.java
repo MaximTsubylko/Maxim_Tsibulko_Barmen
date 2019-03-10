@@ -18,6 +18,14 @@ public class CocktailServiceImpl implements CocktailService {
     private static IngredientSpecificDAO ingredientDao;
     Validator<Cocktail> validator = ValidatorFactory.getInstance().getValidator(ValidatorType.COCKTAIL);
 
+    public void editCocktail(HttpServletRequest request) throws ServiceException {
+        Cocktail cocktail = getByPK(Integer.valueOf(request.getParameter("id")));
+        cocktail.setName(request.getParameter("name"));
+        cocktail.setPrice(Integer.valueOf(request.getParameter("price")));
+        cocktail.setDescription(request.getParameter("description"));
+        update(cocktail);
+    }
+
     @Override
     public Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws ServiceException {
         try {
@@ -115,13 +123,10 @@ public class CocktailServiceImpl implements CocktailService {
     public void update(Cocktail cocktaile) throws ServiceException {
         FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
-            fieldValidator.isExist("name", Cocktail.class, cocktaile.getName());
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.update(cocktaile);
         } catch (DaoException e) {
             throw new ServiceException(e, "Update cocktail error");
-        } catch (ValidationException e) {
-            throw new ServiceException(e, "This cocktail not exist");
         }
     }
 

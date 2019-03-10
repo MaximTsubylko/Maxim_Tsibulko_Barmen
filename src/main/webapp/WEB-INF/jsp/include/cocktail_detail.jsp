@@ -83,5 +83,23 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="span4 pagination-centered">
+            <form action="${pageContext.request.contextPath}/barman" method="post">
+                <a href="?command=show_update_cocktail_page&id=${cocktail.id}" class="btn btn-info btn btn-block ">
+                    <fmt:message key="cocktail.edit" bundle="${bundle}"/>
+                </a>
+            </form>
+        </div>
+
+        <%--<c:choose>--%>
+        <%--<c:when test="${customer.id.equals(1)}">--%>
+        <%--<c:out value="lol"/>--%>
+        <%--</c:when>--%>
+        <%--<c:otherwise>--%>
+        <%--<c:out value="lolnonno"/>--%>
+        <%--</c:otherwise>--%>
+        <%--</c:choose>--%>
     </div>
 </div>

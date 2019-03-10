@@ -38,11 +38,10 @@ public class IndexController extends HttpServlet {
         Command command = CommandProvider.getInstance().takeCommand(commandEnum);
         ResponseContent responseContent;
         try {
-            responseContent = command.process(request);
+            responseContent = command.process(request,response);
             if (responseContent.getRouter().getType() == Router.Type.REDIRECT) {
                 response.sendRedirect(responseContent.getRouter().getRoute());
             } else {
-
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
         } catch (ServiceException e) {

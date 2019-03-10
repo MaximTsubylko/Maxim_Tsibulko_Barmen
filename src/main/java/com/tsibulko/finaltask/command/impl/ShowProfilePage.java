@@ -13,6 +13,7 @@ import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ShowProfilePage implements Command {
@@ -21,7 +22,7 @@ public class ShowProfilePage implements Command {
     private static final String CUSTOMER_ATTRIBUTE_NAME = "customer";
 
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServiceException {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         HttpSession session = request.getSession();
         Customer customer = (Customer) session.getAttribute(SESSION_ATTRIBUTE);
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);

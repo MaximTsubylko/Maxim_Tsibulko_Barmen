@@ -36,6 +36,8 @@ public class CommandProvider {
         commandMap.put(CommandEnum.ACTIVATE_USER, new UserActivationCommand());
         commandMap.put(CommandEnum.CHANGE_PASSWORD, new ChangePasswordCommand());
         commandMap.put(CommandEnum.EDIT_PROFILE, new EditProfileCommand());
+        commandMap.put(CommandEnum.SHOW_UPDATE_COCKTAIL_PAGE, new ShowEditCocktailPage());
+        commandMap.put(CommandEnum.EDIT_COCKTAIL, new EditCocktailCommand());
     }
 
     /**

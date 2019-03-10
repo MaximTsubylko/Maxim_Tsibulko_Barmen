@@ -41,7 +41,7 @@
                         <div class="control-group">
                             <label class="control-label"><fmt:message key="cocktail.name" bundle="${bundle}"/> :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="<fmt:message key="cocktail.name" bundle="${bundle}"/>"
+                                <input  type="text" class="span11" placeholder="<fmt:message key="cocktail.name" bundle="${bundle}"/>"
                                        name="name">
                             </div>
                         </div>

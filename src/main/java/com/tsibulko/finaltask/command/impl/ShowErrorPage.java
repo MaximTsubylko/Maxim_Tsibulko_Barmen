@@ -6,10 +6,11 @@ import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class ShowErrorPage implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) {
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(Page.ERROR.getRout(), Router.Type.FORWARD));
         return responseContent;

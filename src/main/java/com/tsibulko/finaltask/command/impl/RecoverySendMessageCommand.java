@@ -11,10 +11,11 @@ import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class RecoverySendMessageCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request) throws ServiceException {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         service.sendRestoreEmail(request);
         ResponseContent responseContent = new ResponseContent();
