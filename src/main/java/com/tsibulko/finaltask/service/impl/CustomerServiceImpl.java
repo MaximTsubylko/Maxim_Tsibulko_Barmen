@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -91,17 +92,20 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPassword(request.getParameter(PASSWORD_PARAMETR));
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-            if (!dao.getStringsFromColumn(LOGIN_PARAMENR).contains(customer.getLogin())) {
+            if (!dao.findStringsFromColumn(LOGIN_PARAMENR).contains(customer.getLogin())) {
                 throw new ServiceException("Not match customer with this login");
             }
             encryptPassword(customer);
-            Customer validUser = dao.getByLogin(customer.getLogin());
-            if (!customer.getPassword().equals(validUser.getPassword())) {
+            Optional<Customer> validUser = dao.getByLogin(customer.getLogin());
+            if (!validUser.isPresent()){
+                throw new ServiceException("err");
+            }
+            if (!customer.getPassword().equals(validUser.get().getPassword())) {
                 throw new ServiceException("Incorrect password!");
             }
-            session.setAttribute(SESSION_ATTRIBUTE, validUser);
-            authenticatedCustomer.put(session.getId(), validUser);
-            return validUser;
+            session.setAttribute(SESSION_ATTRIBUTE, validUser.get());
+            authenticatedCustomer.put(session.getId(), validUser.get());
+            return validUser.get();
         } catch (DaoException e) {
             throw new ServiceException("Incorrect login or password", e);
         }

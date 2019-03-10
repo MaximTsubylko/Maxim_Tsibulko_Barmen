@@ -4,8 +4,15 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<fmt:setLocale value="${not empty sessionScope.locale ? sessionScope.locale : 'en_EN'}"/>
-<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
+<c:choose>
+    <c:when test="${not empty requestScope.get('lang')}">
+        <fmt:setLocale value="${requestScope.get('lang')}"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${cookie['locale'].value}"/>
+    </c:otherwise>
+</c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <html>
 <head>

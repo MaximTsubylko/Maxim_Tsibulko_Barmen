@@ -55,14 +55,14 @@ public class FieldValidator {
 
     public void isExist(String fieldName, Class curentClass, String value) throws DaoException, ValidationException {
         GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
-        if (!dao.getStringsFromColumn(fieldName).contains(value)) {
+        if (!dao.findStringsFromColumn(fieldName).contains(value)) {
             throw new ValidationException(value + " in " + fieldName + "doesn`t exist!");
         }
     }
 
     public void isNotExist(String fieldName, Class curentClass, String value) throws DaoException, ValidationException {
         GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
-        if (dao.getStringsFromColumn(fieldName).contains(value)) {
+        if (dao.findStringsFromColumn(fieldName).contains(value)) {
             throw new ValidationException(value + " in " + fieldName + "doesn`t exist!");
         }
     }
@@ -70,7 +70,7 @@ public class FieldValidator {
     public void isUnique(String[] fieldName, Class curentClass, String... value) throws DaoException, ValidationException {
         GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
         for (int i = 0; i < fieldName.length - 1; i++) {
-            if (dao.getStringsFromColumn(fieldName[i]).contains(value[i])) {
+            if (dao.findStringsFromColumn(fieldName[i]).contains(value[i])) {
                 throw new ValidationException(value + " in " + fieldName[i] + "doesn`t exist!");
             }
         }

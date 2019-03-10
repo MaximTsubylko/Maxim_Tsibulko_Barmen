@@ -32,7 +32,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     public Optional<T> getByPK(PK key) throws DaoException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(getSelectQuery() + " WHERE id = " + key)) {
-            return Optional.of(parseResultSet(preparedStatement.executeQuery()).get(0));
+            return parseResultSet(preparedStatement.executeQuery()).stream().findFirst();
         } catch (SQLException e) {
             throw new DaoException(e, "Get by PK error");
         }
@@ -94,7 +94,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
 
     @Override
     @AutoConnection
-    public List<String> getStringsFromColumn(String column) throws DaoException {
+    public List<String> findStringsFromColumn(String column) throws DaoException {
         if (!hasColumn(column)) {
             throw new DaoException("This column does not exist");
         }

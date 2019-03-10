@@ -30,14 +30,14 @@ public enum CommandEnum {
     SHOW_LOGIN_PAGE("show_login_page", new AccessLevel[]{AccessLevel.VISITOR}),
     SHOW_SUCCESS_PAGE("show_success_page", new AccessLevel[]{AccessLevel.VISITOR}),
     SHOW_ERROR_PAGE("show_error_page", new AccessLevel[]{AccessLevel.VISITOR}),
-    SEND_RECOVERY_MESSAGE("send_recovery_message", new AccessLevel[]{AccessLevel.VISITOR});
+    SEND_RECOVERY_MESSAGE("send_recovery_message", AccessLevel.VISITOR);
 
 
     private final String name;
     private final AccessLevel[] levels;
 
 
-    CommandEnum(String name, AccessLevel[] levels) {
+    CommandEnum(String name, AccessLevel... levels) {
         this.levels = levels;
         this.name = name;
     }

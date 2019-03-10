@@ -53,16 +53,19 @@ public class CocktailServiceImpl implements CocktailService {
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
 
-            cocktail.setName(request.getParameter("name"));
-            cocktail.setDescription(request.getParameter("description"));
-            cocktail.setPrice(Integer.valueOf(request.getParameter("price")));
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            Integer price = Integer.valueOf(request.getParameter("price"));
+
+            cocktail.setName(name);
+            cocktail.setDescription(description);
+            cocktail.setPrice(price);
             validator.doValidation(cocktail);
             cocktailDao.persist(cocktail);
         } catch (ValidationException | DaoException e) {
             throw new ServiceException(e);
         }
         return cocktail;
-
     }
 
     @Override

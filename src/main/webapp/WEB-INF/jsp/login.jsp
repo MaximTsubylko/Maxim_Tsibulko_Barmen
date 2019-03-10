@@ -11,9 +11,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:requestEncoding value="utf-8"/>
 
-<%--<fmt:setLocale value="${cookie['locale'].value}"/>--%>
-<fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
+
+<c:choose>
+    <c:when test="${not empty requestScope.get('lang')}">
+        <fmt:setLocale value="${requestScope.get('lang')}"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${cookie['locale'].value}"/>
+    </c:otherwise>
+</c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <html>
 

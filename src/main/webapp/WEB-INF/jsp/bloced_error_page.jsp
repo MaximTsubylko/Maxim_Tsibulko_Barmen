@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Buddtha
@@ -6,7 +7,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+
+
+<c:choose>
+    <c:when test="${not empty requestScope.get('lang')}">
+        <fmt:setLocale value="${requestScope.get('lang')}"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${cookie['locale'].value}"/>
+    </c:otherwise>
+</c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
+
+<html>
 
 <head>
     <title>Error of access</title>

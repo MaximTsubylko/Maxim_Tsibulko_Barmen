@@ -1,12 +1,15 @@
 package com.tsibulko.finaltask.filter;
 
+import com.tsibulko.finaltask.util.CookieFinder;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Optional;
 
 @WebFilter(filterName = "LocalChangeFilter")
 public class LocalChangeFilter implements Filter {
@@ -24,30 +27,30 @@ public class LocalChangeFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        HttpSession session = httpServletRequest.getSession();
-        String locale;
-        locale = httpServletRequest.getParameter(CHANGE_LANG_PARAMETR);
-        if (locale == null) {
-            locale = (String) session.getAttribute(LOCALE_ATTRIBUTE);
-        }
-        if (locale == null || locale.equals("en")) {
-            session.setAttribute(LOCALE_ATTRIBUTE, ENGLISH_LANGUAGE);
-            Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "en");
-            httpServletRequest.removeAttribute(CHANGE_LANG_PARAMETR);
-            httpServletResponse.addCookie(cookie);
+        Optional<String> locale = CookieFinder.getValueByName(LOCALE_ATTRIBUTE, httpServletRequest.getCookies());
+        Optional<String> change = Optional.ofNullable(httpServletRequest.getParameter(CHANGE_LANG_PARAMETR));
 
-        } else if (locale.equals("ru")) {
-            session.setAttribute(LOCALE_ATTRIBUTE, RUSSIAN_LANGUAGE);
-            Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "ru");
-            httpServletRequest.removeAttribute(CHANGE_LANG_PARAMETR);
-            httpServletResponse.addCookie(cookie);
-        }
+        if (change.isPresent()) {
+            if (change.get().equals("en")) {
+                Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "en");
+                httpServletRequest.setAttribute("lang","en");
+                httpServletResponse.addCookie(cookie);
+                httpServletResponse.setLocale(new Locale("en"));
+            } else if (change.get().equals("ru")) {
+                Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "ru");
+                httpServletResponse.addCookie(cookie);
+                httpServletRequest.setAttribute("lang","ru");
+                httpServletResponse.setLocale(new Locale("ru"));
+            }
 
+        }
         chain.doFilter(request, response);
+
     }
 
     @Override
     public void destroy() {
 
     }
+
 }

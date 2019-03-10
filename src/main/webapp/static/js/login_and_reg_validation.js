@@ -45,7 +45,8 @@ function validConfirmingPassword(password, confirm_password) {
 function validLoginByPattern(login) {
     var login_pattern = /^[a-zA-Z1-9]+$/;
     if (login_pattern.test(login) === false) {
-        swal("Ooopss..", "Login should consist only of latin letters and numbers!", "error");
+        var msg1 = document.getElementById("key1").textContent;
+        swal("Ooopss..", msg1, "error");
         return false;
     } else {
         return true;

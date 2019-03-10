@@ -17,5 +17,5 @@ public interface GenericDAO<T extends Identified<PK>, PK extends Serializable> {
 
     void update(T daoObject) throws DaoException;
 
-    List<String> getStringsFromColumn(String column) throws DaoException;
+    List<String> findStringsFromColumn(String column) throws DaoException;
 }

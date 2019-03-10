@@ -46,6 +46,7 @@ public class IndexController extends HttpServlet {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
         } catch (ServiceException e) {
+            request.setAttribute("error", "ser.err."+e.getCode());
             request.getRequestDispatcher(CommandEnum.SHOW_ERROR_PAGE.useCommand()).forward(request, response);
         }
     }

@@ -4,6 +4,9 @@ package com.tsibulko.finaltask.service;
 import com.tsibulko.finaltask.dao.DaoException;
 
 public class ServiceException extends Exception {
+
+    int errCode;
+
     public ServiceException(String error) {
     }
 
@@ -15,6 +18,10 @@ public class ServiceException extends Exception {
 
     public ServiceException(String msg, DaoException e) {
 
+    }
+
+    public int getCode() {
+        return errCode;
     }
 }
 

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class CustomerDAOimpl extends AbstractJdbcDao<Customer, Integer> implements CustomerDAO {
 
@@ -109,11 +110,11 @@ public class CustomerDAOimpl extends AbstractJdbcDao<Customer, Integer> implemen
 
     @AutoConnection
     @Override
-    public Customer getByLogin(String login) throws DaoException {
+    public Optional<Customer> getByLogin(String login) throws DaoException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(getSelectQuery() + " WHERE login = ?")) {
             preparedStatement.setString(1, login);
-            return parseResultSet(preparedStatement.executeQuery()).get(0);
+            return parseResultSet(preparedStatement.executeQuery()).stream().findFirst();
         } catch (SQLException e) {
             throw new DaoException(e);
         }
