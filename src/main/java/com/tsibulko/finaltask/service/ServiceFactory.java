@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.service;
 
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
+import com.tsibulko.finaltask.service.impl.IngredientServiceImpl;
 import com.tsibulko.finaltask.service.impl.LoginServiceImpl;
 
 import java.util.concurrent.locks.Lock;
@@ -30,6 +31,8 @@ public class ServiceFactory {
 
     public CRUDService getService(ServiceTypeEnum type) throws IllegalStateException {
         switch (type) {
+            case INGREDIENT:
+                return new IngredientServiceImpl();
             case CUSTOMER:
                 return new CustomerServiceImpl();
             case COCKTAIL:

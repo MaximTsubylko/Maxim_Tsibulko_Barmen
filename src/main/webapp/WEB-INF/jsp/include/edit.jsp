@@ -90,24 +90,13 @@
                     </h5>
                 </div>
                 <div class="widget-content nopadding">
-                    <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
-
-                        <div class="control-group">
-                            <label class="control-label">
-                                <fmt:message key="edit.oldpassword" bundle="${bundle}"/>
-                                :</label>
-                            <div class="controls">
-                                <input type="text" class="span11"
-                                       placeholder="<fmt:message key="edit.oldpassword" bundle="${bundle}"/>"
-                                       name="old_password">
-                            </div>
-                        </div>
+                    <form id="changepasswordform" action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
 
                         <div class="control-group">
                             <label class="control-label"> <fmt:message key="edit.newpassword" bundle="${bundle}"/>
                                 :</label>
                             <div class="controls">
-                                <input type="text" class="span11"
+                                <input type="password" class="span11"
                                        placeholder="<fmt:message key="edit.newpassword" bundle="${bundle}"/>"
                                        name="password">
                             </div>
@@ -117,13 +106,15 @@
                                 <fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>
                                 :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="<fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>"
+                                <input type="password" class="span11" placeholder="<fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>"
                                        name="confirm_password">
                             </div>
                         </div>
 
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">
+                            <input type="hidden" name="command" value="change_password">
+                            <button onclick="return validate(document.getElementById('changepasswordform'))"
+                                    type="submit" class="btn btn-success">
                                 <fmt:message key="edit.savebutton" bundle="${bundle}"/>
                             </button>
                         </div>
@@ -133,3 +124,5 @@
         </div>
     </div>
 </div>
+<script src="${pageContext.request.contextPath}/static/js/change_password_validation.js"></script>
+<script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>

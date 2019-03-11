@@ -14,20 +14,28 @@
 
 <head>
     <%@include file="/WEB-INF/resources.jsp" %>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/select2.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-media.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-wysihtml5.css" />
+
 
 </head>
 <fmt:requestEncoding value="utf-8"/>
 
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
-        <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message key="link.createcocktil" bundle="${bundle}"/></a></div>
+        <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message
+            key="link.createcocktil" bundle="${bundle}"/></a></div>
     <h1>
         <fmt:message key="cocktail.createnew" bundle="${bundle}"/>
     </h1>
 </div>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span6">
+        <div style="margin-left: 45vh" class="span6">
 
 
             <div class="widget-content nopadding">
@@ -37,32 +45,52 @@
                     <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
                         <h5><fmt:message key="fill" bundle="${bundle}"/></h5>
                     </div>
-                    <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal" accept-charset="UTF-8">
+                    <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal"
+                          accept-charset="UTF-8">
                         <div class="control-group">
                             <label class="control-label"><fmt:message key="cocktail.name" bundle="${bundle}"/> :</label>
                             <div class="controls">
-                                <input  type="text" class="span11" placeholder="<fmt:message key="cocktail.name" bundle="${bundle}"/>"
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="cocktail.name" bundle="${bundle}"/>"
                                        name="name">
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label"><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/> :</label>
+                            <label class="control-label"><fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>
+                                :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="<fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>"
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>"
                                        name="description">
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label"><fmt:message key="cocktail.price" bundle="${bundle}"/> :</label>
+                            <label class="control-label"><fmt:message key="cocktail.price" bundle="${bundle}"/>
+                                :</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="<fmt:message key="cocktail.price" bundle="${bundle}"/>"
+                                <input type="text" class="span11"
+                                       placeholder="<fmt:message key="cocktail.price" bundle="${bundle}"/>"
                                        name="price">
                             </div>
                         </div>
+
+                        <div class="control-group">
+                            <label class="control-label"><fmt:message key="ingredient.ingredients" bundle="${bundle}"/></label>
+                            <div class="controls">
+                                <select name="ingredients[]" multiple="" required="required" style="display: none;">
+                                    <c:forEach items="${ingredientList}" var="ingredient">
+                                        <option>
+                                            <c:out value="${ingredient.name}"/>
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
                         <input type="hidden" name="command" value="register_cocktail">
-                        <button type="submit" class="btn btn-success btn btn-large btn-block"><fmt:message key="button.create" bundle="${bundle}"/></button>
+                        <button type="submit" class="btn btn-success btn btn-large btn-block"><fmt:message
+                                key="button.create" bundle="${bundle}"/></button>
                     </form>
                 </div>
 

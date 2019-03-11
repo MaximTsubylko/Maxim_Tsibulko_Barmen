@@ -1,4 +1,5 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Buddtha
@@ -15,7 +16,8 @@
     <c:otherwise>
         <fmt:setLocale value="${cookie['locale'].value}"/>
     </c:otherwise>
-</c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
+</c:choose>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <html>
 

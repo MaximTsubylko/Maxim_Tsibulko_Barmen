@@ -84,22 +84,24 @@
             </div>
         </div>
 
+        <c:choose>
+            <c:when test="${CurentUser.role_id == 3 || CurentUser.id == ProfileUser.id }">
+                <div class="span4 pagination-centered">
+                    <form action="${pageContext.request.contextPath}/barman" method="post">
+                        <a href="?command=show_update_cocktail_page&id=${cocktail.id}"
+                           class="btn btn-info btn btn-block ">
+                            <fmt:message key="cocktail.edit" bundle="${bundle}"/>
+                        </a>
+                    </form>
 
-        <div class="span4 pagination-centered">
-            <form action="${pageContext.request.contextPath}/barman" method="post">
-                <a href="?command=show_update_cocktail_page&id=${cocktail.id}" class="btn btn-info btn btn-block ">
-                    <fmt:message key="cocktail.edit" bundle="${bundle}"/>
-                </a>
-            </form>
-        </div>
-
-        <%--<c:choose>--%>
-        <%--<c:when test="${customer.id.equals(1)}">--%>
-        <%--<c:out value="lol"/>--%>
-        <%--</c:when>--%>
-        <%--<c:otherwise>--%>
-        <%--<c:out value="lolnonno"/>--%>
-        <%--</c:otherwise>--%>
-        <%--</c:choose>--%>
+                    <form action="${pageContext.request.contextPath}/barman" method="post">
+                        <a href="?command=delete_cocktail&cocktailId=${cocktail.id}"
+                           class="btn btn-danger btn btn-block ">
+                            <fmt:message key="cocktail.delete" bundle="${bundle}"/>
+                        </a>
+                    </form>
+                </div>
+            </c:when>
+        </c:choose>
     </div>
 </div>

@@ -16,7 +16,6 @@ public class CocktailServiceImpl implements CocktailService {
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CocktailSpecificDAO cocktailDao;
     private static IngredientSpecificDAO ingredientDao;
-    Validator<Cocktail> validator = ValidatorFactory.getInstance().getValidator(ValidatorType.COCKTAIL);
 
     public void editCocktail(HttpServletRequest request) throws ServiceException {
         Cocktail cocktail = getByPK(Integer.valueOf(request.getParameter("id")));
@@ -55,22 +54,12 @@ public class CocktailServiceImpl implements CocktailService {
         }
     }
 
-    public Cocktail createNewCocktail(HttpServletRequest request) throws ServiceException {
-        Cocktail cocktail = new Cocktail();
-
+    public Cocktail createNewCocktail(Cocktail cocktail, Customer customer) throws ServiceException {
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
-
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            Integer price = Integer.valueOf(request.getParameter("price"));
-
-            cocktail.setName(name);
-            cocktail.setDescription(description);
-            cocktail.setPrice(price);
-            validator.doValidation(cocktail);
             cocktailDao.persist(cocktail);
-        } catch (ValidationException | DaoException e) {
+            cocktailDao.setCocktailToCustomer(customer,cocktail);
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         return cocktail;

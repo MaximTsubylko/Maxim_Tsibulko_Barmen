@@ -36,7 +36,6 @@ public class AuthenticationFilter implements Filter {
             request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
         } else if (command == null) {
             request.getRequestDispatcher(Page.LOG_IN.getRout()).forward(request, response);
-
         } else if (customer == null && Arrays.stream(CommandEnum.getByName(command).
                 getLevels()).
                 noneMatch((ob) -> ob == AccessLevel.VISITOR || ob == AccessLevel.ALL)) {

@@ -1,6 +1,5 @@
 package com.tsibulko.finaltask.command.impl;
 
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.Include;
 import com.tsibulko.finaltask.command.Page;
@@ -14,24 +13,18 @@ import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class ShowProfilePage implements Command {
-    private static final String SESSION_ATTRIBUTE = "user";
-    private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
-    private static final String ID_PARAMETR_NAME = "id";
-    private static final String CUSTOMER_ATTRIBUTE_NAME = "customer";
-
+public class ShowCustomerListCommand implements Command {
+    private static final String CUSTOMER_LIST_PARAMETR = "customerlist";
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
-        HttpSession session = request.getSession();
-        CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
-        Customer customer = service.getCustomerWithCocktails(Integer.valueOf(request.getParameter(ID_PARAMETR_NAME))
-                ,new Customer());
+        System.out.println(response.isCommitted());
         ResponseContent responseContent = new ResponseContent();
+        CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
+        request.setAttribute(CUSTOMER_LIST_PARAMETR, service.getList());
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
-        request.setAttribute(CUSTOMER_ATTRIBUTE_NAME, customer);
-        request.setAttribute(Include.VIEW_NAME.getName(), Include.PROFILE_INCLUDE.getName());
+        request.setAttribute(Include.VIEW_NAME.getName(), Include.CUSTOMER_LIST_INCLUDE.getName());
+
         return responseContent;
     }
 }

@@ -20,7 +20,7 @@ public class RecoverySendMessageCommand implements Command {
         SendMessages sendMessages = new SendMessages();
         sendMessages.sendRestoreEmail(request);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.SHOW_LOGIN_PAGE.useCommand(), Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_LOGIN_PAGE.useCommand(), Router.Type.FORWARD));
         return responseContent;
 
     }

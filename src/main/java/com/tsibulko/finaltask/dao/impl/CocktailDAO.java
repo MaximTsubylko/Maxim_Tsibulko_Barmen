@@ -62,6 +62,9 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
         return "FROM cocktail";
     }
 
+    protected String getSetCoctailToCustomerQuery() {
+        return "INSERT INTO user_coctails (user_id,cocktail_id) values (?,?)";
+    }
 
     private void statementPreparation(PreparedStatement statement, Cocktail cocktail) throws DaoException {
         int i = 0;
@@ -71,6 +74,17 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
             statement.setInt(++i, cocktail.getPrice());
         } catch (SQLException e) {
             throw new DaoException(e, "Can`t prepare cocktail statement for using!");
+        }
+    }
+
+    protected void preparedStatmentForSetCocktailToCustomer(PreparedStatement statement,
+                                                            Customer customer, Cocktail cocktail) throws DaoException {
+        try {
+            statement.setInt(1, customer.getId());
+            statement.setInt(2, cocktail.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e, "");
         }
     }
 
@@ -117,6 +131,10 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
         return "SELECT * FROM user_coctails INNER JOIN cocktail ON cocktail_id=cocktail.id WHERE user_id = ?";
     }
 
+    public String getCocktailDeleteByCustomerQuary(){
+        return "DELETE from user_coctails WHERE user_id = ? and cocktail_id = ?";
+    }
+
     @AutoConnection
     public List<Cocktail> getCocktailByCustomer(Customer customer) throws DaoException {
         try {
@@ -127,6 +145,30 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
             }
         } catch (SQLException e) {
             throw new DaoException(e, "Can`t get cocktails by customer");
+        }
+    }
+
+    @Override
+    @AutoConnection
+    public void setCocktailToCustomer(Customer customer, Cocktail cocktail) throws DaoException {
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(getSetCoctailToCustomerQuery())) {
+                preparedStatmentForSetCocktailToCustomer(statement,customer, cocktail);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get cocktails by customer");
+        }
+    }
+
+    @AutoConnection
+    @Override
+    public void deleteCoctail(Customer customer, Cocktail cocktail) throws DaoException {
+        try {
+            try (PreparedStatement statement = connection.prepareStatement(getCocktailDeleteByCustomerQuary())) {
+                preparedStatmentForSetCocktailToCustomer(statement,customer, cocktail);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "errr");
         }
     }
 

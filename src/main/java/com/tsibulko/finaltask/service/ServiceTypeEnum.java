@@ -1,5 +1,5 @@
 package com.tsibulko.finaltask.service;
 
 public enum ServiceTypeEnum {
-    CUSTOMER, COCKTAIL, LOGIN, REGISTRATION
+    CUSTOMER, COCKTAIL, LOGIN, REGISTRATION,INGREDIENT
 }

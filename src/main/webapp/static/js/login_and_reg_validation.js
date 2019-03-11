@@ -35,6 +35,7 @@ function validEmailByPattern(email) {
 
 function validConfirmingPassword(password, confirm_password) {
     if (password == confirm_password) {
+        swal("Ooopss..", "Passwords you entered do not match", "error");
         return true;
     } else {
         swal("Ooopss..", "Passwords you entered do not match", "error");

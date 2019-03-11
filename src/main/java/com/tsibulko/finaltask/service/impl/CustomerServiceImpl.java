@@ -4,9 +4,7 @@ package com.tsibulko.finaltask.service.impl;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.dao.*;
-import com.tsibulko.finaltask.service.CustomerService;
-import com.tsibulko.finaltask.service.ServiceException;
-import com.tsibulko.finaltask.service.UserKey;
+import com.tsibulko.finaltask.service.*;
 import com.tsibulko.finaltask.util.AppConstant;
 import com.tsibulko.finaltask.util.EncryptPassword;
 import com.tsibulko.finaltask.util.StringGenerator;
@@ -63,6 +61,20 @@ public class CustomerServiceImpl implements CustomerService {
         } else {
             throw new ServiceException("Error in change password!");
         }
+    }
+
+    public Customer changePassword(Customer customer, String newPassword) throws ServiceException {
+        customer.setPassword(newPassword);
+        EncryptPassword.encrypt(customer);
+        update(customer);
+        return customer;
+    }
+
+    public Customer getCustomerWithCocktails(Integer id,Customer customer) throws ServiceException {
+        CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+        customer = getByPK(id);
+        customer.setCocktails(cocktailService.getCocktailByCustomer(customer));
+        return customer;
     }
 
 

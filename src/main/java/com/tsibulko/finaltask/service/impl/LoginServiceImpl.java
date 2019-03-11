@@ -3,6 +3,8 @@ package com.tsibulko.finaltask.service.impl;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.*;
 import com.tsibulko.finaltask.service.ServiceException;
+import com.tsibulko.finaltask.service.ServiceFactory;
+import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.util.AppConstant;
 import com.tsibulko.finaltask.util.EncryptPassword;
 
@@ -21,6 +23,7 @@ public class LoginServiceImpl {
 
     public Customer logIn(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
+        CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         Customer customer = new Customer();
         customer.setLogin(request.getParameter(AppConstant.LOGIN_PARAMENR));
         customer.setPassword(request.getParameter(AppConstant.PASSWORD_PARAMETR));
@@ -37,6 +40,8 @@ public class LoginServiceImpl {
             if (!customer.getPassword().equals(validUser.get().getPassword())) {
                 throw new ServiceException("Incorrect password!");
             }
+
+            validUser.get().setCocktails(cocktailService.getCocktailByCustomer(validUser.get()));
             session.setAttribute(AppConstant.SESSION_ATTRIBUTE, validUser.get());
             authenticatedCustomer.put(session.getId(), validUser.get());
             return validUser.get();

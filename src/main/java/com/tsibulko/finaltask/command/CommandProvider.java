@@ -34,10 +34,13 @@ public class CommandProvider {
         commandMap.put(CommandEnum.SHOW_EDIT_PAGE, new ShowEditPageCommand());
         commandMap.put(CommandEnum.SHOW_INDEX_PAGE, new ShowIndexCommand());
         commandMap.put(CommandEnum.ACTIVATE_USER, new UserActivationCommand());
-        commandMap.put(CommandEnum.CHANGE_PASSWORD, new ChangePasswordCommand());
+        commandMap.put(CommandEnum.RESTORE_PASSWORD, new RestorePasswordCommand());
         commandMap.put(CommandEnum.EDIT_PROFILE, new EditProfileCommand());
         commandMap.put(CommandEnum.SHOW_UPDATE_COCKTAIL_PAGE, new ShowEditCocktailPage());
         commandMap.put(CommandEnum.EDIT_COCKTAIL, new EditCocktailCommand());
+        commandMap.put(CommandEnum.CHANGE_PASSWORD, new ChangePasswordCommand());
+        commandMap.put(CommandEnum.SHOW_CUSTOMER_LIST, new ShowCustomerListCommand());
+        commandMap.put(CommandEnum.DELETE_CUSTOMER, new DeleteCustomerCommand());
     }
 
     /**
