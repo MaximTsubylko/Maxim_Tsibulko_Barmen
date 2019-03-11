@@ -2,154 +2,30 @@ package com.tsibulko.finaltask.service.impl;
 
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.bean.UserRole;
 import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.dao.*;
-import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
-import com.tsibulko.finaltask.service.*;
+import com.tsibulko.finaltask.service.CustomerService;
+import com.tsibulko.finaltask.service.ServiceException;
+import com.tsibulko.finaltask.service.UserKey;
+import com.tsibulko.finaltask.util.AppConstant;
+import com.tsibulko.finaltask.util.EncryptPassword;
 import com.tsibulko.finaltask.util.StringGenerator;
-import com.tsibulko.finaltask.validation.CustomerValidator;
 import com.tsibulko.finaltask.validation.FieldValidator;
 import com.tsibulko.finaltask.validation.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.WeakHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class CustomerServiceImpl implements CustomerService {
-    private static final String SESSION_ATTRIBUTE = "user";
-    private static final String VALUE_PARAMETR = "value";
-    private static final String ID_PARAMETR = "user_id";
-    private static final String EMAIL_PARAMETR = "email";
-    private static final String LOGIN_PARAMENR = "login";
-    private static final String PASSWORD_PARAMETR = "password";
-    private static final String FIRST_NAME_PARAMETR = "first_name";
-    private static final String SECOND_NAME_PARAMETR = "second_name";
-    private static final String NEW_PASSWORD_PARAMETR = "new_password";
-    private static final String ACTIV_LINK = "Your activation link: %s/barman?command=activate_user&user_id=%d&value=%s";
-    private static final String ACTIV_TITLE = "Activation message from barmen helper!";
-    private static final String RESTORE_LINK = "Your restore link: %s/barman?command=change_password&user_id=%d&value=%s";
-    private static final String RESTORE_TITLE = "Restore password message from barmen helper!";
 
     private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
     private static CustomerDAO dao;
-    private static Map<String, Customer> authenticatedCustomer = new WeakHashMap<>();
-
-
-    public void logout(HttpSession session) {
-        session.setAttribute(SESSION_ATTRIBUTE, null);
-    }
-
-    private void encryptPassword(Customer user) throws ServiceException {
-        try {
-            String passwordWithSalt = user.getPassword() + user.getLogin();
-            byte[] hexHash = MessageDigest.getInstance("SHA-256").digest(passwordWithSalt.getBytes(StandardCharsets.UTF_8));
-            String decimalHash = IntStream.range(0, hexHash.length).mapToObj(i -> Integer.toHexString(0xff & hexHash[i]))
-                    .map(s -> (s.length() == 1) ? "0" + s : s).collect(Collectors.joining());
-            user.setPassword(decimalHash);
-        } catch (NoSuchAlgorithmException e) {
-            throw new ServiceException(e, "Encrypt password error");
-        }
-    }
-
-    public Customer signUp(HttpServletRequest request) throws ServiceException {
-        JdbcDaoFactory daoFactory = (JdbcDaoFactory) FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
-        Customer customer = new Customer();
-        customer.setLogin(request.getParameter(LOGIN_PARAMENR));
-        customer.setPassword(request.getParameter(PASSWORD_PARAMETR));
-        customer.setEmail(request.getParameter(EMAIL_PARAMETR));
-        try {
-            CustomerValidator validator = new CustomerValidator();
-            validator.doValidation(customer);
-
-            customer.setRole_id(UserRole.CUSTOMER.getId());
-            customer.setState(UserState.WAITING_CONFIRMATION.getId());
-
-            GenericDAO<Customer, Integer> userDao = daoFactory.getDao(Customer.class);
-            encryptPassword(customer);
-            customer = userDao.persist(customer);
-            sendActivationLinkEmail(customer, request, ACTIV_TITLE, ACTIV_LINK);
-            return customer;
-        } catch (DaoException e) {
-            throw new ServiceException(e, "Failed  with DAO. ");
-        } catch (ValidationException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public Customer logIn(HttpServletRequest request) throws ServiceException {
-        HttpSession session = request.getSession();
-        Customer customer = new Customer();
-        customer.setLogin(request.getParameter(LOGIN_PARAMENR));
-        customer.setPassword(request.getParameter(PASSWORD_PARAMETR));
-        try {
-            dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-            if (!dao.findStringsFromColumn(LOGIN_PARAMENR).contains(customer.getLogin())) {
-                throw new ServiceException("Not match customer with this login");
-            }
-            encryptPassword(customer);
-            Optional<Customer> validUser = dao.getByLogin(customer.getLogin());
-            if (!validUser.isPresent()){
-                throw new ServiceException("err");
-            }
-            if (!customer.getPassword().equals(validUser.get().getPassword())) {
-                throw new ServiceException("Incorrect password!");
-            }
-            session.setAttribute(SESSION_ATTRIBUTE, validUser.get());
-            authenticatedCustomer.put(session.getId(), validUser.get());
-            return validUser.get();
-        } catch (DaoException e) {
-            throw new ServiceException("Incorrect login or password", e);
-        }
-    }
-
-
-    public String buildActivationLink(String randomString, Integer userId, String url, String link) {
-        return String.format(link, url, userId, randomString);
-    }
-
-
-    private void sendActivationLinkEmail(Customer customer, HttpServletRequest request, String title, String link) throws ServiceException {
-        StringGenerator generator = new StringGenerator();
-        UserKey userKey = UserKey.getInstance();
-        String randomString = generator.generate();
-        userKey.add(customer.getId(), randomString);
-        MailSender sender = MailSender.getInstance();
-        Integer port = request.getLocalPort();
-        String url;
-        url = "http://207.154.220.222" + ":" + port + request.getContextPath();
-        String buildLink = buildActivationLink(randomString, customer.getId(), url, link);
-        CustomMessage activationMessage = new CustomMessage(title, buildLink);
-        sender.send(request, activationMessage);
-    }
-
-    public void sendRestoreEmail(HttpServletRequest request) throws ServiceException {
-        FieldValidator validator = FieldValidator.getInstance();
-        try {
-            validator.emailMatches(request.getParameter(EMAIL_PARAMETR));
-            validator.isExist(EMAIL_PARAMETR,Customer.class, request.getParameter(EMAIL_PARAMETR));
-            String customerEmail = request.getParameter(EMAIL_PARAMETR);
-            Customer customer = getByEmail(customerEmail);
-            sendActivationLinkEmail(customer, request, RESTORE_TITLE, RESTORE_LINK);
-        } catch (ValidationException e) {
-            throw new ServiceException("Some error in validation date");
-        } catch (DaoException e) {
-            throw new ServiceException(e,"");
-        }
-    }
 
 
     public void setNewState(HttpServletRequest request, String name) throws ServiceException {
-        Integer userID = Integer.valueOf(request.getParameter(ID_PARAMETR));
-        String reaquestKey = request.getParameter(VALUE_PARAMETR);
+        Integer userID = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
+        String reaquestKey = request.getParameter(AppConstant.VALUE_PARAMETR);
         UserKey userKey = UserKey.getInstance();
         if (reaquestKey.equals(userKey.get(userID))) {
             Customer customer = getByPK(userID);
@@ -162,28 +38,28 @@ public class CustomerServiceImpl implements CustomerService {
 
     public void editUserProfile(HttpServletRequest request) throws ServiceException {
         HttpSession session = request.getSession();
-        Customer customer = (Customer) session.getAttribute(SESSION_ATTRIBUTE);
-        customer.setFirst_name(request.getParameter(FIRST_NAME_PARAMETR));
-        customer.setSecond_name(request.getParameter(SECOND_NAME_PARAMETR));
-        customer.setEmail(request.getParameter(EMAIL_PARAMETR));
+        Customer customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
+        customer.setFirst_name(request.getParameter(AppConstant.FIRST_NAME_PARAMETR));
+        customer.setSecond_name(request.getParameter(AppConstant.SECOND_NAME_PARAMETR));
+        customer.setEmail(request.getParameter(AppConstant.EMAIL_PARAMETR));
         update(customer);
-        session.setAttribute(SESSION_ATTRIBUTE,getByPK(customer.getId()));
+        session.setAttribute(AppConstant.SESSION_ATTRIBUTE, getByPK(customer.getId()));
     }
 
     public void restorePassword(HttpServletRequest request) throws ServiceException {
         StringGenerator generator = new StringGenerator();
         HttpSession session = request.getSession();
         String newPassword = generator.generate();
-        Integer userID = Integer.valueOf(request.getParameter(ID_PARAMETR));
-        String reaquestKey = request.getParameter(VALUE_PARAMETR);
+        Integer userID = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
+        String reaquestKey = request.getParameter(AppConstant.VALUE_PARAMETR);
         UserKey userKey = UserKey.getInstance();
         if (reaquestKey.equals(userKey.get(userID))) {
             Customer customer = getByPK(userID);
             customer.setPassword(newPassword);
-            request.setAttribute(NEW_PASSWORD_PARAMETR, newPassword);
-            encryptPassword(customer);
+            request.setAttribute(AppConstant.NEW_PASSWORD_PARAMETR, newPassword);
+            EncryptPassword.encrypt(customer);
             update(customer);
-            session.setAttribute(SESSION_ATTRIBUTE, customer);
+            session.setAttribute(AppConstant.SESSION_ATTRIBUTE, customer);
         } else {
             throw new ServiceException("Error in change password!");
         }
@@ -194,9 +70,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer create(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isUnique(new String[]{LOGIN_PARAMENR, EMAIL_PARAMETR}, Customer.class, customer.getLogin(), customer.getEmail());
+            fieldValidator.isUnique(new String[]{AppConstant.LOGIN_PARAMENR, AppConstant.EMAIL_PARAMETR},
+                    Customer.class, customer.getLogin(), customer.getEmail());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
-            encryptPassword(customer);
+            EncryptPassword.encrypt(customer);
             dao.persist(customer);
             return customer;
         } catch (DaoException e) {
@@ -210,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void delete(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist(LOGIN_PARAMENR, Customer.class, customer.getLogin());
+            fieldValidator.isExist(AppConstant.LOGIN_PARAMENR, Customer.class, customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.delete(customer);
 
@@ -240,7 +117,7 @@ public class CustomerServiceImpl implements CustomerService {
     public void update(Customer customer) throws ServiceException {
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
-            fieldValidator.isExist(LOGIN_PARAMENR, Customer.class, customer.getLogin());
+            fieldValidator.isExist(AppConstant.LOGIN_PARAMENR, Customer.class, customer.getLogin());
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             dao.update(customer);
 
