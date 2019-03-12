@@ -57,7 +57,7 @@ public class CocktailServiceImpl implements CocktailService {
     public Cocktail createNewCocktail(Cocktail cocktail, Customer customer) throws ServiceException {
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
-            cocktailDao.persist(cocktail);
+            create(cocktail);
             cocktailDao.setCocktailToCustomer(customer,cocktail);
         } catch (DaoException e) {
             throw new ServiceException(e);

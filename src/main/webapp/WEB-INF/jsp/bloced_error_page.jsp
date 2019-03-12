@@ -1,5 +1,3 @@
-
-
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -31,13 +29,18 @@
         <div class="span12">
             <div class="error_ex">
                 <h1>405</h1>
-                <h3 style="color: #2d6987">Sorry, you haven`t got access to this page, because you have been
-                    banned!</h3>
-                <p style="color: #2d6987"> For some reason you have been banned..
-                    You can send message for us, and we try to help!</p>
-                <p> Our e-mail address - barmansupp@gmail.com</p>
+                <h3 style="color: #2d6987">
+                    <fmt:message key="error.blocked.title" bundle="${bundle}"/>
+                </h3>
+                <p style="color: #2d6987">
+                    <fmt:message key="error.blocked.text" bundle="${bundle}"/></p>
+                <p>
+                    <fmt:message key="error.blocker.email" bundle="${bundle}"/></p>
+                </p>
                 <a class="btn btn-warning btn-big"
-                   href="${pageContext.request.contextPath}/barman?command=show_index_page">Back to Home</a>
+                   href="${pageContext.request.contextPath}/barman?command=show_index_page">
+                    <fmt:message key="button.back_to_home" bundle="${bundle}"/>
+                </a>
             </div>
         </div>
     </div>

@@ -52,6 +52,9 @@
                                 <th>
                                     <fmt:message key="cocktail.price" bundle="${bundle}"/>
                                 </th>
+                                <th>
+                                    <fmt:message key="cocktail.avermarck" bundle="${bundle}"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -62,6 +65,7 @@
                                                 <c:out value="${cocktail.name}"/>
                                     </td>
                                     <td><c:out value="${cocktail.description}"/></td>
+                                    <td><c:out value="${cocktail.price}"/></td>
                                     <td><c:out value="${cocktail.price}"/></td>
                                 </tr>
                             </c:forEach>

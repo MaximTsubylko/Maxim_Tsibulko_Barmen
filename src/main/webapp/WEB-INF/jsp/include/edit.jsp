@@ -113,7 +113,7 @@
 
                         <div class="form-actions">
                             <input type="hidden" name="command" value="change_password">
-                            <button onclick="return validate(document.getElementById('changepasswordform'))"
+                            <button form="changepasswordform" onclick="return validate(document.getElementById('changepasswordform'))"
                                     type="submit" class="btn btn-success">
                                 <fmt:message key="edit.savebutton" bundle="${bundle}"/>
                             </button>

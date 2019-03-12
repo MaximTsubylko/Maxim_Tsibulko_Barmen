@@ -35,12 +35,16 @@
         <div class="span12">
             <div class="error_ex">
                 <h1>405</h1>
-                <h3 style="color: #2d6987">Sorry, you haven`t got access to this page, because you not confirm
-                    your account!</h3>
-                <p style="color: #2d6987"> We send you e-mail with link for confirm account. Please, check your e-mail
-                    address</p>
+                <h3 style="color: #2d6987">
+                    <fmt:message key="error.waiting_conf.title" bundle="${bundle}"/>
+                </h3>
+                <p style="color: #2d6987">
+                    <fmt:message key="error.waiting_conf.text" bundle="${bundle}"/>
+                </p>
                 <a class="btn btn-warning btn-big"
-                   href="${pageContext.request.contextPath}/barman?command=show_index_page">Back to Home</a>
+                   href="${pageContext.request.contextPath}/barman?command=show_index_page">
+                    <fmt:message key="button.back_to_home" bundle="${bundle}"/>
+                </a>
             </div>
         </div>
     </div>

@@ -26,7 +26,6 @@ public class CreateNewCocktailCommand implements Command {
         Builder<Cocktail> builder = BuilderFactory.getInstance().getBuilder(Cocktail.class);
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         Cocktail cocktail = builder.build(request);
-//        String[] s = request.getParameter("ingredients");
         service.createNewCocktail(cocktail, (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE));
         responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.FORWARD));
 

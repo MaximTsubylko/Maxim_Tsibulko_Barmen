@@ -130,6 +130,7 @@
             </div>
         </div>
 
+
         <div class="row-fluid">
             <div class="span6 pagination-centered">
                 <div class="widget-box">
@@ -141,13 +142,16 @@
                     </div>
                     <div class="widget-content nopadding in collapse" id="collapseG2" style="height: auto;">
                         <ul class="recent-posts">
-                            <li>
-                                <div class="article-post"><span class="user-info">
+                            <c:forEach items="${feedback}" var="feedback">
+                                <li>
+                                    <div class="article-post"><span class="user-info">
                                     <fmt:message key="user.comments.by" bundle="${bundle}"/>: john Deo</span>
-                                    <p><a href="#">This is a much longer one that will go on for a few lines.It has
-                                        multiple paragraphs and is full of waffle to pad out the comment.</a></p>
-                                </div>
-                            </li>
+                                        <h5><a href="#"><c:out value="${feedback.title}"/></a></h5>
+                                        <p><a href="#"><c:out value="${feedback.comment}"/></a></p>
+                                    </div>
+                                </li>
+                            </c:forEach>
+
                         </ul>
                     </div>
                 </div>
@@ -161,12 +165,36 @@
                         </h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <form action="#" method="get" class="form-horizontal">
+                        <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
                             <div class="control-group">
                                 <label class="control-label">
                                     <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
                                 <div class="controls">
-                                    <input type="text" class="span11" placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
+                                    <input name="title" type="text" class="span11"
+                                           placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Mark</label>
+                                <div class="controls">
+                                    <div data-toggle="buttons-radio" class="btn-group">
+                                        <button class="btn btn-info" type="button">
+                                            <input type="hidden" name="mark" value="1">
+                                            1</button>
+                                        <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                            <input type="hidden" name="mark" value="2">
+                                            2</button>
+                                        <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                            <input type="hidden" name="mark" value="3">
+                                            3</button>
+                                        <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                            <input type="hidden" name="mark" value="4">
+                                            4</button>
+                                        <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                            <input type="hidden" name="mark" value="5">
+                                            5</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -175,11 +203,14 @@
                                     <fmt:message key="user.comments.message" bundle="${bundle}"/>:
                                 </label>
                                 <div class="controls">
-                                    <textarea class="span11"></textarea>
+                                    <textarea name="comment" class="span11"></textarea>
                                 </div>
                             </div>
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-success">
+                                    <input type="hidden" name="from" value="${CurentUser.id}">
+                                    <input type="hidden" name="to" value="${ProfileUser.id}">
+                                    <input type="hidden" name="command" value="add_user_feedback">
                                     <fmt:message key="edit.savebutton" bundle="${bundle}"/>
                                 </button>
                             </div>

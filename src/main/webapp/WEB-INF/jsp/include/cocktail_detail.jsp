@@ -4,6 +4,9 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
+<c:set var="CurentUser" scope="application" value="${sessionScope.get('user')}"/>
+<c:set var="ProfileUser" scope="application" value="${requestScope.get('customer')}"/>
+
 
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
@@ -141,12 +144,36 @@
                     </h5>
                 </div>
                 <div class="widget-content nopadding">
-                    <form action="#" method="get" class="form-horizontal">
+                    <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label">
                                 <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
                             <div class="controls">
-                                <input type="text" class="span11" placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
+                                <input type="text" class="span11" name="title"
+                                       placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">Mark</label>
+                            <div class="controls">
+                                <div data-toggle="buttons-radio" class="btn-group">
+                                    <button class="btn btn-info" type="button">
+                                        <input type="hidden" name="mark" value="1">
+                                        1</button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                        <input type="hidden" name="mark" value="2">
+                                        2</button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                        <input type="hidden" name="mark" value="3">
+                                        3</button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                        <input type="hidden" name="mark" value="4">
+                                        4</button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
+                                        <input type="hidden" name="mark" value="5">
+                                        5</button>
+                                </div>
                             </div>
                         </div>
 
@@ -155,11 +182,14 @@
                                 <fmt:message key="user.comments.message" bundle="${bundle}"/>:
                             </label>
                             <div class="controls">
-                                <textarea class="span11"></textarea>
+                                <textarea class="span11" name="comment"></textarea>
                             </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-success">
+                                <input type="hidden" name="from" value="${CurentUser.id}">
+                                <input type="hidden" name="to" value="${cocktail.id}">
+                                <input type="hidden" name="command" value="add_cocktail_feedback">
                                 <fmt:message key="edit.savebutton" bundle="${bundle}"/>
                             </button>
                         </div>

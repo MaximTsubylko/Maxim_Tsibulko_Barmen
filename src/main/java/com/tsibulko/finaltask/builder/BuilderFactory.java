@@ -1,9 +1,13 @@
 package com.tsibulko.finaltask.builder;
 
 
+import com.tsibulko.finaltask.bean.BarmenFeedback;
 import com.tsibulko.finaltask.bean.Cocktail;
+import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Customer;
+import com.tsibulko.finaltask.builder.impl.BarmanFeedbackBuilder;
 import com.tsibulko.finaltask.builder.impl.CocktailBuiler;
+import com.tsibulko.finaltask.builder.impl.CocktailFeedbackBuilder;
 import com.tsibulko.finaltask.builder.impl.CustomerBuilder;
 
 import java.util.HashMap;
@@ -34,6 +38,8 @@ public class BuilderFactory {
     private BuilderFactory() {
         builderMap.put(Customer.class, new CustomerBuilder());
         builderMap.put(Cocktail.class, new CocktailBuiler());
+        builderMap.put(BarmenFeedback.class,new BarmanFeedbackBuilder());
+        builderMap.put(CocktaileFeedback.class, new CocktailFeedbackBuilder());
     }
 
     public Builder getBuilder(Class type){

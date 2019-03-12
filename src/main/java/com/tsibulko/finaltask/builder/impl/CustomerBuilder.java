@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.builder.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.builder.Builder;
+import com.tsibulko.finaltask.dto.UserDto;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.validation.CustomerValidator;
 import com.tsibulko.finaltask.validation.ValidationException;
@@ -29,5 +30,11 @@ public class CustomerBuilder implements Builder<Customer> {
         }
 
         return customer;
+    }
+
+
+    public UserDto bu(HttpServletRequest request) throws ServiceException{
+        UserDto dto = new UserDto();
+        return dto;
     }
 }

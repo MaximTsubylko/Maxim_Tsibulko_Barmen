@@ -1,6 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
+import com.tsibulko.finaltask.bean.Cocktail;
+import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.*;
 
@@ -97,6 +99,7 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
 
 
     @AutoConnection
+    @Override
     public List<BarmenFeedback> getCocktailFeedbackByCustomer(Customer customer) throws DaoException {
         try {
             try (PreparedStatement statment = connection.prepareStatement(getSelectQuery() + " WHERE to_user_id = ?")) {
@@ -107,5 +110,7 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
             throw new DaoException(e, "Can`t get cocktails by customer");
         }
     }
+
+
 
 }
