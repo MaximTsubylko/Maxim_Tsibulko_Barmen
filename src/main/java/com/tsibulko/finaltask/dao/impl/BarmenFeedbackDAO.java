@@ -1,9 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.dao.AbstractJdbcDao;
-import com.tsibulko.finaltask.dao.DaoException;
-import com.tsibulko.finaltask.dao.GenericDAO;
+import com.tsibulko.finaltask.bean.Customer;
+import com.tsibulko.finaltask.dao.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> implements GenericDAO<BarmenFeedback, Integer> {
+public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> implements BarmanFeedBackSpecificDAO<BarmenFeedback, Integer> {
 
     @Override
     protected List<BarmenFeedback> parseResultSet(ResultSet resultSet) throws DaoException {
@@ -94,6 +93,19 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
     @Override
     public String getDeleteQuery() {
         return "DELETE FROM barmen_feedback WHERE id = ?";
+    }
+
+
+    @AutoConnection
+    public List<BarmenFeedback> getCocktailFeedbackByCustomer(Customer customer) throws DaoException {
+        try {
+            try (PreparedStatement statment = connection.prepareStatement(getSelectQuery() + " WHERE to_user_id = ?")) {
+                statment.setInt(1, customer.getId());
+                return parseResultSet(statment.executeQuery());
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get cocktails by customer");
+        }
     }
 
 }

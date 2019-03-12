@@ -25,7 +25,7 @@
 </div>
 
 
-<div class="container con container-fluid">
+<div class="container container-fluid">
     <div class="row-fluid">
         <div class="span2">
             <img src="${pageContext.request.contextPath}/static/img/usericon.png">
@@ -113,17 +113,80 @@
                 </div>
             </div>
         </div>
-        <div class="span4">
-            <c:choose>
-                <c:when test="${CurentUser.role_id == 3 || CurentUser.id == ProfileUser.id }">
-                    <form action="${pageContext.request.contextPath}/barman" method="post">
-                        <a href="?command=delete_customer&id=${ProfileUser.id}"
-                           class="btn btn-danger btn btn-block ">
-                            <fmt:message key="cocktail.delete" bundle="${bundle}"/>
-                        </a>
-                    </form>
-                </c:when>
-            </c:choose>
+
+        <div class="row-fluid">
+            <div style="margin-left: 60vh;
+                        margin-top: 1vh" class="span4 pagination-centered">
+                <c:choose>
+                    <c:when test="${CurentUser.role_id == 3 || CurentUser.id == ProfileUser.id }">
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=delete_customer&id=${ProfileUser.id}"
+                               class="btn btn-danger btn btn-block ">
+                                <fmt:message key="cocktail.delete" bundle="${bundle}"/>
+                            </a>
+                        </form>
+                    </c:when>
+                </c:choose>
+            </div>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span6 pagination-centered">
+                <div class="widget-box">
+                    <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i
+                            class="icon-chevron-down"></i></span>
+                        <h5>
+                            <fmt:message key="user.comments" bundle="${bundle}"/>
+                        </h5>
+                    </div>
+                    <div class="widget-content nopadding in collapse" id="collapseG2" style="height: auto;">
+                        <ul class="recent-posts">
+                            <li>
+                                <div class="article-post"><span class="user-info">
+                                    <fmt:message key="user.comments.by" bundle="${bundle}"/>: john Deo</span>
+                                    <p><a href="#">This is a much longer one that will go on for a few lines.It has
+                                        multiple paragraphs and is full of waffle to pad out the comment.</a></p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="span5">
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                        <h5>
+                            <fmt:message key="user.comments.add" bundle="${bundle}"/>
+                        </h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <form action="#" method="get" class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label">
+                                    <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
+                                <div class="controls">
+                                    <input type="text" class="span11" placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">
+                                    <fmt:message key="user.comments.message" bundle="${bundle}"/>:
+                                </label>
+                                <div class="controls">
+                                    <textarea class="span11"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success">
+                                    <fmt:message key="edit.savebutton" bundle="${bundle}"/>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -41,6 +41,8 @@ public class CommandProvider {
         commandMap.put(CommandEnum.CHANGE_PASSWORD, new ChangePasswordCommand());
         commandMap.put(CommandEnum.SHOW_CUSTOMER_LIST, new ShowCustomerListCommand());
         commandMap.put(CommandEnum.DELETE_CUSTOMER, new DeleteCustomerCommand());
+        commandMap.put(CommandEnum.ADD_USER_FEEDBACK, new AddUserFeedbackCommand());
+        commandMap.put(CommandEnum.ADD_COCKTAIL_FEEDBACK, new AddCocktailFedbackCommand());
     }
 
     /**

@@ -35,12 +35,10 @@ public class LocalChangeFilter implements Filter {
                 Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "en");
                 httpServletRequest.setAttribute("lang","en");
                 httpServletResponse.addCookie(cookie);
-                httpServletResponse.setLocale(new Locale("en"));
             } else if (change.get().equals("ru")) {
                 Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "ru");
                 httpServletResponse.addCookie(cookie);
                 httpServletRequest.setAttribute("lang","ru");
-                httpServletResponse.setLocale(new Locale("ru"));
             }
 
         }

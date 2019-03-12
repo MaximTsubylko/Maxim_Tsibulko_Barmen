@@ -1,9 +1,8 @@
 package com.tsibulko.finaltask.dao.impl;
 
+import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
-import com.tsibulko.finaltask.dao.AbstractJdbcDao;
-import com.tsibulko.finaltask.dao.DaoException;
-import com.tsibulko.finaltask.dao.GenericDAO;
+import com.tsibulko.finaltask.dao.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Integer> implements GenericDAO<CocktaileFeedback, Integer> {
+public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Integer> implements CocktailFeedBackSpecificDAO<CocktaileFeedback, Integer> {
 
     @Override
     protected List<CocktaileFeedback> parseResultSet(ResultSet resultSet) throws DaoException {
@@ -36,6 +35,29 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
 
     }
 
+
+    @Override
+    public String getSelectQuery() {
+        return "SELECT * FROM cocktaile_feedback";
+    }
+
+
+    @Override
+    public String getPersistQuery() {
+        return "INSERT INTO cocktaile_feedback (user_id, cocktail_id, title, mark, comment) " +
+                "VALUES (?,?,?,?,?)";
+    }
+
+    @Override
+    public String getUpdateQuery() {
+        return "UPDATE cocktaile_feedback set user_id=?, cocktail_id = ?, title = ?, mark = ?, comment = ? WHERE id = ?";
+    }
+
+    @Override
+    public String getDeleteQuery() {
+        return "DELETE FROM cocktaile_feedback WHERE id = ?";
+    }
+
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, CocktaileFeedback cocktaileFeedback) throws DaoException {
         statementPreparation(statement, cocktaileFeedback);
@@ -50,6 +72,7 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
             throw new DaoException(e, "Cun`t run statement for update cocktail feedback!");
         }
     }
+
 
 
     @Override
@@ -78,25 +101,18 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
         }
     }
 
+    @AutoConnection
     @Override
-    public String getSelectQuery() {
-        return "SELECT * FROM cocktaile_feedback";
+    public List<CocktaileFeedback> getCocktailFeedbacksByCocktail(Cocktail cocktail) throws DaoException {
+        try {
+            try (PreparedStatement statment = connection.prepareStatement(getSelectQuery() + " WHERE cocktail_id = ?")) {
+                statment.setInt(1, cocktail.getId());
+                return parseResultSet(statment.executeQuery());
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get cocktails by customer");
+        }
     }
 
-    @Override
-    public String getPersistQuery() {
-        return "INSERT INTO cocktaile_feedback (user_id, cocktail_id, title, mark, comment) " +
-                "VALUES (?,?,?,?,?)";
-    }
-
-    @Override
-    public String getUpdateQuery() {
-        return "UPDATE cocktaile_feedback set user_id=?, cocktail_id = ?, title = ?, mark = ?, comment = ? WHERE id = ?";
-    }
-
-    @Override
-    public String getDeleteQuery() {
-        return "DELETE FROM cocktaile_feedback WHERE id = ?";
-    }
 
 }

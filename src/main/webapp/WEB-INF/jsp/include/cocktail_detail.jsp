@@ -22,9 +22,9 @@
 </div>
 
 
-<div class="container con container-fluid">
+<div class="container container-fluid">
     <div class="row-fluid">
-        <div class="span3">
+        <div class="span2">
             <img src="${pageContext.request.contextPath}/static/img/cocktailIcon.jpg">
             <div class="pagination-centered">
                 <h3><c:out value="${cocktail.name}"/></h3>
@@ -46,7 +46,7 @@
         </div>
 
 
-        <div class="span4">
+        <div class="span5">
             <div class="widget-content nopadding">
                 <h2 class="pagination-centered">
                     <fmt:message key="cocktail.ingredient" bundle="${bundle}"/>
@@ -83,25 +83,89 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <c:choose>
-            <c:when test="${CurentUser.role_id == 3 || CurentUser.id == ProfileUser.id }">
-                <div class="span4 pagination-centered">
-                    <form action="${pageContext.request.contextPath}/barman" method="post">
-                        <a href="?command=show_update_cocktail_page&id=${cocktail.id}"
-                           class="btn btn-info btn btn-block ">
-                            <fmt:message key="cocktail.edit" bundle="${bundle}"/>
-                        </a>
-                    </form>
+    <div class="row-fluid">
+        <div class="span3 pagination-centered">
+            <c:choose>
+                <c:when test="${CurentUser.role_id == 3 || CurentUser.id == ProfileUser.id }">
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=show_update_cocktail_page&id=${cocktail.id}"
+                               class="btn btn-info btn btn-block ">
+                                <fmt:message key="cocktail.edit" bundle="${bundle}"/>
+                            </a>
+                        </form>
 
-                    <form action="${pageContext.request.contextPath}/barman" method="post">
-                        <a href="?command=delete_cocktail&cocktailId=${cocktail.id}"
-                           class="btn btn-danger btn btn-block ">
-                            <fmt:message key="cocktail.delete" bundle="${bundle}"/>
-                        </a>
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=delete_cocktail&cocktailId=${cocktail.id}"
+                               class="btn btn-danger btn btn-block ">
+                                <fmt:message key="cocktail.delete" bundle="${bundle}"/>
+                            </a>
+                        </form>
+                </c:when>
+            </c:choose>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span6 pagination-centered">
+            <div class="widget-box">
+                <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i
+                        class="icon-chevron-down"></i></span>
+                    <h5>
+                        <fmt:message key="user.comments" bundle="${bundle}"/>
+                    </h5>
+                </div>
+                <div class="widget-content nopadding in collapse" id="collapseG2" style="height: auto;">
+                    <ul class="recent-posts">
+                        <c:forEach items="${feedback}" var="feedback">
+                            <li>
+                                <div class="article-post"><span class="user-info">
+                                    <fmt:message key="user.comments.by" bundle="${bundle}"/>: john Deo</span>
+                                    <h5><a href="#"><c:out value="${feedback.title}"/></a></h5>
+                                    <p><a href="#"><c:out value="${feedback.comment}"/></a></p>
+                                </div>
+                            </li>
+                        </c:forEach>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="span5">
+            <div class="widget-box">
+                <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                    <h5>
+                        <fmt:message key="user.comments.add" bundle="${bundle}"/>
+                    </h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form action="#" method="get" class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">
+                                <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
+                            <div class="controls">
+                                <input type="text" class="span11" placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                <fmt:message key="user.comments.message" bundle="${bundle}"/>:
+                            </label>
+                            <div class="controls">
+                                <textarea class="span11"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">
+                                <fmt:message key="edit.savebutton" bundle="${bundle}"/>
+                            </button>
+                        </div>
                     </form>
                 </div>
-            </c:when>
-        </c:choose>
+            </div>
+        </div>
     </div>
 </div>
