@@ -19,8 +19,7 @@ import java.util.List;
 
 public class CocktailServiceImpl implements CocktailService {
     private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-    private static CocktailSpecificDAO cocktailDao;
-    private static IngredientSpecificDAO ingredientDao;
+
 
     public void editCocktail(Cocktail cocktail) throws ServiceException {
         update(cocktail);
@@ -28,6 +27,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws ServiceException {
+        IngredientSpecificDAO ingredientDao;
         try {
             ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             return ingredientDao.setCocktailIngredients(create(cocktail), ingredients);
@@ -38,6 +38,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public List<Cocktail> getCocktailByCustomer(Customer customer) throws ServiceException {
+        CocktailSpecificDAO cocktailDao;
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             return cocktailDao.getCocktailByCustomer(customer);
@@ -47,6 +48,7 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     public List<Ingredient> getIngredientByCocktail(Cocktail cocktail) throws ServiceException {
+        IngredientSpecificDAO ingredientDao;
         try {
             ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             return ingredientDao.getIngredientByCocktail(cocktail);
@@ -56,14 +58,16 @@ public class CocktailServiceImpl implements CocktailService {
     }
 
     public Cocktail createNewCocktail(Cocktail cocktail, Customer customer) throws ServiceException {
+        CocktailSpecificDAO cocktailDao;
+        IngredientSpecificDAO ingredientDao;
         TransactionManager transactionManager = new TransactionManager();
         try {
-            ingredientDao = (IngredientDAO) daoFactory.getTransactionalDao(Ingredient.class);
-            cocktailDao = (CocktailDAO) daoFactory.getTransactionalDao(Cocktail.class);
-            create(cocktail);
+            ingredientDao = (IngredientSpecificDAO) daoFactory.getTransactionalDao(Ingredient.class);
+            cocktailDao = (CocktailSpecificDAO) daoFactory.getTransactionalDao(Cocktail.class);
 
             transactionManager.begin(cocktailDao,ingredientDao);
 
+            cocktailDao.persist(cocktail);
             ingredientDao.setCocktailIngredients(cocktail,cocktail.getIngredients());
             cocktailDao.setCocktailToCustomer(customer,cocktail);
 
@@ -92,6 +96,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public Cocktail create(Cocktail cocktaile) throws ServiceException {
+        CocktailSpecificDAO cocktailDao;
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.persist(cocktaile);
@@ -105,7 +110,7 @@ public class CocktailServiceImpl implements CocktailService {
     @Override
     public void delete(Cocktail cocktaile) throws ServiceException {
         FieldValidator fieldValidator = FieldValidator.getInstance();
-
+        CocktailSpecificDAO cocktailDao;
         try {
             fieldValidator.isExist("name", Cocktail.class, cocktaile.getName());
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
@@ -120,6 +125,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public Cocktail getByPK(Integer id) throws ServiceException {
+        CocktailSpecificDAO cocktailDao;
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             if (cocktailDao.getByPK(id).isPresent()) {
@@ -135,6 +141,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public void update(Cocktail cocktaile) throws ServiceException {
+        CocktailSpecificDAO cocktailDao;
         FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
             fieldValidator.isExist("id",Cocktail.class,String.valueOf(cocktaile.getId()));
@@ -149,6 +156,7 @@ public class CocktailServiceImpl implements CocktailService {
 
     @Override
     public List<Cocktail> getList() throws ServiceException {
+        CocktailSpecificDAO cocktailDao;
         try {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             return cocktailDao.getAll();

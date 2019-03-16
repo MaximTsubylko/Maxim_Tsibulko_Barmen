@@ -11,10 +11,11 @@ import com.tsibulko.finaltask.service.ServiceException;
 import java.util.List;
 
 public class CocktailFeedbackServiceImpl implements CocktailFeedbackService {
-    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-    private static CocktailFeedBackSpecificDAO dao;
+    private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
+
 
     public List<CocktaileFeedback> getCocktailFeedbacksByCocktail(Cocktail cocktail) throws ServiceException {
+        CocktailFeedBackSpecificDAO dao;
         try {
             dao = (CocktailFeedBackSpecificDAO) daoFactory.getDao(CocktaileFeedback.class);
             return dao.getCocktailFeedbacksByCocktail(cocktail);
@@ -26,8 +27,9 @@ public class CocktailFeedbackServiceImpl implements CocktailFeedbackService {
 
     @Override
     public CocktaileFeedback create(CocktaileFeedback cocktaileFeedback) throws ServiceException {
+        CocktailFeedBackSpecificDAO dao;
         try {
-
+            dao = (CocktailFeedBackSpecificDAO) daoFactory.getDao(CocktaileFeedback.class);
             dao.persist(cocktaileFeedback);
             return cocktaileFeedback;
         } catch (DaoException e) {

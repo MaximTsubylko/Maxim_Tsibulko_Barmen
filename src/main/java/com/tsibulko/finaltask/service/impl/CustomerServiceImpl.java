@@ -18,8 +18,7 @@ import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
 
-    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-    private static CustomerDAO dao;
+    private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
 
     public void setNewState(Customer customer,String reaquestKey, String name) throws ServiceException {
@@ -72,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer create(Customer customer) throws ServiceException {
+        CustomerDAO dao;
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
             fieldValidator.isUnique(new String[]{AppConstant.LOGIN_PARAMENR, AppConstant.EMAIL_PARAMETR},
@@ -89,6 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(Customer customer) throws ServiceException {
+        CustomerDAO dao;
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
             fieldValidator.isExist(AppConstant.LOGIN_PARAMENR, Customer.class, customer.getLogin());
@@ -104,6 +105,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getByPK(Integer id) throws ServiceException {
+        CustomerDAO dao;
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             if (dao.getByPK(id).isPresent()) {
@@ -119,6 +121,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void update(Customer customer) throws ServiceException {
+        CustomerDAO dao;
         try {
             FieldValidator fieldValidator = FieldValidator.getInstance();
             fieldValidator.isExist(AppConstant.LOGIN_PARAMENR, Customer.class, customer.getLogin());
@@ -134,6 +137,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> getList() throws ServiceException {
+        CustomerDAO dao;
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             return dao.getAll();
@@ -144,6 +148,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getByEmail(String email) throws ServiceException {
+        CustomerDAO dao;
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             return dao.getByEmail(email);

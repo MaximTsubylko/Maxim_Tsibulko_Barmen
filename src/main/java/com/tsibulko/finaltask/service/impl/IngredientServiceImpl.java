@@ -1,9 +1,8 @@
 package com.tsibulko.finaltask.service.impl;
 
-import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.DaoException;
+import com.tsibulko.finaltask.dao.IngredientSpecificDAO;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 import com.tsibulko.finaltask.service.IngredientService;
 import com.tsibulko.finaltask.service.ServiceErrorConstant;
@@ -13,11 +12,11 @@ import java.util.List;
 
 public class IngredientServiceImpl implements IngredientService {
 
-    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-    private static IngredientSpecificDAO dao;
+    private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
     @Override
     public Ingredient create(Ingredient ingredient) throws ServiceException {
+        IngredientSpecificDAO dao;
         try {
             dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             dao.persist(ingredient);
@@ -44,9 +43,10 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     public Ingredient getByName(String name) throws ServiceException {
+        IngredientSpecificDAO dao;
         try {
-        dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
-        return (Ingredient) dao.getByName(name).get();
+            dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
+            return (Ingredient) dao.getByName(name).get();
         } catch (DaoException e) {
             throw new ServiceException(ServiceErrorConstant.ERR_CODE_NOT_EXIST_INGREDIENT);
         }
@@ -54,6 +54,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public List<Ingredient> getList() throws ServiceException {
+        IngredientSpecificDAO dao;
         try {
             dao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             return dao.getAll();

@@ -14,10 +14,10 @@ import com.tsibulko.finaltask.service.ServiceException;
 import java.util.List;
 
 public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
-    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-    private static BarmanFeedBackSpecificDAO dao;
+    private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
     public List<BarmenFeedback> getCustomerFeedbacksByCustomer(Customer customer) throws ServiceException {
+        BarmanFeedBackSpecificDAO dao;
         try {
             dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);
             return dao.getCocktailFeedbackByCustomer(customer);
@@ -28,7 +28,9 @@ public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
 
     @Override
     public BarmenFeedback create(BarmenFeedback barmenFeedback) throws ServiceException {
+        BarmanFeedBackSpecificDAO dao;
         try {
+            dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);
             dao.persist(barmenFeedback);
             return barmenFeedback;
         } catch (DaoException e) {

@@ -18,12 +18,12 @@ import java.util.WeakHashMap;
 
 public class LoginServiceImpl {
 
-    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-    private static CustomerDAO dao;
+    private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
 
     public Customer logIn(Customer customer) throws ServiceException {
         CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+        CustomerDAO dao;
         try {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             if (!dao.findStringsFromColumn(AppConstant.LOGIN_PARAMENR).contains(customer.getLogin())) {
