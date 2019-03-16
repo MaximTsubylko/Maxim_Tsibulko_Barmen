@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class DeleteCocktailCommand implements Command {
-    private static final String PARAMETR_NAME = "cocktailId";
+
 
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         ResponseContent responseContent = new ResponseContent();
-        Integer id = Integer.parseInt(request.getParameter(PARAMETR_NAME));
+        Integer id = Integer.parseInt(request.getParameter(AppConstant.COCKTAIL_ID_PARAMETR));
         Cocktail cocktaile = service.getByPK(id);
         service.delete(cocktaile);
         responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.FORWARD));

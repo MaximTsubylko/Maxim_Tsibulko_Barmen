@@ -22,9 +22,11 @@ public class RegistrationCommand implements Command {
         Builder<Customer> builder = BuilderFactory.getInstance().getBuilder(Customer.class);
         SendMessages sendMessages = new SendMessages();
         Customer customer = builder.build(request);
+        Integer port = request.getLocalPort();
+        String contextPath =request.getContextPath();
 
         service.signUp(customer);
-        sendMessages.sendActivationLinkEmail(customer, request,
+        sendMessages.sendActivationLinkEmail(customer, port, contextPath,
                 AppConstant.ACTIV_TITLE, AppConstant.ACTIV_LINK);
 
         ResponseContent responseContent = new ResponseContent();

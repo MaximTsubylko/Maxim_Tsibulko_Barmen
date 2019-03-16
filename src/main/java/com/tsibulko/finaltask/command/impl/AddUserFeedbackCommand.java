@@ -24,8 +24,9 @@ public class AddUserFeedbackCommand implements Command {
         CustomerFeedbackServiceImpl service = (CustomerFeedbackServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER_FEEDBACK);
         Builder<BarmenFeedback> builder = BuilderFactory.getInstance().getBuilder(BarmenFeedback.class);
         BarmenFeedback barmenFeedback = builder.build(request);
+
         service.create(barmenFeedback);
-        responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.REDIRECT));
 
         return responseContent;
     }

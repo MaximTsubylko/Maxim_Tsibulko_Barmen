@@ -1,5 +1,8 @@
 package com.tsibulko.finaltask.command.impl;
 
+import com.tsibulko.finaltask.bean.Cocktail;
+import com.tsibulko.finaltask.builder.Builder;
+import com.tsibulko.finaltask.builder.BuilderFactory;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Router;
@@ -14,9 +17,12 @@ public class EditCocktailCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         CocktailServiceImpl service = new CocktailServiceImpl();
-        service.editCocktail(request);
+        Builder<Cocktail> builder = BuilderFactory.getInstance().getBuilder(Cocktail.class);
+
+        Cocktail cocktail = builder.build(request);
+        service.editCocktail(cocktail);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_COCKTAIL_DETAILS.useCommand(), Router.Type.FORWARD));
         return responseContent;
     }
 }

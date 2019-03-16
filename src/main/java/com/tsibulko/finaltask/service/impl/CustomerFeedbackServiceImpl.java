@@ -5,22 +5,24 @@ import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 import com.tsibulko.finaltask.service.CustomerFedbackService;
 import com.tsibulko.finaltask.service.CustomerService;
+import com.tsibulko.finaltask.service.ServiceErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 
 import java.util.List;
 
 public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
-    private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
     private static BarmanFeedBackSpecificDAO dao;
 
-    public List<CocktaileFeedback> getCustomerFeedbacksByCustomer(Customer customer) throws ServiceException {
+    public List<BarmenFeedback> getCustomerFeedbacksByCustomer(Customer customer) throws ServiceException {
         try {
             dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);
             return dao.getCocktailFeedbackByCustomer(customer);
         } catch (DaoException e) {
-            throw new ServiceException(e, "Create cocktail with ingredients error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_GET_CUSTOMER_FEEDBACK);
         }
     }
 
@@ -30,7 +32,7 @@ public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
             dao.persist(barmenFeedback);
             return barmenFeedback;
         } catch (DaoException e) {
-            throw new ServiceException(e, "Create cocktail error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_CREATE_CUSTOMER_FEBACK);
         }
 
     }

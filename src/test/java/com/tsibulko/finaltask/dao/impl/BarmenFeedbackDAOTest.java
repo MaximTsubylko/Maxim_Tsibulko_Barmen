@@ -3,7 +3,6 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.BarmenFeedback;
 import com.tsibulko.finaltask.dao.DaoFactory;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.DaoException;
@@ -22,7 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BarmenFeedbackDAOTest {
-    DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+    DaoFactory daoFactory = JdbcDaoFactory.getInstance();
     GenericDAO dao;
     List<BarmenFeedback> feedbacks = JSONParser.BarmenFeedbackParse("src/test/resources/JsonData/BarmenFeedbackData.json");
 

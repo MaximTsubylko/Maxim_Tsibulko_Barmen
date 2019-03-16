@@ -3,6 +3,7 @@ package com.tsibulko.finaltask.service.impl;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.service.CustomMessage;
+import com.tsibulko.finaltask.service.ServiceErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.validation.FieldValidator;
 import com.tsibulko.finaltask.validation.ValidationException;
@@ -40,7 +41,7 @@ public class MailSender {
     private MailSender() {
     }
 
-    public void send(HttpServletRequest request, CustomMessage m) throws ServiceException {
+    public void send(String email, CustomMessage m) throws ServiceException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -49,7 +50,7 @@ public class MailSender {
         props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 
         FieldValidator validator = FieldValidator.getInstance();
-        String to = request.getParameter("email");
+        String to = email;
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -59,7 +60,7 @@ public class MailSender {
                 });
 
         try {
-            validator.isExist(FILD, Customer.class, request.getParameter(FILD));
+            validator.isExist(FILD, Customer.class, email);
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(USERNAME));
@@ -75,7 +76,7 @@ public class MailSender {
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (ValidationException e) {
-            throw new ServiceException(e, "Not exist email!");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_NOT_EXIST_EMAIL);
         }
     }
 }

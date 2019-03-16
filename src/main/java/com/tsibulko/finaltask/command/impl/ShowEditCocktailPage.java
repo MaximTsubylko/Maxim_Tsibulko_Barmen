@@ -12,20 +12,22 @@ import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
+import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ShowEditCocktailPage implements Command {
-    private static final String COCKTAIL_PARAMETR_NAME = "id";
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         CocktailServiceImpl cocktailService = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
+        Integer id = Integer.parseInt(request.getParameter(AppConstant.ID_PARAMETR));
+
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
-        Cocktail cocktail = cocktailService.getByPK(Integer.parseInt(request.getParameter(COCKTAIL_PARAMETR_NAME)));
-        request.setAttribute("cocktail",cocktail);
+        Cocktail cocktail = cocktailService.getByPK(id);
+        request.setAttribute(AppConstant.COCKTAIL_PARAMETR,cocktail);
         request.setAttribute(Include.VIEW_NAME.getName(), Include.EDIT_COCKTAIL_PAGE.getName());
 
         return responseContent;

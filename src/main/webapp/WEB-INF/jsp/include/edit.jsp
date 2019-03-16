@@ -71,6 +71,7 @@
                         </div>
                         <div class="form-actions">
                             <input type="hidden" name="command" value="edit_profile">
+                            <input type="hidden" name="id" value="${customer.id}">
                             <button type="submit" class="btn btn-success"><fmt:message key="edit.savebutton"
                                                                                        bundle="${bundle}"/>
                             </button>

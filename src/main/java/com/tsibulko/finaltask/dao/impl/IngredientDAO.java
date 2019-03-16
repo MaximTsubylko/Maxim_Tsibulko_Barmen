@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implements IngredientSpecificDAO<Ingredient, Integer> {
 
@@ -166,6 +167,18 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
             return cocktail;
         } catch (SQLException e) {
             throw new DaoException(e, "Can`t set cocktail ingredient");
+        }
+    }
+
+    @AutoConnection
+    @Override
+    public Optional<Ingredient> getByName(String name) throws DaoException {
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(getSelectQuery() + " WHERE name = ?")) {
+            preparedStatement.setString(1, name);
+            return parseResultSet(preparedStatement.executeQuery()).stream().findFirst();
+        } catch (SQLException e) {
+            throw new DaoException(e);
         }
     }
 

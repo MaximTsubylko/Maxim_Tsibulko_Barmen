@@ -9,6 +9,7 @@ import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.service.impl.LoginServiceImpl;
+import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +18,10 @@ import javax.servlet.http.HttpSession;
 public class LogoutCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) {
-        LoginServiceImpl service = new LoginServiceImpl();
         HttpSession session = request.getSession();
-        service.logout(session);
+
+        session.setAttribute(AppConstant.SESSION_ATTRIBUTE, null);
+
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(CommandEnum.SHOW_LOGIN_PAGE.useCommand(), Router.Type.REDIRECT));
         return responseContent;

@@ -20,9 +20,11 @@ public class ChangePasswordCommand implements Command {
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         HttpSession session = request.getSession();
+        String newPassword = request.getParameter(AppConstant.PASSWORD_PARAMETR);
         Customer customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
-        service.changePassword(customer, request.getParameter("password"));
+
+        service.changePassword(customer,newPassword);
         responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.FORWARD));
         return responseContent;
     }

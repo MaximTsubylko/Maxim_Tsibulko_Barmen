@@ -18,7 +18,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/barman")
 public class IndexController extends HttpServlet {
     private static final String COMMAND_PARAMETER = "command";
-
+    private Command bufferCommandForError;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -42,8 +42,8 @@ public class IndexController extends HttpServlet {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
         } catch (ServiceException e) {
-            request.setAttribute("error", "ser.err." + e.getCode());
-            request.getRequestDispatcher(CommandEnum.SHOW_ERROR_PAGE.useCommand()).forward(request, response);
+            request.setAttribute("error", String.valueOf(e.getCode()));
+            request.getRequestDispatcher(CommandEnum.SHOW_LOGIN_PAGE.useCommand()).forward(request, response);
         }
     }
 

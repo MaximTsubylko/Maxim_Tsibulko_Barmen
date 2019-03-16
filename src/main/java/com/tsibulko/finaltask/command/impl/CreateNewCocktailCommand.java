@@ -23,10 +23,12 @@ public class CreateNewCocktailCommand implements Command {
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         HttpSession session = request.getSession();
+        Customer customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
         Builder<Cocktail> builder = BuilderFactory.getInstance().getBuilder(Cocktail.class);
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         Cocktail cocktail = builder.build(request);
-        service.createNewCocktail(cocktail, (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE));
+
+        service.createNewCocktail(cocktail, customer);
         responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.FORWARD));
 
         return responseContent;

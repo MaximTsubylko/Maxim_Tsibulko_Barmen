@@ -63,6 +63,7 @@
                                        value="<c:out value="${cocktail.price}"/>" name="price">
                             </div>
                         </div>
+
                         <div class="form-actions">
                             <input type="hidden" name="command" value="edit_cocktail">
                             <input type="hidden" name="id" value="${cocktail.id}">

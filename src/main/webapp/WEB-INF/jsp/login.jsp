@@ -12,7 +12,6 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
         <fmt:setLocale value="${requestScope.get('lang')}"/>
@@ -20,19 +19,38 @@
     <c:otherwise>
         <fmt:setLocale value="${cookie['locale'].value}"/>
     </c:otherwise>
-</c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
+</c:choose>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
+<%@include file="/WEB-INF/jsp/localizedTags.jsp" %>
+
 
 <html>
 
 <head>
-    <title>Matrix Admin</title>
+    <title>Login page</title>
     <meta charset="UTF-8"/>
     <%@include file="/WEB-INF/resources.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/login_and_reg_validation.js"></script>
+    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+
+    <ul class="typeahead dropdown-menu"></ul>
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/showMessage.js"></script>
 
 </head>
 <body>
-
+<c:if test="${not empty requestScope.get('error')}">
+    <script>
+        show(String(${requestScope.get('error')}));
+    </script>
+</c:if>
 
 <div id="user-nav" class="navbar">
     <div class="btn-group ">
@@ -133,7 +151,8 @@
                 <div class="row-fluid">
                     <div class="pull-right span4">
                         <input type="hidden" name="command" value="send_recovery_message">
-                        <button type="submit" class="btn btn-info btn btn-block"><fmt:message key="button.recovery" bundle="${bundle}"/></button>
+                        <button type="submit" class="btn btn-info btn btn-block"><fmt:message key="button.recovery"
+                                                                                              bundle="${bundle}"/></button>
                     </div>
                     <div class="pull-left span4">
                         <a href="#" class="flip-link btn btn-success"
@@ -195,12 +214,14 @@
                     <div class="pull-right span4">
                         <input type="hidden" name="command" value="registration">
                         <button type="submit" class="btn btn-success btn btn-block"
-                                onclick="return validRegistration(document.getElementById('registrationform'))"><fmt:message key="button.registration" bundle="${bundle}"/>
+                                onclick="return validRegistration(document.getElementById('registrationform'))">
+                            <fmt:message key="button.registration" bundle="${bundle}"/>
                         </button>
                     </div>
                     <div class="pull-left span4">
                         <a href="#" class="flip-link btn btn-success"
-                           id="registrationform-login"><fmt:message key="button.backtologin" bundle="${bundle}"/></a></div>
+                           id="registrationform-login"><fmt:message key="button.backtologin" bundle="${bundle}"/></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -209,16 +230,6 @@
 
 </div>
 
-<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/login_and_reg_validation.js"></script>
-<script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
-
-<ul class="typeahead dropdown-menu"></ul>
-<script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
 </body>
 
 </html>

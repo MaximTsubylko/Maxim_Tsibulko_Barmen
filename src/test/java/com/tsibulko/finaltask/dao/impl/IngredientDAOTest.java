@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class IngredientDAOTest {
-    DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+    DaoFactory daoFactory = JdbcDaoFactory.getInstance();
     IngredientSpecificDAO dao;
     CocktailSpecificDAO daoCocktail;
     List<Cocktail> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
@@ -58,7 +58,6 @@ class IngredientDAOTest {
     void persist() throws DaoException, InterruptedException, SQLException, PersistException {
         Ingredient ingredient = ingredients.get(1);
         ingredient.setName("Test");
-        ingredient.setDescription("Test");
         dao.persist(ingredient);
         List<Ingredient> d = dao.getAll();
         assertEquals(ingredient, dao.getByPK(5).get());
@@ -68,7 +67,6 @@ class IngredientDAOTest {
     void delete() throws SQLException, PersistException, InterruptedException, DaoException {
         Ingredient ingredient = new Ingredient();
         ingredient.setName("test");
-        ingredient.setDescription("test");
         dao.persist(ingredient);
         dao.delete(ingredient);
         assertEquals(ingredients, dao.getAll());

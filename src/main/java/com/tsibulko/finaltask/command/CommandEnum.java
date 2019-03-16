@@ -29,7 +29,10 @@ public enum CommandEnum {
     SHOW_ERROR_PAGE("show_error_page", AccessLevel.VISITOR),
     EDIT_COCKTAIL("edit_cocktail", AccessLevel.CUSTOMER, AccessLevel.BARMEN,
             AccessLevel.ADMINISTRATOR),
-    SEND_RECOVERY_MESSAGE("send_recovery_message", AccessLevel.VISITOR);
+    SEND_RECOVERY_MESSAGE("send_recovery_message", AccessLevel.VISITOR),
+    SHOW_INGREDIENT_LIST("show_ingredient_list", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
+    SHOW_CREATE_INGREDIENT("show_create_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
+    CREATE_INGREDIENT("create_ingredient", AccessLevel.ADMINISTRATOR,AccessLevel.BARMEN);
 
 
     private final String name;

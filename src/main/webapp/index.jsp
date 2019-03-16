@@ -65,6 +65,8 @@
         </ul>
     </div>
 </div>
+
+
 <div id="loginbox">
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
         <p class="normal_text"><fmt:message key="index.welcomemessage" bundle="${bundle}"/></p>

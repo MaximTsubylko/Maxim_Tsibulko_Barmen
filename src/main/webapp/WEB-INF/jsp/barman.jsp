@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
+<c:set var="CurentUser" scope="application" value="${sessionScope.get('user')}"/>
 
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
@@ -11,11 +12,38 @@
     <c:otherwise>
         <fmt:setLocale value="${cookie['locale'].value}"/>
     </c:otherwise>
-</c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
+</c:choose>
+<fmt:setBundle basename="language" var="bundle" scope="application"/>
+
 
 <html>
 <head>
     <title>Main page</title>
+
+    <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.uniform.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/select2.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/matrix.tables.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap-colorpicker.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.toggle.buttons.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/masked.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/jquery.peity.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/matrix.form_common.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/wysihtml5-0.3.0.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/bootstrap-wysihtml5.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/showMessage.js"></script>
+    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+
+    <script>
+        $('.textarea_editor').wysihtml5();
+    </script>
+    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+
     <%@include file="/WEB-INF/resources.jsp" %>
 
 </head>
@@ -23,7 +51,7 @@
 
 <!--Header-part-->
 <div id="header">
-    <h1><a href="dashboard.html">Matrix Admin</a></h1>
+    <h1><a href="dashboard.html">Barman helper</a></h1>
 </div>
 <!--close-Header-part-->
 
@@ -65,17 +93,17 @@
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-tint"></i>
     <fmt:message key="main.name" bundle="${bundle}"/></a>
     <ul>
-        <li><a href="?command=show_customer_list"><i class="icon icon-home"></i> <span>
+        <li><a href="?command=show_customer_list"><i class="icon icon-list"></i> <span>
             <fmt:message key="main.userlist" bundle="${bundle}"/>
         </span></a></li>
-        <li><a href="?command=show_create_cocktail"><i class="icon icon-home"></i> <span>
+        <li><a href="?command=show_create_cocktail"><i class="icon icon-plus-sign"></i> <span>
             <fmt:message key="main.createcocktail" bundle="${bundle}"/></span></a></li>
 
-        <li><a href="?command=cocktail_list"><i class="icon icon-signal"></i> <span>
+        <li><a href="?command=cocktail_list"><i class="icon icon-list"></i> <span>
             <fmt:message key="main.cocktaillist" bundle="${bundle}"/>
         </span></a></li>
 
-        <li class="submenu"><a href="#"><i class="icon icon-file"></i> <span>
+        <li class="submenu"><a href="#"><i class="icon icon-user"></i> <span>
                      <fmt:message key="main.usermenu" bundle="${bundle}"/>
         </span></a>
             <ul>
@@ -92,6 +120,24 @@
 
             </ul>
         </li>
+        <c:choose>
+            <c:when test="${CurentUser.role_id == 3 || CurentUser.id == 2}">
+                <li class="submenu"><a href="#"><i class="icon  icon-glass"></i> <span>
+                     <fmt:message key="main.barman" bundle="${bundle}"/>
+        </span></a>
+                    <ul>
+                        <li><a href="barman?command=show_ingredient_list">
+                            <fmt:message key="main.ingredientlist" bundle="${bundle}"/>
+                        </a></li>
+                        <li><a href="barman?command=show_create_ingredient">
+                            <fmt:message key="main.addingredient" bundle="${bundle}"/>
+                        </a></li>
+
+                    </ul>
+                </li>
+            </c:when>
+        </c:choose>
+
 
     </ul>
 </div>
@@ -111,27 +157,6 @@
 </div>
 <!--end-Footer-part-->
 <!--end-Footer-part-->
-
-<script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.uniform.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/select2.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.dataTables.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/matrix.tables.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/bootstrap-colorpicker.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.toggle.buttons.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/masked.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/jquery.peity.min.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/matrix.form_common.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/wysihtml5-0.3.0.js"></script>
-<script src="${pageContext.request.contextPath}/static/js/bootstrap-wysihtml5.js"></script>
-<script>
-    $('.textarea_editor').wysihtml5();
-</script>
-<script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 
 </body>
 </html>

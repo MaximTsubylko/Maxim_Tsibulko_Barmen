@@ -20,29 +20,29 @@ public class SendMessages {
     }
 
 
-    public void sendActivationLinkEmail(Customer customer, HttpServletRequest request, String title, String link) throws ServiceException {
+    public void sendActivationLinkEmail(Customer customer,Integer port, String contextPath, String title, String link) throws ServiceException {
         StringGenerator generator = new StringGenerator();
         UserKey userKey = UserKey.getInstance();
         String randomString = generator.generate();
         userKey.add(customer.getId(), randomString);
         MailSender sender = MailSender.getInstance();
-        Integer port = request.getLocalPort();
         String url;
-        url = "http://207.154.220.222" + ":" + port + request.getContextPath();
+        url = "http://207.154.220.222" + ":" + port + contextPath;
         String buildLink = buildActivationLink(randomString, customer.getId(), url, link);
         CustomMessage activationMessage = new CustomMessage(title, buildLink);
-        sender.send(request, activationMessage);
+
+        sender.send(customer.getEmail(), activationMessage);
     }
 
-    public void sendRestoreEmail(HttpServletRequest request) throws ServiceException {
+    public void sendRestoreEmail(Customer customer, Integer port, String contextPath) throws ServiceException {
         FieldValidator validator = FieldValidator.getInstance();
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
         try {
-            validator.emailMatches(request.getParameter(AppConstant.EMAIL_PARAMETR));
-            validator.isExist(AppConstant.EMAIL_PARAMETR,Customer.class, request.getParameter(AppConstant.EMAIL_PARAMETR));
-            String customerEmail = request.getParameter(AppConstant.EMAIL_PARAMETR);
-            Customer customer = service.getByEmail(customerEmail);
-            sendActivationLinkEmail(customer, request, AppConstant.RESTORE_TITLE, AppConstant.RESTORE_LINK);
+//            validator.emailMatches(customer.getEmail());
+            validator.isExist(AppConstant.EMAIL_PARAMETR,Customer.class, customer.getEmail());
+            String customerEmail = customer.getEmail();
+            Customer validCustomer = service.getByEmail(customerEmail);
+            sendActivationLinkEmail(customer, port, contextPath, AppConstant.RESTORE_TITLE, AppConstant.RESTORE_LINK);
         } catch (ValidationException e) {
             throw new ServiceException("Some error in validation date");
         } catch (DaoException e) {

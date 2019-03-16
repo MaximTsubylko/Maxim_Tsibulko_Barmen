@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
+import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.Include;
@@ -13,16 +14,14 @@ import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CocktailFeedbackServiceImpl;
 import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
+import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class ViewCocktailDetailCommand implements Command {
-    private static final String COCKTAIL_ATTRIBUTE_NAME = "cocktail";
-    private static final String COCKTAIL_PARAMETR_NAME = "id";
-    private static final String COCKTAIL_INGREDIENT_PARAMETR_NAME = "ingredients";
-    private static final String FEEDBACK = "feedback";
+
 
 
     @Override
@@ -30,11 +29,15 @@ public class ViewCocktailDetailCommand implements Command {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         CocktailFeedbackServiceImpl feedbackService = (CocktailFeedbackServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL_FEEDBACK);
         ResponseContent responseContent = new ResponseContent();
-        Cocktail cocktail = service.getByPK(Integer.parseInt(request.getParameter(COCKTAIL_PARAMETR_NAME)));
+
+        Cocktail cocktail = service.getByPK(Integer.parseInt(request.getParameter(AppConstant.ID_PARAMETR)));
+
         List<Ingredient> ingredients = service.getIngredientByCocktail(cocktail);
-        request.setAttribute(COCKTAIL_ATTRIBUTE_NAME, cocktail);
-        request.setAttribute(COCKTAIL_INGREDIENT_PARAMETR_NAME,ingredients);
-        request.setAttribute(FEEDBACK,feedbackService.getCocktailFeedbacksByCocktail(cocktail));
+        List<CocktaileFeedback> feedbacks = feedbackService.getCocktailFeedbacksByCocktail(cocktail);
+
+        request.setAttribute(AppConstant.COCKTAIL_PARAMETR, cocktail);
+        request.setAttribute(AppConstant.INGREDIENT_PARAMETR,ingredients);
+        request.setAttribute(AppConstant.FEEDBACK_PARAMETR,feedbacks);
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
         request.setAttribute(Include.VIEW_NAME.getName(), Include.COCKTAIL_DETAILS_INCLUDE.getName());
 

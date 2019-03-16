@@ -30,7 +30,7 @@ public class CommandProvider {
         commandMap.put(CommandEnum.SHOW_SUCCESS_PAGE, new ShowSuccessPageCommand());
         commandMap.put(CommandEnum.SEND_RECOVERY_MESSAGE, new RecoverySendMessageCommand());
         commandMap.put(CommandEnum.LOGOUT, new LogoutCommand());
-        commandMap.put(CommandEnum.SHOW_PROFILE, new ShowProfilePage());
+        commandMap.put(CommandEnum.SHOW_PROFILE, new ShowProfilePageCommand());
         commandMap.put(CommandEnum.SHOW_EDIT_PAGE, new ShowEditPageCommand());
         commandMap.put(CommandEnum.SHOW_INDEX_PAGE, new ShowIndexCommand());
         commandMap.put(CommandEnum.ACTIVATE_USER, new UserActivationCommand());
@@ -43,6 +43,9 @@ public class CommandProvider {
         commandMap.put(CommandEnum.DELETE_CUSTOMER, new DeleteCustomerCommand());
         commandMap.put(CommandEnum.ADD_USER_FEEDBACK, new AddUserFeedbackCommand());
         commandMap.put(CommandEnum.ADD_COCKTAIL_FEEDBACK, new AddCocktailFedbackCommand());
+        commandMap.put(CommandEnum.SHOW_INGREDIENT_LIST, new ShowIngredientListCommand());
+        commandMap.put(CommandEnum.SHOW_CREATE_INGREDIENT,new ShowCreateIngredientPageCommand());
+        commandMap.put(CommandEnum.CREATE_INGREDIENT, new CreateIngredientCommand());
     }
 
     /**

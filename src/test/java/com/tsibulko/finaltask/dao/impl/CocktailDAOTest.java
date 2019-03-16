@@ -5,7 +5,6 @@ import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
 import com.tsibulko.finaltask.dao.DaoFactory;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.PersistException;
@@ -24,7 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CocktailDAOTest {
-    DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+    DaoFactory daoFactory = JdbcDaoFactory.getInstance();
     CocktailSpecificDAO dao;
     List<Cocktail> cocktailes = JSONParser.CocktaileParse("src/test/resources/JsonData/CocktileData.json");
     List<Customer> customers = JSONParser.CustomerParse("src/test/resources/JsonData/CustomerData.json");

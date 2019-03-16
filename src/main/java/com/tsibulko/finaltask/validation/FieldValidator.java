@@ -2,8 +2,8 @@ package com.tsibulko.finaltask.validation;
 
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.GenericDAO;
+import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 
 import java.util.regex.Pattern;
 
@@ -54,21 +54,21 @@ public class FieldValidator {
     }
 
     public void isExist(String fieldName, Class curentClass, String value) throws DaoException, ValidationException {
-        GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
+        GenericDAO dao = JdbcDaoFactory.getInstance().getDao(curentClass);
         if (!dao.findStringsFromColumn(fieldName).contains(value)) {
             throw new ValidationException(value + " in " + fieldName + "doesn`t exist!");
         }
     }
 
     public void isNotExist(String fieldName, Class curentClass, String value) throws DaoException, ValidationException {
-        GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
+        GenericDAO dao = JdbcDaoFactory.getInstance().getDao(curentClass);
         if (dao.findStringsFromColumn(fieldName).contains(value)) {
             throw new ValidationException(value + " in " + fieldName + "doesn`t exist!");
         }
     }
 
     public void isUnique(String[] fieldName, Class curentClass, String... value) throws DaoException, ValidationException {
-        GenericDAO dao = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC).getDao(curentClass);
+        GenericDAO dao = JdbcDaoFactory.getInstance().getDao(curentClass);
         for (int i = 0; i < fieldName.length - 1; i++) {
             if (dao.findStringsFromColumn(fieldName[i]).contains(value[i])) {
                 throw new ValidationException(value + " in " + fieldName[i] + "doesn`t exist!");

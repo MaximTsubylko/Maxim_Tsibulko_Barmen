@@ -9,7 +9,9 @@ public enum Include {
     COCKTAIL_LIST_INCLUDE("cocktail_list"),
     CUSTOMER_LIST_INCLUDE("user_list"),
     CREATE_COCKTAIL_CREATE("show_create_cocktail"),
-    EDIT_COCKTAIL_PAGE("show_update_cocktail_page");
+    EDIT_COCKTAIL_PAGE("show_update_cocktail_page"),
+    INGREDIENT_LIST_INCLUDE("ingredient_list"),
+    CREATE_INGREDIENT("ingredient_create");
 
 
 

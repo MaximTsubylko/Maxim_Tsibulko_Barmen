@@ -16,18 +16,23 @@ public final class TransactionManager {
     private Connection proxyConnection;
     private List<GenericDAO> currentDaos;
 
-    public void begin(GenericDAO dao, GenericDAO... daos) throws DaoException {
+    public void begin(GenericDAO... daos) throws DaoException {
+        currentDaos = new ArrayList<>(daos.length + 1);
         try {
             ConnectionPool connectionPool = ConnectionPoolFactory.getInstance().getConnectionPool();
             proxyConnection = connectionPool.retrieveConnection();
-            setConnectionWithReflection(dao, proxyConnection);
+
+            try {
+                proxyConnection.setAutoCommit(false);
+            } catch (SQLException e) {
+                throw new DaoException(e.getMessage());
+            }
+
             for (GenericDAO d : daos) {
+                currentDaos.add(d);
                 setConnectionWithReflection(d, proxyConnection);
             }
 
-            currentDaos = new ArrayList<>(daos.length + 1);
-            currentDaos.addAll(Arrays.asList(daos));
-            currentDaos.add(dao);
 
         } catch (ConnectionPoolException e) {
             throw new DaoException("Failed to get a connection from CP.", e);
@@ -48,12 +53,20 @@ public final class TransactionManager {
         }
     }
 
-    public void commit() throws SQLException {
-        proxyConnection.commit();
+    public void commit() throws DaoException{
+        try {
+            proxyConnection.commit();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
-    public void rollback() throws SQLException {
-        proxyConnection.rollback();
+    public void rollback() throws DaoException {
+        try {
+            proxyConnection.rollback();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 
     static void setConnectionWithReflection(Object dao, Connection connection) throws DaoException {

@@ -10,6 +10,15 @@ public class ServiceException extends Exception {
     public ServiceException(String error) {
     }
 
+    public ServiceException(int code) {
+        this.errCode = code;
+
+    }
+
+    public ServiceException(Exception e,int code){
+        super();
+        this.errCode = code;
+    }
     public ServiceException(Exception e) {
     }
 

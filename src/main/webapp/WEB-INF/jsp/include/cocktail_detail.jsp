@@ -111,7 +111,7 @@
     </div>
 
     <div class="row-fluid">
-        <div class="span6 pagination-centered">
+        <div class="span6">
             <div class="widget-box">
                 <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i
                         class="icon-chevron-down"></i></span>
@@ -123,8 +123,7 @@
                     <ul class="recent-posts">
                         <c:forEach items="${feedback}" var="feedback">
                             <li>
-                                <div class="article-post"><span class="user-info">
-                                    <fmt:message key="user.comments.by" bundle="${bundle}"/>: john Deo</span>
+                                <div class="article-post">
                                     <h5><a href="#"><c:out value="${feedback.title}"/></a></h5>
                                     <p><a href="#"><c:out value="${feedback.comment}"/></a></p>
                                 </div>
@@ -138,12 +137,13 @@
 
         <div class="span5">
             <div class="widget-box">
-                <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
+                <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG3"><span class="icon"><i
+                        class="icon-chevron-down"></i></span>
                     <h5>
                         <fmt:message key="user.comments.add" bundle="${bundle}"/>
                     </h5>
                 </div>
-                <div class="widget-content nopadding">
+                <div class="widget-content nopadding in collapse" id="collapseG3" style="height: auto;">
                     <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label">
@@ -189,6 +189,7 @@
                             <button type="submit" class="btn btn-success">
                                 <input type="hidden" name="from" value="${CurentUser.id}">
                                 <input type="hidden" name="to" value="${cocktail.id}">
+                                <input type="hidden" name="id" value="${cocktail.id}">
                                 <input type="hidden" name="command" value="add_cocktail_feedback">
                                 <fmt:message key="edit.savebutton" bundle="${bundle}"/>
                             </button>

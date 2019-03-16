@@ -15,11 +15,14 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
+
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a></div>
-    <h1>
+
+    <h1 class="">
         <fmt:message key="main.empty.welcome" bundle="${bundle}"/>
-        </h1>
+    </h1>
 </div>
+

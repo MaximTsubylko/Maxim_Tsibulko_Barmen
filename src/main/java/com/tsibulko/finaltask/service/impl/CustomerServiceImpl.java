@@ -4,6 +4,7 @@ package com.tsibulko.finaltask.service.impl;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 import com.tsibulko.finaltask.service.*;
 import com.tsibulko.finaltask.util.AppConstant;
 import com.tsibulko.finaltask.util.EncryptPassword;
@@ -17,49 +18,40 @@ import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
 
-    private static DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+    private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
     private static CustomerDAO dao;
 
 
-    public void setNewState(HttpServletRequest request, String name) throws ServiceException {
-        Integer userID = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
-        String reaquestKey = request.getParameter(AppConstant.VALUE_PARAMETR);
+    public void setNewState(Customer customer,String reaquestKey, String name) throws ServiceException {
+        Integer userID = customer.getId();
         UserKey userKey = UserKey.getInstance();
         if (reaquestKey.equals(userKey.get(userID))) {
-            Customer customer = getByPK(userID);
-            customer.setState(UserState.getByName(name).getId());
-            update(customer);
+            Customer validCustomer = getByPK(userID);
+            validCustomer.setState(UserState.getByName(name).getId());
+            update(validCustomer);
         } else {
-            throw new ServiceException("Error in change state!");
+            throw new ServiceException(ServiceErrorConstant.ERR_CODE_CHANGE_STATE);
         }
     }
 
-    public void editUserProfile(HttpServletRequest request) throws ServiceException {
-        HttpSession session = request.getSession();
-        Customer customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
-        customer.setFirst_name(request.getParameter(AppConstant.FIRST_NAME_PARAMETR));
-        customer.setSecond_name(request.getParameter(AppConstant.SECOND_NAME_PARAMETR));
-        customer.setEmail(request.getParameter(AppConstant.EMAIL_PARAMETR));
+    public void editUserProfile(Customer customer) throws ServiceException {
         update(customer);
-        session.setAttribute(AppConstant.SESSION_ATTRIBUTE, getByPK(customer.getId()));
     }
 
-    public void restorePassword(HttpServletRequest request) throws ServiceException {
+    public Customer  restorePassword(Customer customer, String reaquestKey) throws ServiceException {
         StringGenerator generator = new StringGenerator();
-        HttpSession session = request.getSession();
         String newPassword = generator.generate();
-        Integer userID = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
-        String reaquestKey = request.getParameter(AppConstant.VALUE_PARAMETR);
+        Integer userID = customer.getId();
         UserKey userKey = UserKey.getInstance();
         if (reaquestKey.equals(userKey.get(userID))) {
-            Customer customer = getByPK(userID);
+            Customer validCustomer = getByPK(userID);
             customer.setPassword(newPassword);
-            request.setAttribute(AppConstant.NEW_PASSWORD_PARAMETR, newPassword);
             EncryptPassword.encrypt(customer);
             update(customer);
-            session.setAttribute(AppConstant.SESSION_ATTRIBUTE, customer);
+            return validCustomer;
+
         } else {
-            throw new ServiceException("Error in change password!");
+            throw new ServiceException(ServiceErrorConstant.ERR_CODE_CHANGE_PASSWORD);
         }
     }
 
@@ -89,9 +81,9 @@ public class CustomerServiceImpl implements CustomerService {
             dao.persist(customer);
             return customer;
         } catch (DaoException e) {
-            throw new ServiceException(e, "Create customer error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
         } catch (ValidationException e) {
-            throw new ServiceException("This user not unique");
+            throw new ServiceException(ServiceErrorConstant.ERR_CODE_NOT_UNIQUE_CUSTOMER);
         }
     }
 
@@ -104,9 +96,9 @@ public class CustomerServiceImpl implements CustomerService {
             dao.delete(customer);
 
         } catch (DaoException e) {
-            throw new ServiceException(e, "delete error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
         } catch (ValidationException e) {
-            throw new ServiceException("This customer not exist");
+            throw new ServiceException(ServiceErrorConstant.ERR_CODE_NOT_EXIST_CUSTOMER);
         }
     }
 
@@ -118,10 +110,10 @@ public class CustomerServiceImpl implements CustomerService {
                 Customer customer = dao.getByPK(id).get();
                 return customer;
             } else {
-                throw new ServiceException("Can`t find customer with id = " + id);
+                throw new ServiceException(ServiceErrorConstant.ERR_CODE_NOT_EXIST_CUSTOMER);
             }
         } catch (DaoException e) {
-            throw new ServiceException(e, "Get by PK customer error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
         }
     }
 
@@ -134,9 +126,9 @@ public class CustomerServiceImpl implements CustomerService {
             dao.update(customer);
 
         } catch (DaoException e) {
-            throw new ServiceException(e, "Update customer error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
         } catch (ValidationException e) {
-            throw new ServiceException("This customer not exist");
+            throw new ServiceException(ServiceErrorConstant.ERR_CODE_NOT_EXIST_CUSTOMER);
         }
     }
 
@@ -146,7 +138,7 @@ public class CustomerServiceImpl implements CustomerService {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             return dao.getAll();
         } catch (DaoException e) {
-            throw new ServiceException(e, "Get customer list error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
         }
     }
 
@@ -156,7 +148,7 @@ public class CustomerServiceImpl implements CustomerService {
             dao = (CustomerDAO) daoFactory.getDao(Customer.class);
             return dao.getByEmail(email);
         } catch (DaoException e) {
-            throw new ServiceException(e, "Get customer list error");
+            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
         }
     }
 }

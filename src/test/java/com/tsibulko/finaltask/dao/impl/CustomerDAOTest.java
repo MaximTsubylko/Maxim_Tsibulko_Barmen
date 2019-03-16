@@ -3,7 +3,6 @@ package com.tsibulko.finaltask.dao.impl;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoFactory;
 import com.tsibulko.finaltask.dao.DaoFactoryType;
-import com.tsibulko.finaltask.dao.FactoryProducer;
 import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.DaoException;
@@ -22,7 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CustomerDAOTest {
-    DaoFactory daoFactory = FactoryProducer.getDaoFactory(DaoFactoryType.JDBC);
+    DaoFactory daoFactory = JdbcDaoFactory.getInstance();
     GenericDAO dao;
     List<Customer> customers = JSONParser.CustomerParse("src/test/resources/JsonData/CustomerData.json");
 

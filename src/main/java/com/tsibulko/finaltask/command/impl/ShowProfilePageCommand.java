@@ -1,5 +1,6 @@
 package com.tsibulko.finaltask.command.impl;
 
+import com.tsibulko.finaltask.bean.BarmenFeedback;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.Include;
@@ -18,30 +19,30 @@ import com.tsibulko.finaltask.util.AppConstant;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
-public class ShowProfilePage implements Command {
-    private static final String SESSION_ATTRIBUTE = "user";
-    private static final String COCKTAIL_LIST_ATTRIBUTE_NAME = "cocktailList";
-    private static final String ID_PARAMETR_NAME = "id";
-    private static final String CUSTOMER_ATTRIBUTE_NAME = "customer";
-    private static final String FEEDBACK = "feedback";
+public class ShowProfilePageCommand implements Command {
+
 
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         HttpSession session = request.getSession();
         CustomerFeedbackServiceImpl feedbackService = (CustomerFeedbackServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER_FEEDBACK);
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
+
         Customer customer;
-        if (request.getParameter(ID_PARAMETR_NAME) != null) {
-            customer = service.getCustomerWithCocktails(Integer.valueOf(request.getParameter(ID_PARAMETR_NAME))
+        if (request.getParameter(AppConstant.ID_PARAMETR) != null) {
+            Integer id = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
+            customer = service.getCustomerWithCocktails(id
                     , new Customer());
         } else {
             customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
         }
+        List<BarmenFeedback> feedbacks = feedbackService.getCustomerFeedbacksByCustomer(customer);
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
-        request.setAttribute(FEEDBACK,feedbackService.getCustomerFeedbacksByCustomer(customer));
-        request.setAttribute(CUSTOMER_ATTRIBUTE_NAME, customer);
+        request.setAttribute(AppConstant.FEEDBACK_PARAMETR, feedbacks);
+        request.setAttribute(AppConstant.CUSTOMER_PARAMETR, customer);
         request.setAttribute(Include.VIEW_NAME.getName(), Include.PROFILE_INCLUDE.getName());
         return responseContent;
     }
