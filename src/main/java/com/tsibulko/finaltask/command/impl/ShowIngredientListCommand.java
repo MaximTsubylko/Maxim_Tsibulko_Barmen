@@ -23,7 +23,7 @@ public class ShowIngredientListCommand implements Command {
         IngredientServiceImpl service = (IngredientServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.INGREDIENT);
         List<Ingredient> cocktails = service.getList();
 
-        request.setAttribute(AppConstant.INGREDIENT_LIST_PARAMETR,cocktails);
+        request.setAttribute(AppConstant.INGREDIENT_LIST_PARAMETR, cocktails);
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
         request.setAttribute(Include.VIEW_NAME.getName(), Include.INGREDIENT_LIST_INCLUDE.getName());
 

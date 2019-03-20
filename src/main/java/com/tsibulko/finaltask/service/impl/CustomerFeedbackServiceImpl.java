@@ -1,14 +1,13 @@
 package com.tsibulko.finaltask.service.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.BarmanFeedBackSpecificDAO;
+import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
+import com.tsibulko.finaltask.error.ErrorCode;
+import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.CustomerFedbackService;
-import com.tsibulko.finaltask.service.CustomerService;
-import com.tsibulko.finaltask.service.ServiceErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 
 import java.util.List;
@@ -22,7 +21,8 @@ public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
             dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);
             return dao.getCocktailFeedbackByCustomer(customer);
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_GET_CUSTOMER_FEEDBACK);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_CUSTOMER_FEEDBACK);
+            throw new ServiceException(e, "Dao error");
         }
     }
 
@@ -34,7 +34,8 @@ public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
             dao.persist(barmenFeedback);
             return barmenFeedback;
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_CREATE_CUSTOMER_FEBACK);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_CUSTOMER_FEBACK);
+            throw new ServiceException(e, "Dao error");
         }
 
     }

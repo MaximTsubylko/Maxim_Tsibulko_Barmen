@@ -15,7 +15,7 @@
 </c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a>
         <a href="#" class="current">
@@ -49,14 +49,16 @@
                                 <th>
                                     <fmt:message key="ingredient.descriptoin" bundle="${bundle}"/>
                                 </th>
-
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach items="${ingredientList}" var="ingredient">
                                 <tr>
-                                    <td><c:out value="${ingredient.name}"/></td>
+                                    <td><a href="?command=show_edit_ingredient&id=${ingredient.id}">
+                                        <c:out value="${ingredient.name}"/>
+                                    </td>
                                     <td><c:out value="${ingredient.description}"/></td>
+
                                 </tr>
                             </c:forEach>
                             </tbody>

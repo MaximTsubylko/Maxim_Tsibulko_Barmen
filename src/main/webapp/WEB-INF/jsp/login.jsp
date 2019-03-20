@@ -22,35 +22,28 @@
 </c:choose>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
-<%@include file="/WEB-INF/jsp/localizedTags.jsp" %>
 
 
 <html>
 
 <head>
     <title>Login page</title>
-    <meta charset="UTF-8"/>
-    <%@include file="/WEB-INF/resources.jsp" %>
+    <%@include file="/WEB-INF/res.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/login_and_reg_validation.js"></script>
-    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
-
+    <script src="${pageContext.request.contextPath}/static/js/registration_validation.js"></script>
     <ul class="typeahead dropdown-menu"></ul>
     <script src="${pageContext.request.contextPath}/static/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/showMessage.js"></script>
+
+    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+
 
 </head>
 <body>
-<c:if test="${not empty requestScope.get('error')}">
-    <script>
-        show(String(${requestScope.get('error')}));
-    </script>
-</c:if>
 
 <div id="user-nav" class="navbar">
     <div class="btn-group ">
@@ -92,7 +85,7 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
+                    <span style="padding-bottom:8px" class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
                                                                                        id="loginField"
                                                                                        name="login"
                                                                                        placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
@@ -102,7 +95,7 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required"
+                    <span style="padding-bottom:8px" class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required"
                                                                                       type="password" name="password"
                                                                                       placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
                 </div>
@@ -140,7 +133,7 @@
 
         <div class="controls">
             <div class="main_input_box">
-                <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input required="required" type="email"
+                <span style="padding-bottom:8px" class="add-on bg_lo"><i class="icon-envelope"></i></span><input required="required" type="email"
                                                                                       name="email"
                                                                                       placeholder="E-mail"/>
             </div>
@@ -170,7 +163,7 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
+                    <span style="padding-bottom:8px" class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
                                                                                        id="login"
                                                                                        name="login"
                                                                                        placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
@@ -180,7 +173,7 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required"
+                    <span style="padding-bottom:8px" class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required"
                                                                                                id="email"
                                                                                                type="email" name="email"
                                                                                                placeholder="E-mail"/>
@@ -190,7 +183,7 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password"
+                    <span style="padding-bottom:8px" class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password"
                                                                                      id="password"
                                                                                      name="password"
                                                                                      placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
@@ -201,8 +194,8 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span class="add-on bg_lr"><i class="icon-key"></i></span><input required="required" type="password"
-                                                                                     name="confirm_password"
+                    <span style="padding-bottom:8px" class="add-on bg_lr"><i class="icon-key"></i></span><input required="required" type="password"
+                                                                                     name="confirm_password" id="confirm_password"
                                                                                      placeholder="<fmt:message key="user.confirmpassword" bundle="${bundle}"/>"/>
                 </div>
             </div>
@@ -214,7 +207,7 @@
                     <div class="pull-right span4">
                         <input type="hidden" name="command" value="registration">
                         <button type="submit" class="btn btn-success btn btn-block"
-                                onclick="return validRegistration(document.getElementById('registrationform'))">
+                                onclick="return validRegistration()">
                             <fmt:message key="button.registration" bundle="${bundle}"/>
                         </button>
                     </div>
@@ -227,6 +220,7 @@
         </div>
     </form>
 
+    <%@include file="/WEB-INF/jsp/localizedTags.jsp" %>
 
 </div>
 

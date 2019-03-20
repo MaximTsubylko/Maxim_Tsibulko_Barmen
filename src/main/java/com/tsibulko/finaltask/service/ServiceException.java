@@ -5,20 +5,10 @@ import com.tsibulko.finaltask.dao.DaoException;
 
 public class ServiceException extends Exception {
 
-    int errCode;
-
     public ServiceException(String error) {
     }
 
-    public ServiceException(int code) {
-        this.errCode = code;
 
-    }
-
-    public ServiceException(Exception e,int code){
-        super();
-        this.errCode = code;
-    }
     public ServiceException(Exception e) {
     }
 
@@ -29,8 +19,5 @@ public class ServiceException extends Exception {
 
     }
 
-    public int getCode() {
-        return errCode;
-    }
 }
 

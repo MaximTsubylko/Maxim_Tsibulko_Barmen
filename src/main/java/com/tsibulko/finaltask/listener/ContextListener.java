@@ -2,8 +2,6 @@ package com.tsibulko.finaltask.listener;
 
 import com.tsibulko.finaltask.dao.ConnectionPoolException;
 import com.tsibulko.finaltask.dao.impl.JDBCConnectionPool;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

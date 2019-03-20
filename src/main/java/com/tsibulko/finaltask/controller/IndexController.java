@@ -5,7 +5,9 @@ import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.CommandProvider;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
+import com.tsibulko.finaltask.error.ErrorCode;
 import com.tsibulko.finaltask.service.ServiceException;
+import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +19,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/barman")
 public class IndexController extends HttpServlet {
-    private static final String COMMAND_PARAMETER = "command";
-    private Command bufferCommandForError;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         processRequest(req, resp);
@@ -30,7 +31,7 @@ public class IndexController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String commandName = request.getParameter(COMMAND_PARAMETER);
+        String commandName = request.getParameter(AppConstant.COMMAND_PARAMETER);
         CommandEnum commandEnum = CommandEnum.getByName(commandName);
         Command command = CommandProvider.getInstance().takeCommand(commandEnum);
         ResponseContent responseContent;
@@ -42,8 +43,8 @@ public class IndexController extends HttpServlet {
                 request.getRequestDispatcher(responseContent.getRouter().getRoute()).forward(request, response);
             }
         } catch (ServiceException e) {
-            request.setAttribute("error", String.valueOf(e.getCode()));
-            request.getRequestDispatcher(CommandEnum.SHOW_LOGIN_PAGE.useCommand()).forward(request, response);
+            request.setAttribute("code", ErrorCode.getInstance().getErr_code());
+            request.getRequestDispatcher(CommandEnum.SHOW_ERROR_PAGE.useCommand()).forward(request, response);
         }
     }
 

@@ -20,6 +20,7 @@ import java.util.List;
 public class CocktailBuiler implements Builder<Cocktail> {
     Validator<Cocktail> validator = ValidatorFactory.getInstance().getValidator(ValidatorType.COCKTAIL);
     IngredientServiceImpl ingredientService = (IngredientServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.INGREDIENT);
+
     @Override
     public Cocktail build(HttpServletRequest request) throws ServiceException {
         Cocktail cocktail = new Cocktail();
@@ -32,7 +33,7 @@ public class CocktailBuiler implements Builder<Cocktail> {
             String name = request.getParameter(AppConstant.NAME_PARAMETR);
             String description = request.getParameter(AppConstant.DESCRIPTION_PARAMETR);
             Integer price = Integer.valueOf(request.getParameter(AppConstant.PRICE_PARAMETR));
-            String[] ingredients = request.getParameterValues(AppConstant.INGREDIENT_PARAMETR);
+            String[] ingredients = request.getParameterValues(AppConstant.INGREDIENTS_PARAMETR);
             if (ingredients != null) {
                 List<Ingredient> ingredientList = new ArrayList<>();
 

@@ -2,8 +2,9 @@ package com.tsibulko.finaltask.service.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.DaoException;
+import com.tsibulko.finaltask.error.ErrorCode;
+import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.CustomMessage;
-import com.tsibulko.finaltask.service.ServiceErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.validation.FieldValidator;
 import com.tsibulko.finaltask.validation.ValidationException;
@@ -11,7 +12,6 @@ import com.tsibulko.finaltask.validation.ValidationException;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Properties;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -76,7 +76,8 @@ public class MailSender {
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (ValidationException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_NOT_EXIST_EMAIL);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_NOT_EXIST_CUSTOMER);
+            throw new ServiceException(e, "DAO error");
         }
     }
 }

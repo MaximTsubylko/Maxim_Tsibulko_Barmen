@@ -2,7 +2,10 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.CocktailFeedBackSpecificDAO;
+import com.tsibulko.finaltask.dao.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +32,7 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
 
             }
         } catch (SQLException e) {
-            throw new DaoException(e, "Can`t parse barman feedback result set!");
+            throw new DaoException(e, "Can`t parse cocktail feedback result set!");
         }
         return resultList;
 
@@ -74,7 +77,6 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
     }
 
 
-
     @Override
     protected boolean hasColumn(String column) {
         return Arrays.asList("id", "user_id", "title", "cocktail_id", "mark", "comment")
@@ -110,7 +112,7 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
                 return parseResultSet(statment.executeQuery());
             }
         } catch (SQLException e) {
-            throw new DaoException(e, "Can`t get cocktails by customer");
+            throw new DaoException(e, "Can`t get cocktail feedback by customer");
         }
     }
 

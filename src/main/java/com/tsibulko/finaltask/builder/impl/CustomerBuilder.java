@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.builder.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.builder.Builder;
 import com.tsibulko.finaltask.builder.CustomerExtendedBuilder;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.util.AppConstant;

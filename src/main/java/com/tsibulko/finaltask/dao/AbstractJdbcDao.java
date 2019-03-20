@@ -54,7 +54,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(getPersistQuery(), Statement.RETURN_GENERATED_KEYS)) {
             prepareStatementForInsert(preparedStatement, object);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {

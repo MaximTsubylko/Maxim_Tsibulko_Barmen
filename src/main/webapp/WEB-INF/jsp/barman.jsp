@@ -19,6 +19,7 @@
 <html>
 <head>
     <title>Main page</title>
+    <%@include file="/WEB-INF/res.jsp" %>
 
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
@@ -30,24 +31,25 @@
     <script src="${pageContext.request.contextPath}/static/js/matrix.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/bootstrap-colorpicker.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/jquery.toggle.buttons.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/masked.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery.peity.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/matrix.form_common.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/wysihtml5-0.3.0.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/bootstrap-wysihtml5.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/showMessage.js"></script>
     <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 
     <script>
         $('.textarea_editor').wysihtml5();
     </script>
-    <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
 
-    <%@include file="/WEB-INF/resources.jsp" %>
 
 </head>
 <body>
+
+<c:if test="${not empty requestScope.get('error')}">
+    <script>
+        show(String(${requestScope.get('error')}));
+    </script>
+</c:if>
 
 <!--Header-part-->
 <div id="header">
@@ -103,24 +105,7 @@
             <fmt:message key="main.cocktaillist" bundle="${bundle}"/>
         </span></a></li>
 
-        <li class="submenu"><a href="#"><i class="icon icon-user"></i> <span>
-                     <fmt:message key="main.usermenu" bundle="${bundle}"/>
-        </span></a>
-            <ul>
-                <li><a href="barman?command=show_profile&id=${sessionScope.get("user").id}">
-                    <fmt:message key="main.profile" bundle="${bundle}"/>
-                </a></li>
-                <li><a href="barman?command=show_edit_page">
-                    <fmt:message key="main.useredit" bundle="${bundle}"/>
-                </a></li>
-                <li><a href="barman?command=logout">
-                    <fmt:message key="main.logout" bundle="${bundle}"/>
-                </a>
-                </li>
-
-            </ul>
-        </li>
-        <c:choose>
+                <c:choose>
             <c:when test="${CurentUser.role_id == 3 || CurentUser.id == 2}">
                 <li class="submenu"><a href="#"><i class="icon  icon-glass"></i> <span>
                      <fmt:message key="main.barman" bundle="${bundle}"/>
@@ -138,6 +123,25 @@
             </c:when>
         </c:choose>
 
+        <li class="submenu"><a href="#"><i class="icon icon-user"></i> <span>
+                     <fmt:message key="main.usermenu" bundle="${bundle}"/>
+        </span></a>
+            <ul>
+                <li><a href="barman?command=show_profile&id=${sessionScope.get("user").id}">
+                    <fmt:message key="main.profile" bundle="${bundle}"/>
+                </a></li>
+                <li><a href="barman?command=show_edit_page">
+                    <fmt:message key="main.useredit" bundle="${bundle}"/>
+                </a></li>
+                <li><a href="barman?command=logout">
+                    <fmt:message key="main.logout" bundle="${bundle}"/>
+                </a>
+                </li>
+
+            </ul>
+        </li>
+
+
 
     </ul>
 </div>
@@ -147,7 +151,6 @@
     <jsp:include page="include/${viewName}.jsp"/>
 </div>
 
-</div>
 <!--End-main-container-part-->
 <!--Footer-part-->
 <!--Footer-part-->

@@ -17,7 +17,7 @@
 
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a>
         <a href="#" class="current"> <fmt:message key="link.cocktailedit" bundle="${bundle}"/>

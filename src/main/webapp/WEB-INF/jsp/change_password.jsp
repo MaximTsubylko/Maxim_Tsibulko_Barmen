@@ -19,7 +19,7 @@
 <head>
     <title>Success!</title>
     <meta charset="UTF-8"/>
-    <%@include file="/WEB-INF/resources.jsp" %>
+    <%@include file="/WEB-INF/res.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 </head>
 <body>
@@ -28,9 +28,9 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="error_ex">
-                <h3 style="color: #46a546">Your password was successful changed!</h3>
-                <h4 style="color: #46a546">New password is - <c:out value="${new_password}"/></h4>
-                <h4>Now, you can change password in your profile!</h4>
+                <h3 style="color: #46a546"><fmt:message key="password.change.succes" bundle="${bundle}"/></h3>
+                <h4 style="color: #46a546"><fmt:message key="password.change.newpassword" bundle="${bundle}"/> - <c:out value="${new_password}"/></h4>
+                <h4><fmt:message key="password.change.inprofile" bundle="${bundle}"/></h4>
                 <a class="btn btn-warning btn-big"
                    href="${pageContext.request.contextPath}/barman?command=show_edit_page">Edit profile</a>
             </div>

@@ -38,7 +38,6 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Ingredient ingredient) throws DaoException {
-        int i = 0;
         statementPreparation(statement, ingredient);
     }
 
@@ -49,7 +48,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
         try {
             statement.setInt(statement.getParameterMetaData().getParameterCount(), ingredient.getId());
         } catch (SQLException e) {
-            throw new DaoException(e, "Cun`t run statement for update ingredient feedback!");
+            throw new DaoException(e, "Cun`t run statement for update ingredient");
         }
     }
 
@@ -178,7 +177,7 @@ public class IngredientDAO extends AbstractJdbcDao<Ingredient, Integer> implemen
             preparedStatement.setString(1, name);
             return parseResultSet(preparedStatement.executeQuery()).stream().findFirst();
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(e, "Can`t find customer by name");
         }
     }
 

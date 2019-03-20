@@ -18,21 +18,23 @@ public enum CommandEnum {
     ADD_USER_FEEDBACK("add_user_feedback", AccessLevel.CUSTOMER, AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
     ADD_COCKTAIL_FEEDBACK("add_cocktail_feedback", AccessLevel.CUSTOMER, AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
     DELETE_CUSTOMER("delete_customer", AccessLevel.CUSTOMER, AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
-    SHOW_WHAITING_CONFORMATION("show_whating_conformation",AccessLevel.ALL),
     ACTIVATE_USER("activate_user", AccessLevel.ALL),
     RESTORE_PASSWORD("restore_password", AccessLevel.ALL),
+    SHOW_ERROR_PAGE("show_error_page", AccessLevel.ALL),
     SHOW_INDEX_PAGE("show_index_page", AccessLevel.VISITOR),
     TRY_LOGIN("try_login", AccessLevel.VISITOR),
     REGISTRATION("registration", AccessLevel.VISITOR),
     SHOW_LOGIN_PAGE("show_login_page", AccessLevel.VISITOR),
     SHOW_SUCCESS_PAGE("show_success_page", AccessLevel.VISITOR),
-    SHOW_ERROR_PAGE("show_error_page", AccessLevel.VISITOR),
     EDIT_COCKTAIL("edit_cocktail", AccessLevel.CUSTOMER, AccessLevel.BARMEN,
             AccessLevel.ADMINISTRATOR),
     SEND_RECOVERY_MESSAGE("send_recovery_message", AccessLevel.VISITOR),
     SHOW_INGREDIENT_LIST("show_ingredient_list", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
     SHOW_CREATE_INGREDIENT("show_create_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
-    CREATE_INGREDIENT("create_ingredient", AccessLevel.ADMINISTRATOR,AccessLevel.BARMEN);
+    DELETE_INGREDIENT("delete_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
+    EDIT_INGREDIENT("edit_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
+    SHOW_EDIT_INGREDIENT("show_edit_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
+    CREATE_INGREDIENT("create_ingredient", AccessLevel.ADMINISTRATOR, AccessLevel.BARMEN);
 
 
     private final String name;
@@ -53,6 +55,8 @@ public enum CommandEnum {
 
     }
 
+
+    public String getName() {return name;}
     public AccessLevel[] getLevels() {
         return levels;
     }

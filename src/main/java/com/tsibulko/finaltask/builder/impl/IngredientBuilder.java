@@ -12,6 +12,11 @@ public class IngredientBuilder implements Builder<Ingredient> {
     public Ingredient build(HttpServletRequest request) throws ServiceException {
         Ingredient ingredient = new Ingredient();
 
+
+        if (request.getParameter(AppConstant.ID_PARAMETR) != null) {
+            Integer id = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
+            ingredient.setId(id);
+        }
         String name = request.getParameter(AppConstant.NAME_PARAMETR);
         String description = request.getParameter(AppConstant.DESCRIPTION_PARAMETR);
 

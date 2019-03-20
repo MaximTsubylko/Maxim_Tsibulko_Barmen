@@ -9,7 +9,6 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
-import com.tsibulko.finaltask.service.impl.CocktailServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.util.AppConstant;
 

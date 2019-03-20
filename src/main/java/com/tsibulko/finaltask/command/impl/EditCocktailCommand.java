@@ -20,7 +20,7 @@ public class EditCocktailCommand implements Command {
         Builder<Cocktail> builder = BuilderFactory.getInstance().getBuilder(Cocktail.class);
 
         Cocktail cocktail = builder.build(request);
-        service.editCocktail(cocktail);
+        service.update(cocktail);
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(CommandEnum.SHOW_COCKTAIL_DETAILS.useCommand(), Router.Type.FORWARD));
         return responseContent;

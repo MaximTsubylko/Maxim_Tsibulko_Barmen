@@ -13,13 +13,22 @@
     <fmt:message key="error.registration.lesslonger" var="error_14" bundle="${bundle}"/>
     <fmt:message key="error.registration.morelonger" var="error_15" bundle="${bundle}"/>
     <fmt:message key="error.registration.notvalidlogin" var="error_16" bundle="${bundle}"/>
+    <fmt:message key="error.registration.smallpassword" var="error_17" bundle="${bundle}"/>
+    <fmt:message key="error.registration.largepassword" var="error_18" bundle="${bundle}"/>
+    <fmt:message key="error.create.cocktaile.description.large" var="error_19" bundle="${bundle}"/>
+    <fmt:message key="error.create.cocktail.price.large" var="error_20" bundle="${bundle}"/>
+    <fmt:message key="error.create.cocktail.price.sign" var="error_20" bundle="${bundle}"/>
+
+
 
     <fmt:message key="error.dao" var="error_113" bundle="${bundle}"/>
     <fmt:message key="error.cocktailfeedback.get" var="error_115" bundle="${bundle}"/>
     <fmt:message key="error.cocktailfeedback.create" var="error_116" bundle="${bundle}"/>
     <fmt:message key="error.customerfeedback.get" var="error_117" bundle="${bundle}"/>
     <fmt:message key="error.customerfeedback.create" var="error_118" bundle="${bundle}"/>
+
     <fmt:message key="error.state.change" var="error_119" bundle="${bundle}"/>
+
     <fmt:message key="error.password.change" var="error_120" bundle="${bundle}"/>
     <fmt:message key="error.customer.notunique" var="error_121" bundle="${bundle}"/>
     <fmt:message key="error.customer.notexist" var="error_122" bundle="${bundle}"/>
@@ -29,6 +38,27 @@
     <fmt:message key="error.validation.incorrectpassword" var="error_126" bundle="${bundle}"/>
     <fmt:message key="error.validation.notexistemil" var="error_127" bundle="${bundle}"/>
 
+
+    <fmt:message key="error.waiting_conf.title" var="error_128_title" bundle="${bundle}"/>
+    <fmt:message key="error.waiting_conf.text" var="error_128_message" bundle="${bundle}"/>
+
+
+    <fmt:message key="error.blocked.title" var="error_129_title" bundle="${bundle}"/>
+    <fmt:message key="error.blocked.text" var="error_129_message" bundle="${bundle}"/>
+
+
+    <fmt:message key="error.cocktail.cannotcreatecocktwhithingr" var="error_130_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.cocktail.cantgetingredietn" var="error_131_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.customer.create" var="error_132_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.customer.delete" var="error_133_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.customer.delete" var="error_134_message" bundle="${bundle}"/>
+
+
+    <fmt:message key="error.pagenotfound" var="error_404_title" bundle="${bundle}"/>
 
 
 
@@ -45,15 +75,67 @@
     <span id="e116_message">${error_116}</span>
     <span id="e117_message">${error_117}</span>
     <span id="e118_message">${error_118}</span>
-    <span id="e119_message">${error_119}</span>
     <span id="e120_message">${error_120}</span>
     <span id="e121_message">${error_121}</span>
+
+    <%--change state--%>
+    <span id="e119_title">${title}</span>
+    <span id="e119_message">${error_119}</span>
+
+    <%--incorrect username--%>
+    <span id="e122_title">${title}</span>
     <span id="e122_message">${error_122}</span>
+
+    <%--can`t create ingredient--%>
+    <span id="e123_title">${title}</span>
     <span id="e123_message">${error_123}</span>
+
     <span id="e124_message">${error_124}</span>
+
+    <%--not exist ingredient--%>
+    <span id="e125_title">${title}</span>
     <span id="e125_message">${error_125}</span>
+
+    <%--incorrect password--%>
+    <span id="e126_title">${title}</span>
     <span id="e126_message">${error_126}</span>
+
+    <%--not exist e-mail--%>
+    <span id="e127_title">${title}</span>
     <span id="e127_message">${error_127}</span>
+
+    <%--create ingredient--%>
+    <span id="e134_message">${error_134_message}</span>
+    <span id="e134_title">${title}</span>
+
+    <%--delete customer--%>
+    <span id="e133_message">${error_133_message}</span>
+    <span id="e133_title">${title}</span>
+
+    <%--create customer--%>
+    <span id="e132_message">${error_132_message}</span>
+    <span id="e132_title">${title}</span>
+
+
+    <%--get ingredient by cocktail--%>
+    <span id="e131_message">${error_131_message}</span>
+    <span id="e131_title">${title}</span>
+
+    <%--get cocktail by customer--%>
+    <span id="e130_message">${error_130_message}</span>
+    <span id="e130_title">${error_130_title}</span>
+
+    <%--waiting conformation--%>
+    <span id="e128_message">${error_128_message}</span>
+    <span id="e128_title">${error_128_title}</span>
+
+    <%--bloced--%>
+    <span id="e129_message">${error_129_message}</span>
+    <span id="e129_title">${error_129_title}</span>
+
+    <%--page not found--%>
+    <span id="e404_title">${error_404_title}</span>
+
 
 
 </div>

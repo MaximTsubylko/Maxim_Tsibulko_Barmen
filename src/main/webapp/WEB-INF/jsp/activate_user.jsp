@@ -19,7 +19,7 @@
 <head>
     <title>Success!</title>
     <meta charset="UTF-8"/>
-    <%@include file="/WEB-INF/resources.jsp" %>
+    <%@include file="/WEB-INF/res.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 </head>
 <body>
@@ -28,8 +28,8 @@
     <div class="row-fluid">
         <div class="span12">
             <div class="error_ex">
-                <h3 style="color: #46a546">Your account was successful activate!</h3>
-                <h4>Now, you can join for us!</h4>
+                <h3 style="color: #46a546"><fmt:message key="user.activation.succes" bundle="${bundle}"/></h3>
+                <h4><fmt:message key="user.activation.join" bundle="${bundle}"/></h4>
                 <a class="btn btn-warning btn-big"
                    href="${pageContext.request.contextPath}/barman?command=show_login_page">Log in!</a>
             </div>

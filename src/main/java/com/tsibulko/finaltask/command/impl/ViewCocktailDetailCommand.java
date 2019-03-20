@@ -8,7 +8,6 @@ import com.tsibulko.finaltask.command.Include;
 import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
-import com.tsibulko.finaltask.service.CocktailFeedbackService;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
@@ -23,7 +22,6 @@ import java.util.List;
 public class ViewCocktailDetailCommand implements Command {
 
 
-
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
@@ -36,8 +34,8 @@ public class ViewCocktailDetailCommand implements Command {
         List<CocktaileFeedback> feedbacks = feedbackService.getCocktailFeedbacksByCocktail(cocktail);
 
         request.setAttribute(AppConstant.COCKTAIL_PARAMETR, cocktail);
-        request.setAttribute(AppConstant.INGREDIENT_PARAMETR,ingredients);
-        request.setAttribute(AppConstant.FEEDBACK_PARAMETR,feedbacks);
+        request.setAttribute(AppConstant.INGREDIENTS_PARAMETR, ingredients);
+        request.setAttribute(AppConstant.FEEDBACK_PARAMETR, feedbacks);
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
         request.setAttribute(Include.VIEW_NAME.getName(), Include.COCKTAIL_DETAILS_INCLUDE.getName());
 

@@ -44,8 +44,11 @@ public class CommandProvider {
         commandMap.put(CommandEnum.ADD_USER_FEEDBACK, new AddUserFeedbackCommand());
         commandMap.put(CommandEnum.ADD_COCKTAIL_FEEDBACK, new AddCocktailFedbackCommand());
         commandMap.put(CommandEnum.SHOW_INGREDIENT_LIST, new ShowIngredientListCommand());
-        commandMap.put(CommandEnum.SHOW_CREATE_INGREDIENT,new ShowCreateIngredientPageCommand());
+        commandMap.put(CommandEnum.SHOW_CREATE_INGREDIENT, new ShowCreateIngredientPageCommand());
         commandMap.put(CommandEnum.CREATE_INGREDIENT, new CreateIngredientCommand());
+        commandMap.put(CommandEnum.DELETE_INGREDIENT, new DeleteIngreditntCommand());
+        commandMap.put(CommandEnum.EDIT_INGREDIENT, new EditIngredientCommand());
+        commandMap.put(CommandEnum.SHOW_EDIT_INGREDIENT, new ShowEditIngredientCommand());
     }
 
     /**

@@ -19,7 +19,7 @@
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a><a href="#" class="current"><c:out value="${cocktail.name}"/></a></div>
 </div>
@@ -144,7 +144,7 @@
                     </h5>
                 </div>
                 <div class="widget-content nopadding in collapse" id="collapseG3" style="height: auto;">
-                    <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
+                    <form id="commentform" action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label">
                                 <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
@@ -158,21 +158,21 @@
                             <label class="control-label">Mark</label>
                             <div class="controls">
                                 <div data-toggle="buttons-radio" class="btn-group">
-                                    <button class="btn btn-info" type="button">
-                                        <input type="hidden" name="mark" value="1">
-                                        1</button>
-                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
-                                        <input type="hidden" name="mark" value="2">
-                                        2</button>
-                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
-                                        <input type="hidden" name="mark" value="3">
-                                        3</button>
-                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
-                                        <input type="hidden" name="mark" value="4">
-                                        4</button>
-                                    <button style="margin-left: 1vh" class="btn btn-info" type="button">
-                                        <input type="hidden" name="mark" value="5">
-                                        5</button>
+                                    <button class="btn btn-info" type="button" onclick="m1()">
+                                        1
+                                    </button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m2()">
+                                        2
+                                    </button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m3()">
+                                        3
+                                    </button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m4()">
+                                        4
+                                    </button>
+                                    <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m5()">
+                                        5
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -186,9 +186,10 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success" onclick="setMark()">
                                 <input type="hidden" name="from" value="${CurentUser.id}">
                                 <input type="hidden" name="to" value="${cocktail.id}">
+                                <input type="hidden" id="mark" name="mark" value="">
                                 <input type="hidden" name="id" value="${cocktail.id}">
                                 <input type="hidden" name="command" value="add_cocktail_feedback">
                                 <fmt:message key="edit.savebutton" bundle="${bundle}"/>
@@ -200,3 +201,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    var mark = 0;
+    function m1() {
+        mark = 1;
+    }
+    function m2() {
+        mark = 2;
+    }
+    function m3() {
+        mark = 3;
+    }
+    function m4() {
+        mark = 4;
+    }
+    function m5() {
+        mark = 5;
+    }
+
+    function setMark() {
+        document.getElementById("mark").value = mark;
+    }
+</script>

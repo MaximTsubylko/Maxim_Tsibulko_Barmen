@@ -24,7 +24,7 @@ public class ChangePasswordCommand implements Command {
         Customer customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
 
-        service.changePassword(customer,newPassword);
+        service.changePassword(customer, newPassword);
         responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.FORWARD));
         return responseContent;
     }

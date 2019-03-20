@@ -13,7 +13,7 @@ public class BuilderFactory {
 
     private static BuilderFactory instance;
     private static Lock lock = new ReentrantLock();
-    private static Map<Class,Builder> builderMap = new HashMap<>();
+    private static Map<Class, Builder> builderMap = new HashMap<>();
 
     public static BuilderFactory getInstance() {
         lock.lock();
@@ -32,12 +32,12 @@ public class BuilderFactory {
     private BuilderFactory() {
         builderMap.put(Customer.class, new CustomerBuilder());
         builderMap.put(Cocktail.class, new CocktailBuiler());
-        builderMap.put(BarmenFeedback.class,new BarmanFeedbackBuilder());
+        builderMap.put(BarmenFeedback.class, new BarmanFeedbackBuilder());
         builderMap.put(CocktaileFeedback.class, new CocktailFeedbackBuilder());
         builderMap.put(Ingredient.class, new IngredientBuilder());
     }
 
-    public Builder getBuilder(Class type){
+    public Builder getBuilder(Class type) {
         return builderMap.get(type);
     }
 

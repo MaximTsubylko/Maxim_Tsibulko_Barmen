@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Router;
@@ -14,7 +13,6 @@ import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class DeleteCocktailCommand implements Command {
 

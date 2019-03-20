@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ShowIndexCommand implements Command {
     @Override
-    public ResponseContent process(HttpServletRequest request,HttpServletResponse response) throws ServiceException {
+    public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(Page.INDEX.getRout(), Router.Type.FORWARD));
         return responseContent;

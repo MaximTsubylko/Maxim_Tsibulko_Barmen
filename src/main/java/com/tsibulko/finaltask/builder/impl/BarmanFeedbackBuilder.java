@@ -5,7 +5,6 @@ import com.tsibulko.finaltask.builder.Builder;
 import com.tsibulko.finaltask.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 
 public class BarmanFeedbackBuilder implements Builder<BarmenFeedback> {
     private static String FROM = "from";
@@ -13,6 +12,7 @@ public class BarmanFeedbackBuilder implements Builder<BarmenFeedback> {
     private static String TITLE = "title";
     private static String COMMENT = "comment";
     private static String MARK = "mark";
+
     @Override
     public BarmenFeedback build(HttpServletRequest request) throws ServiceException {
         BarmenFeedback feedback = new BarmenFeedback();

@@ -26,22 +26,22 @@
 <head>
     <title>Success!</title>
     <meta charset="UTF-8"/>
-    <%@include file="/WEB-INF/resources.jsp" %>
+    <%@include file="/WEB-INF/res.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 
 </head>
 <body>
 <div id="loginbox">
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
-        <p class="normal_text">Thanks for registration!</p>
-        <p class="normal_text"> We send you e-mail with link for confirm account.</p>
+        <p class="normal_text"><fmt:message key="registration.success.thanks" bundle="${bundle}"/></p>
+        <p class="normal_text"><fmt:message key="registration.success.send" bundle="${bundle}"/></p>
 
 
         <div class="form-actions">
             <div class="center-pill">
                 <div class="row-fluid">
                     <input type="hidden" name="command" value="show_login_page">
-                    <button type="submit" class="btn btn-success btn btn-block">&laquo; Back to login</button>
+                    <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="button.backtologin" bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

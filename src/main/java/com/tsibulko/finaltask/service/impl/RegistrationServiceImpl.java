@@ -4,10 +4,10 @@ import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.UserRole;
 import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.dao.DaoException;
-import com.tsibulko.finaltask.dao.DaoFactoryType;
 import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
-import com.tsibulko.finaltask.service.ServiceErrorConstant;
+import com.tsibulko.finaltask.error.ErrorCode;
+import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.util.EncryptPassword;
 
@@ -23,7 +23,8 @@ public class RegistrationServiceImpl {
             customer = userDao.persist(customer);
             return customer;
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_CUSTOMER);
+            throw new ServiceException(e, "DAO error");
         }
     }
 }

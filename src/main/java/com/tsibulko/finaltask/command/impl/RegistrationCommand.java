@@ -9,8 +9,8 @@ import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.impl.RegistrationServiceImpl;
-import com.tsibulko.finaltask.util.SendMessages;
 import com.tsibulko.finaltask.util.AppConstant;
+import com.tsibulko.finaltask.util.SendMessages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +23,7 @@ public class RegistrationCommand implements Command {
         SendMessages sendMessages = new SendMessages();
         Customer customer = builder.build(request);
         Integer port = request.getLocalPort();
-        String contextPath =request.getContextPath();
+        String contextPath = request.getContextPath();
 
         service.signUp(customer);
         sendMessages.sendActivationLinkEmail(customer, port, contextPath,

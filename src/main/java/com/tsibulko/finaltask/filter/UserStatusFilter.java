@@ -2,21 +2,24 @@ package com.tsibulko.finaltask.filter;
 
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.UserState;
+import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Page;
+import com.tsibulko.finaltask.error.ErrorCode;
+import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
+import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(filterName = "UserStatusFilter")
 public class UserStatusFilter implements Filter {
-    private static final String USER_SESSION_ATTRIBUTE = "user";
 
 
     @Override
@@ -27,25 +30,37 @@ public class UserStatusFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        Customer customer = (Customer) httpServletRequest.getSession().getAttribute(USER_SESSION_ATTRIBUTE);
+        HttpSession session = httpServletRequest.getSession();
+        String command = request.getParameter(AppConstant.COMMAND_PARAMETER);
+        Customer customer = (Customer) session.getAttribute(AppConstant.SESSION_ATTRIBUTE);
+
         if (customer != null) {
             CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
             try {
-                Customer dbCustomer = service.getByPK(customer.getId());
-                if (dbCustomer.getState() == UserState.WAITING_CONFIRMATION.getId()) {
-                    request.getRequestDispatcher(Page.WAITING_CONFIRMATION.getRout()).forward(request, response);
-                    httpServletRequest.getSession().setAttribute(USER_SESSION_ATTRIBUTE, null);
-                } else if (dbCustomer.getState() == UserState.BLOCKED.getId()) {
-                    request.getRequestDispatcher(Page.BLOCKED_ERROR_PAGE.getRout()).forward(request, response);
-                    httpServletRequest.getSession().setAttribute(USER_SESSION_ATTRIBUTE, null);
+                if (command.equals(CommandEnum.LOGOUT.getName())){
+                    chain.doFilter(request,response);
+                } else {
+                    Customer dbCustomer = service.getByPK(customer.getId());
+                    if (dbCustomer.getState() == UserState.WAITING_CONFIRMATION.getId()) {
+                        ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_WAITING_CONFORMATION);
+                        request.getRequestDispatcher(CommandEnum.SHOW_ERROR_PAGE.useCommand()).forward(request, response);
+
+                    } else if (dbCustomer.getState() == UserState.BLOCKED.getId()) {
+
+                        ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_BLOCED);
+                        request.getRequestDispatcher(CommandEnum.SHOW_ERROR_PAGE.useCommand()).forward(request, response);
+                    } else {
+                        chain.doFilter(request, response);
+                    }
                 }
             } catch (ServiceException e) {
                 throw new IllegalStateException("Illegal state of program! Problem in UserService", e);
             }
+        } else {
+            chain.doFilter(request, response);
         }
 
 
-        chain.doFilter(request, response);
     }
 
     @Override

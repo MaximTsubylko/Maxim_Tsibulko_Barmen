@@ -4,26 +4,23 @@ package com.tsibulko.finaltask.service.impl;
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.*;
-import com.tsibulko.finaltask.dao.impl.CocktailDAO;
-import com.tsibulko.finaltask.dao.impl.IngredientDAO;
+import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
+import com.tsibulko.finaltask.dao.DaoException;
+import com.tsibulko.finaltask.dao.IngredientSpecificDAO;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 import com.tsibulko.finaltask.dao.impl.TransactionManager;
+import com.tsibulko.finaltask.error.ErrorCode;
+import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.CocktailService;
-import com.tsibulko.finaltask.service.ServiceErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
-import com.tsibulko.finaltask.validation.*;
+import com.tsibulko.finaltask.validation.FieldValidator;
+import com.tsibulko.finaltask.validation.ValidationException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class CocktailServiceImpl implements CocktailService {
     private static JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
-
-    public void editCocktail(Cocktail cocktail) throws ServiceException {
-        update(cocktail);
-    }
 
     @Override
     public Cocktail createCocktailWithIngredients(Cocktail cocktail, List<Ingredient> ingredients) throws ServiceException {
@@ -32,7 +29,8 @@ public class CocktailServiceImpl implements CocktailService {
             ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             return ingredientDao.setCocktailIngredients(create(cocktail), ingredients);
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);
+            throw new ServiceException(e,"Dao error");
         }
     }
 
@@ -43,7 +41,8 @@ public class CocktailServiceImpl implements CocktailService {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             return cocktailDao.getCocktailByCustomer(customer);
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_COCKTAIL_BY_CUSTOMER);
+            throw new ServiceException(e, "Dao error");
         }
     }
 
@@ -53,7 +52,8 @@ public class CocktailServiceImpl implements CocktailService {
             ingredientDao = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             return ingredientDao.getIngredientByCocktail(cocktail);
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_INGREDIENT_BY_COCKTAIL);
+            throw new ServiceException(e, "Dao error");
         }
     }
 
@@ -65,11 +65,11 @@ public class CocktailServiceImpl implements CocktailService {
             ingredientDao = (IngredientSpecificDAO) daoFactory.getTransactionalDao(Ingredient.class);
             cocktailDao = (CocktailSpecificDAO) daoFactory.getTransactionalDao(Cocktail.class);
 
-            transactionManager.begin(cocktailDao,ingredientDao);
+            transactionManager.begin(cocktailDao, ingredientDao);
 
             cocktailDao.persist(cocktail);
-            ingredientDao.setCocktailIngredients(cocktail,cocktail.getIngredients());
-            cocktailDao.setCocktailToCustomer(customer,cocktail);
+            ingredientDao.setCocktailIngredients(cocktail, cocktail.getIngredients());
+            cocktailDao.setCocktailToCustomer(customer, cocktail);
 
             transactionManager.commit();
         } catch (DaoException e) {
@@ -79,9 +79,9 @@ public class CocktailServiceImpl implements CocktailService {
             } catch (DaoException e1) {
                 e1.printStackTrace();
             }
-
-            throw new ServiceException(e,ServiceErrorConstant.ERR_CODE_GET_CREATE_COCKTAIL_WHITH_INGREDIENTS);
-        }finally {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);
+            throw new ServiceException(e, "Dao error");
+        } finally {
 
             try {
                 transactionManager.end();
@@ -102,7 +102,7 @@ public class CocktailServiceImpl implements CocktailService {
             cocktailDao.persist(cocktaile);
             return cocktaile;
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            throw new ServiceException(e, "Dao error");
         }
 
     }
@@ -117,9 +117,9 @@ public class CocktailServiceImpl implements CocktailService {
             cocktailDao.delete(cocktaile);
 
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            throw new ServiceException(e, "Dao error");
         } catch (ValidationException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_NOT_EXIST_COCKTAIL);
+            throw new ServiceException(e, "Dao error");
         }
     }
 
@@ -132,10 +132,10 @@ public class CocktailServiceImpl implements CocktailService {
                 Cocktail cocktaile = (Cocktail) cocktailDao.getByPK(id).get();
                 return cocktaile;
             } else {
-                throw new ServiceException(ServiceErrorConstant.ERR_CODE_NOT_EXIST_COCKTAIL);
+                throw new ServiceException("Dao error");
             }
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            throw new ServiceException(e, "Dao error");
         }
     }
 
@@ -144,13 +144,13 @@ public class CocktailServiceImpl implements CocktailService {
         CocktailSpecificDAO cocktailDao;
         FieldValidator fieldValidator = FieldValidator.getInstance();
         try {
-            fieldValidator.isExist("id",Cocktail.class,String.valueOf(cocktaile.getId()));
+            fieldValidator.isExist("id", Cocktail.class, String.valueOf(cocktaile.getId()));
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             cocktailDao.update(cocktaile);
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            throw new ServiceException(e, "Dao error");
         } catch (ValidationException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_NOT_EXIST_COCKTAIL);
+            throw new ServiceException(e, "Dao error");
         }
     }
 
@@ -161,7 +161,7 @@ public class CocktailServiceImpl implements CocktailService {
             cocktailDao = (CocktailSpecificDAO) daoFactory.getDao(Cocktail.class);
             return cocktailDao.getAll();
         } catch (DaoException e) {
-            throw new ServiceException(e, ServiceErrorConstant.ERR_CODE_DAO_ERROR);
+            throw new ServiceException(e, "Dao error");
         }
     }
 

@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.validation;
 
 import com.tsibulko.finaltask.dao.DaoException;
-import com.tsibulko.finaltask.dao.DaoFactoryType;
 import com.tsibulko.finaltask.dao.GenericDAO;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 

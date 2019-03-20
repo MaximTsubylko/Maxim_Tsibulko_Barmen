@@ -131,7 +131,7 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
         return "SELECT * FROM user_coctails INNER JOIN cocktail ON cocktail_id=cocktail.id WHERE user_id = ?";
     }
 
-    public String getCocktailDeleteByCustomerQuary(){
+    public String getCocktailDeleteByCustomerQuary() {
         return "DELETE from user_coctails WHERE user_id = ? and cocktail_id = ?";
     }
 
@@ -153,7 +153,7 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
     public void setCocktailToCustomer(Customer customer, Cocktail cocktail) throws DaoException {
         try {
             try (PreparedStatement statement = connection.prepareStatement(getSetCoctailToCustomerQuery())) {
-                preparedStatmentForSetCocktailToCustomer(statement,customer, cocktail);
+                preparedStatmentForSetCocktailToCustomer(statement, customer, cocktail);
             }
         } catch (SQLException e) {
             throw new DaoException(e, "Can`t get cocktails by customer");
@@ -165,10 +165,10 @@ public class CocktailDAO extends AbstractJdbcDao<Cocktail, Integer> implements C
     public void deleteCoctail(Customer customer, Cocktail cocktail) throws DaoException {
         try {
             try (PreparedStatement statement = connection.prepareStatement(getCocktailDeleteByCustomerQuary())) {
-                preparedStatmentForSetCocktailToCustomer(statement,customer, cocktail);
+                preparedStatmentForSetCocktailToCustomer(statement, customer, cocktail);
             }
         } catch (SQLException e) {
-            throw new DaoException(e, "errr");
+            throw new DaoException(e, "Can`t delete cocktails by customer");
         }
     }
 

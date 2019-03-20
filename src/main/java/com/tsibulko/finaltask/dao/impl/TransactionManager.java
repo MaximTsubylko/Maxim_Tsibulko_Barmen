@@ -6,7 +6,6 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,7 +52,7 @@ public final class TransactionManager {
         }
     }
 
-    public void commit() throws DaoException{
+    public void commit() throws DaoException {
         try {
             proxyConnection.commit();
         } catch (SQLException e) {

@@ -11,8 +11,9 @@ public enum Include {
     CREATE_COCKTAIL_CREATE("show_create_cocktail"),
     EDIT_COCKTAIL_PAGE("show_update_cocktail_page"),
     INGREDIENT_LIST_INCLUDE("ingredient_list"),
-    CREATE_INGREDIENT("ingredient_create");
-
+    CREATE_INGREDIENT("ingredient_create"),
+    EDIT_INGREDIENT("ingredient_edit"),
+    ERROR("error");
 
 
     private final String name;

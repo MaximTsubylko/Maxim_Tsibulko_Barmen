@@ -1,10 +1,11 @@
 package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.AbstractJdbcDao;
+import com.tsibulko.finaltask.dao.AutoConnection;
+import com.tsibulko.finaltask.dao.BarmanFeedBackSpecificDAO;
+import com.tsibulko.finaltask.dao.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,9 +19,9 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
     @Override
     protected List<BarmenFeedback> parseResultSet(ResultSet resultSet) throws DaoException {
         List<BarmenFeedback> resultList = new ArrayList<>();
-        BarmenFeedback barmenFeedback = new BarmenFeedback();
         try {
             while (resultSet.next()) {
+                BarmenFeedback barmenFeedback = new BarmenFeedback();
                 barmenFeedback.setId(resultSet.getInt("id"));
                 barmenFeedback.setFromUserId(resultSet.getInt("from_user_id"));
                 barmenFeedback.setToUserId(resultSet.getInt("to_user_id"));
@@ -110,7 +111,6 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
             throw new DaoException(e, "Can`t get cocktails by customer");
         }
     }
-
 
 
 }

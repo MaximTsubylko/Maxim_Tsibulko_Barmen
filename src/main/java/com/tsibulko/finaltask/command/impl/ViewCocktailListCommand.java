@@ -24,7 +24,7 @@ public class ViewCocktailListCommand implements Command {
         CocktailServiceImpl service = (CocktailServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.COCKTAIL);
         List<Cocktail> cocktails = service.getList();
 
-        request.setAttribute(AppConstant.COCKTAIL_LIST_PARAMETR,cocktails);
+        request.setAttribute(AppConstant.COCKTAIL_LIST_PARAMETR, cocktails);
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
         request.setAttribute(Include.VIEW_NAME.getName(), Include.COCKTAIL_LIST_INCLUDE.getName());
 

@@ -9,7 +9,7 @@ public class UserKey {
     private static UserKey instance;
     private static Lock lock = new ReentrantLock();
 
-    private Map<Integer,String> keys = new WeakHashMap<>();
+    private Map<Integer, String> keys = new WeakHashMap<>();
 
     private UserKey() {
     }
@@ -28,15 +28,15 @@ public class UserKey {
         return instance;
     }
 
-    public void add(Integer id, String key){
-        keys.put(id,key);
+    public void add(Integer id, String key) {
+        keys.put(id, key);
     }
 
-    public void remove(Integer id, String key){
+    public void remove(Integer id, String key) {
         keys.remove(id);
     }
 
-    public String get(Integer id){
+    public String get(Integer id) {
         return keys.get(id);
     }
 

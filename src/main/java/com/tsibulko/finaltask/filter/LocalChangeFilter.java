@@ -8,7 +8,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Optional;
 
 @WebFilter(filterName = "LocalChangeFilter")
@@ -33,12 +32,12 @@ public class LocalChangeFilter implements Filter {
         if (change.isPresent()) {
             if (change.get().equals("en")) {
                 Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "en");
-                httpServletRequest.setAttribute("lang","en");
+                httpServletRequest.setAttribute("lang", "en");
                 httpServletResponse.addCookie(cookie);
             } else if (change.get().equals("ru")) {
                 Cookie cookie = new Cookie(LOCALE_ATTRIBUTE, "ru");
                 httpServletResponse.addCookie(cookie);
-                httpServletRequest.setAttribute("lang","ru");
+                httpServletRequest.setAttribute("lang", "ru");
             }
 
         }

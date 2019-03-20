@@ -8,9 +8,6 @@ import com.tsibulko.finaltask.command.CommandEnum;
 import com.tsibulko.finaltask.command.Router;
 import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
-import com.tsibulko.finaltask.service.ServiceFactory;
-import com.tsibulko.finaltask.service.ServiceTypeEnum;
-import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.util.SendMessages;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +22,7 @@ public class RecoverySendMessageCommand implements Command {
         Integer port = request.getLocalPort();
         String contextPath = request.getContextPath();
 
-        sendMessages.sendRestoreEmail(customer,port,contextPath);
+        sendMessages.sendRestoreEmail(customer, port, contextPath);
 
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(CommandEnum.SHOW_LOGIN_PAGE.useCommand(), Router.Type.FORWARD));
