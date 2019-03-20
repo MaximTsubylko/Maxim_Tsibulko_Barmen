@@ -8,4 +8,7 @@ import java.util.List;
 public interface BarmanFeedBackSpecificDAO<T extends Identified<PK>, PK extends Number> extends GenericDAO<T, PK> {
 
     List<BarmenFeedback> getCocktailFeedbackByCustomer(Customer customer) throws DaoException;
+
+    double getMarkByCustomer(Customer customer) throws DaoException;
+
 }

@@ -57,6 +57,19 @@
 
     <fmt:message key="error.customer.delete" var="error_134_message" bundle="${bundle}"/>
 
+    <fmt:message key="error.validation.incorrectlogin" var="error_135_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.cocktail.notqnique" var="error_136_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.ingredient.notunique" var="error_137_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.customer.email.notunique" var="error_138_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.customer.email.incorrect" var="error_139_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.customer.edit" var="error_140_message" bundle="${bundle}"/>
+
+
 
     <fmt:message key="error.pagenotfound" var="error_404_title" bundle="${bundle}"/>
 
@@ -69,13 +82,29 @@
     <span id="e14_message">${error_14}</span>
     <span id="e15_message">${error_15}</span>
     <span id="e16_message">${error_16}</span>
+    <span id="e17_message">${error_17}</span>
+    <span id="e18_message">${error_18}</span>
 
+
+    <span id="e113_title">${title}</span>
     <span id="e113_message">${error_113}</span>
+
+    <span id="e115_title">${title}</span>
     <span id="e115_message">${error_115}</span>
+
+    <span id="e116_title">${title}</span>
     <span id="e116_message">${error_116}</span>
+
+    <span id="e117_title">${title}</span>
     <span id="e117_message">${error_117}</span>
+
+    <span id="e118_title">${title}</span>
     <span id="e118_message">${error_118}</span>
+
+    <span id="e120_title">${title}</span>
     <span id="e120_message">${error_120}</span>
+
+    <span id="e121_title">${title}</span>
     <span id="e121_message">${error_121}</span>
 
     <%--change state--%>
@@ -90,6 +119,7 @@
     <span id="e123_title">${title}</span>
     <span id="e123_message">${error_123}</span>
 
+    <span id="e124_title">${title}</span>
     <span id="e124_message">${error_124}</span>
 
     <%--not exist ingredient--%>
@@ -112,6 +142,9 @@
     <span id="e133_message">${error_133_message}</span>
     <span id="e133_title">${title}</span>
 
+    <span id="e135_message">${error_135_message}</span>
+    <span id="e135_title">${title}</span>
+
     <%--create customer--%>
     <span id="e132_message">${error_132_message}</span>
     <span id="e132_title">${title}</span>
@@ -132,6 +165,26 @@
     <%--bloced--%>
     <span id="e129_message">${error_129_message}</span>
     <span id="e129_title">${error_129_title}</span>
+
+    <%--not unique cocktail--%>
+    <span id="e136_message">${error_136_message}</span>
+    <span id="e136_title">${title}</span>
+
+    <%--not unique ingredient--%>
+    <span id="e137_message">${error_137_message}</span>
+    <span id="e137_title">${title}</span>
+
+    <%--not unique email--%>
+    <span id="e138_message">${error_138_message}</span>
+    <span id="e138_title">${title}</span>
+
+    <%--incorrect email--%>
+    <span id="e139_message">${error_139_message}</span>
+    <span id="e139_title">${title}</span>
+
+    <%--incorrect email--%>
+    <span id="e140_message">${error_140_message}</span>
+    <span id="e140_title">${title}</span>
 
     <%--page not found--%>
     <span id="e404_title">${error_404_title}</span>

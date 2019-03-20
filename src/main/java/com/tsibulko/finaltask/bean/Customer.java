@@ -16,6 +16,7 @@ public class Customer implements Identified<Integer> {
     private String email;
     private List<Cocktail> cocktails;
     private int role_id = 1;
+    private String averageMark;
 
     public Customer() {
     }
@@ -114,6 +115,31 @@ public class Customer implements Identified<Integer> {
         this.id = id;
     }
 
+    public String getAverageMark() {
+        return averageMark;
+    }
+
+    public void setAverageMark(String averageMark) {
+        this.averageMark = averageMark;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", second_name='" + second_name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", registr_date=" + registr_date +
+                ", state=" + state +
+                ", email='" + email + '\'' +
+                ", cocktails=" + cocktails +
+                ", role_id=" + role_id +
+                ", averageMark='" + averageMark + '\'' +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -132,7 +158,8 @@ public class Customer implements Identified<Integer> {
         if (registr_date != null ? !registr_date.equals(customer.registr_date) : customer.registr_date != null)
             return false;
         if (email != null ? !email.equals(customer.email) : customer.email != null) return false;
-        return cocktails != null ? cocktails.equals(customer.cocktails) : customer.cocktails == null;
+        if (cocktails != null ? !cocktails.equals(customer.cocktails) : customer.cocktails != null) return false;
+        return averageMark != null ? averageMark.equals(customer.averageMark) : customer.averageMark == null;
     }
 
     @Override
@@ -147,22 +174,7 @@ public class Customer implements Identified<Integer> {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (cocktails != null ? cocktails.hashCode() : 0);
         result = 31 * result + role_id;
+        result = 31 * result + (averageMark != null ? averageMark.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", second_name='" + second_name + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", registr_date=" + registr_date +
-                ", state='" + state + '\'' +
-                ", email='" + email + '\'' +
-                ", cocktails=" + cocktails +
-                ", role_id=" + role_id +
-                '}';
     }
 }

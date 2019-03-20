@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> implements BarmanFeedBackSpecificDAO<BarmenFeedback, Integer> {
 
@@ -110,6 +111,26 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
         } catch (SQLException e) {
             throw new DaoException(e, "Can`t get cocktails by customer");
         }
+    }
+
+    @AutoConnection
+    @Override
+    public double getMarkByCustomer(Customer customer) throws DaoException {
+        try {
+            try (PreparedStatement statment = connection.prepareStatement(getSelectQuery() + " WHERE to_user_id = ?")) {
+                statment.setInt(1, customer.getId());
+                List<Integer> marks = new ArrayList<>();
+                try (ResultSet resultSet = statment.executeQuery()) {
+                    while (resultSet.next()){
+                        marks.add(resultSet.getInt("mark"));
+                    }
+                }
+                return marks.stream().collect(Collectors.averagingDouble(m -> m));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get mark by customer");
+        }
+
     }
 
 

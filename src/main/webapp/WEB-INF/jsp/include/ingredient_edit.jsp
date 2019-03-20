@@ -28,9 +28,9 @@
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message
-            key="link.createcocktil" bundle="${bundle}"/></a></div>
+            key="link.ingredientedit" bundle="${bundle}"/></a></div>
     <h1 class="pagination-centered">
-        <fmt:message key="cocktail.createnew" bundle="${bundle}"/>
+        <fmt:message key="ingredient.edit" bundle="${bundle}"/>
     </h1>
     <hr>
 </div>
@@ -68,15 +68,18 @@
                         </div>
 
 
-                        <input type="hidden" name="command" value="edit_ingredient">
-                        <input type="hidden" name="id" value="${ingredient.id}">
                         <button type="submit" class="btn btn-success btn btn-large btn-block"><fmt:message
-                                key="button.create" bundle="${bundle}"/>
-                        </button>
-                        <button class="btn btn-danger"><fmt:message key="cocktail.delete" bundle="${bundle}"/>
+                                key="cocktail.edit" bundle="${bundle}"/>
+                            <input type="hidden" name="command" value="edit_ingredient">
                             <input type="hidden" name="id" value="${ingredient.id}">
-                            <input type="hidden" name="command" value="delete_ingredient">
                         </button>
+
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=delete_ingredient&id=${ingredient.id}"
+                               class="btn btn-danger btn btn-block ">
+                                <fmt:message key="cocktail.delete" bundle="${bundle}"/>
+                            </a>
+                        </form>
                     </form>
                 </div>
 

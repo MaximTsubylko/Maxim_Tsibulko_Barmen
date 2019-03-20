@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.service.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
+import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.BarmanFeedBackSpecificDAO;
 import com.tsibulko.finaltask.dao.DaoException;
@@ -10,6 +11,8 @@ import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.CustomerFedbackService;
 import com.tsibulko.finaltask.service.ServiceException;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
@@ -20,6 +23,21 @@ public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
         try {
             dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);
             return dao.getCocktailFeedbackByCustomer(customer);
+        } catch (DaoException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_CUSTOMER_FEEDBACK);
+            throw new ServiceException(e, "Dao error");
+        }
+    }
+
+    public void setAverageMarkToCustomer (List<Customer> customers) throws ServiceException {
+        BarmanFeedBackSpecificDAO dao;
+        try {
+            dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);
+            for (Customer customer : customers) {
+                NumberFormat formatter = new DecimalFormat("#0.00");
+                customer.setAverageMark(formatter.format(dao.getMarkByCustomer(customer)));
+            }
+
         } catch (DaoException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_CUSTOMER_FEEDBACK);
             throw new ServiceException(e, "Dao error");

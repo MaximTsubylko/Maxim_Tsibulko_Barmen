@@ -38,13 +38,14 @@ public class IngredientServiceImpl implements IngredientService {
         FieldValidator fieldValidator = FieldValidator.getInstance();
         IngredientSpecificDAO ingredientDAO;
         try {
-            fieldValidator.isExist("name", Cocktail.class, ingredient.getName());
-            ingredientDAO = (IngredientSpecificDAO) daoFactory.getDao(Cocktail.class);
+            fieldValidator.isExist("name", Ingredient.class, ingredient.getName());
+            ingredientDAO = (IngredientSpecificDAO) daoFactory.getDao(Ingredient.class);
             ingredientDAO.delete(ingredient);
 
         } catch (DaoException e) {
             throw new ServiceException(e, "Dao error");
         } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_NOT_EXIST_INGREDIENT);
             throw new ServiceException(e, "Dao error");
         }
     }

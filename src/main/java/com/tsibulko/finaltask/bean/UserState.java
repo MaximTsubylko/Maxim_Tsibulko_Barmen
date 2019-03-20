@@ -4,7 +4,7 @@ import com.tsibulko.finaltask.dao.Identified;
 
 public enum UserState implements Identified<Integer> {
     ACTIVE(1, "active"),
-    BLOCKED(2, "bloked"),
+    BLOCKED(2, "blocked"),
     WAITING_CONFIRMATION(3, "waiting_confirmation");
 
     private String name;

@@ -55,6 +55,9 @@
                                 <th>
                                     <fmt:message key="user.state" bundle="${bundle}"/>
                                 </th>
+                                <th>
+                                    <fmt:message key="cocktail.avermarck" bundle="${bundle}"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -90,6 +93,8 @@
                                         </c:otherwise>
                                     </c:choose>
                                     </td>
+                                    <td><c:out value="${customer.averageMark}"/></td>
+
                                 </tr>
                             </c:forEach>
                             </tbody>

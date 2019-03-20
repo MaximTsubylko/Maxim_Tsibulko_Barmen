@@ -10,19 +10,18 @@ import com.tsibulko.finaltask.error.ErrorCode;
 import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.util.EncryptPassword;
-import com.tsibulko.finaltask.validation.ValidationException;
-import com.tsibulko.finaltask.validation.Validator;
-import com.tsibulko.finaltask.validation.ValidatorFactory;
-import com.tsibulko.finaltask.validation.ValidatorType;
+import com.tsibulko.finaltask.validation.*;
 
 public class RegistrationServiceImpl {
     public Customer signUp(Customer customer) throws ServiceException {
         JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
-        Validator<Customer> validator = ValidatorFactory.getInstance().getValidator(ValidatorType.CUSTOMER);
+        FieldValidator validator = FieldValidator.getInstance();
+
         try {
-            validator.doValidation(customer);
             customer.setRole_id(UserRole.CUSTOMER.getId());
             customer.setState(UserState.WAITING_CONFIRMATION.getId());
+
+            validator.isUnique(new String[]{"login","email"},Customer.class,customer.getLogin(),customer.getEmail());
 
             GenericDAO<Customer, Integer> userDao = daoFactory.getDao(Customer.class);
             EncryptPassword.encrypt(customer);
@@ -33,7 +32,7 @@ public class RegistrationServiceImpl {
             throw new ServiceException(e, "DAO error");
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_NOT_UNIQUE_CUSTOMER);
-            throw new ServiceException(e, "Validation error");
+            throw new ServiceException(e);
         }
     }
 }

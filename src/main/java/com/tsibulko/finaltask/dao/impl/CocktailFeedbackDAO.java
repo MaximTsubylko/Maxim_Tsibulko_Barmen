@@ -2,6 +2,7 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
+import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.AbstractJdbcDao;
 import com.tsibulko.finaltask.dao.AutoConnection;
 import com.tsibulko.finaltask.dao.CocktailFeedBackSpecificDAO;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Integer> implements CocktailFeedBackSpecificDAO<CocktaileFeedback, Integer> {
 
@@ -116,5 +118,24 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
         }
     }
 
+    @AutoConnection
+    @Override
+    public double getMarkByCocktail(Cocktail cocktail) throws DaoException {
+        try {
+            try (PreparedStatement statment = connection.prepareStatement(getSelectQuery() + " WHERE cocktail_id = ?")) {
+                statment.setInt(1, cocktail.getId());
+                List<Integer> marks = new ArrayList<>();
+                try (ResultSet resultSet = statment.executeQuery()) {
+                    while (resultSet.next()){
+                        marks.add(resultSet.getInt("mark"));
+                    }
+                }
+                return marks.stream().collect(Collectors.averagingDouble(m -> m));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e, "Can`t get mark by cocktail");
+        }
+
+    }
 
 }

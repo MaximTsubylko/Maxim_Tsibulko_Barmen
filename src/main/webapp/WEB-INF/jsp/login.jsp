@@ -107,8 +107,7 @@
                 <div class="row-fluid">
                     <div class="span4">
                         <input type="hidden" name="command" value="try_login">
-                        <button type="submit" class="btn btn-success btn btn-block"
-                                onclick="return validLogin(document.getElementById('loginform'))">
+                        <button type="submit" class="btn btn-success btn btn-block">
                             <fmt:message key="index.startbutton" bundle="${bundle}"/>
                         </button>
 

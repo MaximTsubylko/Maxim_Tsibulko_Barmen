@@ -10,11 +10,27 @@ import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.CocktailFeedbackService;
 import com.tsibulko.finaltask.service.ServiceException;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 
 public class CocktailFeedbackServiceImpl implements CocktailFeedbackService {
     private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
+    public void setAverageMarkToCocktais (List<Cocktail> cocktais) throws ServiceException {
+        CocktailFeedBackSpecificDAO dao;
+        try {
+            dao = (CocktailFeedBackSpecificDAO) daoFactory.getDao(CocktaileFeedback.class);
+            for (Cocktail cocktail : cocktais) {
+                NumberFormat formatter = new DecimalFormat("#0.00");
+                cocktail.setAverageMark(formatter.format(dao.getMarkByCocktail(cocktail)));
+            }
+
+        } catch (DaoException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_CUSTOMER_FEEDBACK);
+            throw new ServiceException(e, "Dao error");
+        }
+    }
 
     public List<CocktaileFeedback> getCocktailFeedbacksByCocktail(Cocktail cocktail) throws ServiceException {
         CocktailFeedBackSpecificDAO dao;

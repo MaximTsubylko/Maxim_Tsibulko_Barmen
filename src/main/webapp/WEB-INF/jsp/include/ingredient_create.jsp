@@ -13,7 +13,7 @@
 </c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <head>
-    <%@include file="/WEB-INF/res.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css" />
@@ -28,9 +28,9 @@
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message
-            key="link.createcocktil" bundle="${bundle}"/></a></div>
+            key="link.createingredient" bundle="${bundle}"/></a></div>
     <h1 class="pagination-centered">
-        <fmt:message key="cocktail.createnew" bundle="${bundle}"/>
+        <fmt:message key="ingredient.create" bundle="${bundle}"/>
     </h1>
     <hr>
 </div>

@@ -22,7 +22,7 @@ public class UserActivationCommand implements Command {
         Integer id = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
 
         Customer customer = service.getByPK(id);
-        service.setNewState(customer, reaquestKey, AppConstant.ACTIVE_STATE);
+        service.setNewStateWithKey(customer, reaquestKey, AppConstant.ACTIVE_STATE);
 
         ResponseContent responseContent = new ResponseContent();
         responseContent.setRouter(new Router(Page.ACTIVATE_USER.getRout(), Router.Type.FORWARD));

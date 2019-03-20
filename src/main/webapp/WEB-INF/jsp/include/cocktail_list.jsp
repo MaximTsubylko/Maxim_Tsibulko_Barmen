@@ -66,7 +66,7 @@
                                     </td>
                                     <td><c:out value="${cocktail.description}"/></td>
                                     <td><c:out value="${cocktail.price}"/></td>
-                                    <td><c:out value="${cocktail.price}"/></td>
+                                    <td><c:out value="${cocktail.averageMark}"/></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

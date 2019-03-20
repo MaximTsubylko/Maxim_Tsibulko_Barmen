@@ -22,6 +22,7 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
+
 <div id="content-header">
     <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
@@ -99,7 +100,7 @@
                             <div class="controls">
                                 <input type="password" class="span11"
                                        placeholder="<fmt:message key="edit.newpassword" bundle="${bundle}"/>"
-                                       name="password">
+                                       name="password" id="password">
                             </div>
                         </div>
                         <div class="control-group">
@@ -108,13 +109,13 @@
                                 :</label>
                             <div class="controls">
                                 <input type="password" class="span11" placeholder="<fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>"
-                                       name="confirm_password">
+                                       name="confirm_password" id="confirm_password">
                             </div>
                         </div>
 
                         <div class="form-actions">
                             <input type="hidden" name="command" value="change_password">
-                            <button form="changepasswordform" onclick="return validate(document.getElementById('changepasswordform'))"
+                            <button form="changepasswordform" onclick="return validPassword()"
                                     type="submit" class="btn btn-success">
                                 <fmt:message key="edit.savebutton" bundle="${bundle}"/>
                             </button>
@@ -125,5 +126,6 @@
         </div>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/static/js/change_password_validation.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/registration_validation.js"></script>
 <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+<%@include file="/WEB-INF/localizedTags.jsp" %>

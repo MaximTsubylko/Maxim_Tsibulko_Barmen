@@ -128,6 +128,24 @@
                         </form>
                     </c:when>
                 </c:choose>
+                <c:choose>
+                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.state == 1 && CurentUser.id != ProfileUser.id}">
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=change_state&id=${ProfileUser.id}&state=blocked"
+                               class="btn btn-danger btn btn-block ">
+                                <fmt:message key="customer.ban" bundle="${bundle}"/>
+                            </a>
+                        </form>
+                    </c:when>
+                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.state == 2 && CurentUser.id != ProfileUser.id}">
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=change_state&id=${ProfileUser.id}&state=active"
+                               class="btn btn-success btn btn-block ">
+                                <fmt:message key="customer.unban" bundle="${bundle}"/>
+                            </a>
+                        </form>
+                    </c:when>
+                </c:choose>
             </div>
         </div>
 
@@ -207,7 +225,7 @@
                                 </div>
                             </div>
                             <div class="form-actions">
-                                <button type="submit" class="btn btn-success">
+                                <button type="submit" class="btn btn-success" onclick="setMark()">
                                     <input type="hidden" name="from" value="${CurentUser.id}">
                                     <input type="hidden" name="to" value="${ProfileUser.id}">
                                     <input type="hidden" name="id" value="${ProfileUser.id}">

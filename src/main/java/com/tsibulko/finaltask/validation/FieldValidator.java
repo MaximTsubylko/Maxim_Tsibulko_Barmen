@@ -11,7 +11,6 @@ public class FieldValidator {
     private static final String EMAIL_PATTERN = "^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$";
     private static final FieldValidator INSTANCE = new FieldValidator();
     private final Pattern integerPattern = Pattern.compile(INTEGER_PATTERN);
-    private final Pattern emailPattern = Pattern.compile(EMAIL_PATTERN);
 
     private FieldValidator() {
     }
@@ -20,17 +19,20 @@ public class FieldValidator {
         return INSTANCE;
     }
 
-    public void simpleStingMatches(String string, int maxLength, String fieldName) throws ValidationException {
-        if (string == null || string.length() > maxLength || string.trim().equals("")) {
+    public void simpleStingMatches(String string, int maxLength, int minLength, String fieldName) throws ValidationException {
+        if (string == null || string.length() > maxLength || string.length() < minLength || string.trim().equals("")) {
             throw new ValidationException("not valid " + fieldName + " :" + string);
         }
     }
 
-    public void emailMatches(String email) throws ValidationException {
-        if (email == null || !emailPattern.matcher(email).matches()) {
-            throw new ValidationException("Not valid email!");
+    public void isMatcesByPattern(String patternString, String testString) throws ValidationException {
+        Pattern pattern = Pattern.compile(patternString);
+        if (testString == null || !pattern.matcher(testString).matches()) {
+            throw new ValidationException("Not valid "+testString);
         }
+
     }
+
 
     public void isMatchesInt(String stringInt, int[] range) throws ValidationException {
         if (stringInt == null) {
@@ -59,16 +61,10 @@ public class FieldValidator {
         }
     }
 
-    public void isNotExist(String fieldName, Class curentClass, String value) throws DaoException, ValidationException {
-        GenericDAO dao = JdbcDaoFactory.getInstance().getDao(curentClass);
-        if (dao.findStringsFromColumn(fieldName).contains(value)) {
-            throw new ValidationException(value + " in " + fieldName + "doesn`t exist!");
-        }
-    }
 
     public void isUnique(String[] fieldName, Class curentClass, String... value) throws DaoException, ValidationException {
         GenericDAO dao = JdbcDaoFactory.getInstance().getDao(curentClass);
-        for (int i = 0; i < fieldName.length - 1; i++) {
+        for (int i = 0; i <= fieldName.length - 1; i++) {
             if (dao.findStringsFromColumn(fieldName[i]).contains(value[i])) {
                 throw new ValidationException(value + " in " + fieldName[i] + "doesn`t exist!");
             }

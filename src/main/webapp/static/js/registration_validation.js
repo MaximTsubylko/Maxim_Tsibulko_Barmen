@@ -11,12 +11,20 @@ function validLogin() {
 
 function validRegistration() {
 
-    if (validEmailByPattern() && validConfirmingPassword() && validLogin() && validPasswordByLength()){
+    if (validEmailByPattern() && validConfirmingPassword() && validPasswordByLength() && validLogin()){
         return Boolean(1);
     } else {
         return Boolean(0);
     }
 
+}
+
+function validPassword() {
+    if (validPasswordByLength() && validConfirmingPassword()){
+        return Boolean(1);
+    } else {
+        return Boolean(0);
+    }
 }
 
 function validEmailByPattern() {
@@ -37,7 +45,7 @@ function validConfirmingPassword() {
         return Boolean(1);
     } else {
         var title = document.getElementById("e_title").textContent;
-        var message = document.getElementById("e13_title").textContent;
+        var message = document.getElementById("e13_message").textContent;
         swal(title, message, "error");
         return Boolean(0);
     }
@@ -47,7 +55,7 @@ function validLoginByPattern() {
     var login_pattern = /^[a-zA-Z1-9]+$/;
     if (!login_pattern.test(document.getElementById("login").value)) {
         var title = document.getElementById("e_title").textContent;
-        var message = document.getElementById("e16_title").textContent;
+        var message = document.getElementById("e16_message").textContent;
         swal(title, message, "error");
         return Boolean(0);
     } else {
@@ -95,4 +103,5 @@ function validPasswordByLength() {
     } else {
         return Boolean(1);
     }
+
 }

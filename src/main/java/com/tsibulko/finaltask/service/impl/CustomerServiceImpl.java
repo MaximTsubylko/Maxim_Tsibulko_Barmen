@@ -22,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
     private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
 
-    public void setNewState(Customer customer, String reaquestKey, String name) throws ServiceException {
+    public void setNewStateWithKey(Customer customer, String reaquestKey, String name) throws ServiceException {
         Integer userID = customer.getId();
         UserKey userKey = UserKey.getInstance();
         if (reaquestKey.equals(userKey.get(userID))) {
@@ -33,6 +33,12 @@ public class CustomerServiceImpl implements CustomerService {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CHANGE_STATE);
             throw new ServiceException("Validation error");
         }
+    }
+
+    public void setNewState(Customer customer, String name) throws ServiceException {
+        customer.setState(UserState.getByName(name).getId());
+        update(customer);
+
     }
 
     public Customer restorePassword(Customer customer, String reaquestKey) throws ServiceException {

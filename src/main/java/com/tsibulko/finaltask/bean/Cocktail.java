@@ -10,6 +10,7 @@ public class Cocktail implements Identified<Integer> {
     private String description;
     private int price;
     private List<Ingredient> ingredients;
+    private String averageMark;
 
     public Cocktail(String name, String description, int price, List<Ingredient> ingredients) {
         this.name = name;
@@ -62,29 +63,12 @@ public class Cocktail implements Identified<Integer> {
         this.price = price;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Cocktail cocktaile = (Cocktail) o;
-
-        if (price != cocktaile.price) return false;
-        if (id != null ? !id.equals(cocktaile.id) : cocktaile.id != null) return false;
-        if (name != null ? !name.equals(cocktaile.name) : cocktaile.name != null) return false;
-        if (description != null ? !description.equals(cocktaile.description) : cocktaile.description != null)
-            return false;
-        return ingredients != null ? ingredients.equals(cocktaile.ingredients) : cocktaile.ingredients == null;
+    public String getAverageMark() {
+        return averageMark;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + price;
-        result = 31 * result + (ingredients != null ? ingredients.hashCode() : 0);
-        return result;
+    public void setAverageMark(String averageMark) {
+        this.averageMark = averageMark;
     }
 
     @Override
@@ -95,6 +79,35 @@ public class Cocktail implements Identified<Integer> {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", ingredients=" + ingredients +
+                ", averageMark='" + averageMark + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Cocktail cocktail = (Cocktail) o;
+
+        if (price != cocktail.price) return false;
+        if (id != null ? !id.equals(cocktail.id) : cocktail.id != null) return false;
+        if (name != null ? !name.equals(cocktail.name) : cocktail.name != null) return false;
+        if (description != null ? !description.equals(cocktail.description) : cocktail.description != null)
+            return false;
+        if (ingredients != null ? !ingredients.equals(cocktail.ingredients) : cocktail.ingredients != null)
+            return false;
+        return averageMark != null ? averageMark.equals(cocktail.averageMark) : cocktail.averageMark == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + price;
+        result = 31 * result + (ingredients != null ? ingredients.hashCode() : 0);
+        result = 31 * result + (averageMark != null ? averageMark.hashCode() : 0);
+        return result;
     }
 }

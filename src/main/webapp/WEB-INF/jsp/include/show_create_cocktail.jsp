@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/select2.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-media.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/js/create_cocktai_validation.js" />
 
 
 
@@ -90,8 +91,8 @@
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden" name="command" value="register_cocktail">
-                        <button type="submit" class="btn btn-success btn btn-large btn-block"><fmt:message
+                        <input type="hidden" name="command" value="register_cocktail" >
+                        <button type="submit" class="btn btn-success btn btn-large btn-block" onclick="validateCocktailData()"><fmt:message
                                 key="button.create" bundle="${bundle}"/></button>
                     </form>
                 </div>

@@ -1,4 +1,4 @@
-function validate(form) {
+function validate() {
     var pass = form.password.value;
     var confirmpass = form.confirm_password.value;
 

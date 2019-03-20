@@ -19,6 +19,13 @@ public class ErrorConstant {
     public final static String ERR_CODE_NOT_EXIST_CUSTOMER = "122";
     public final static String ERR_CODE_CREATE_CUSTOMER = "132";
     public final static String ERR_CODE_DELETE_CUSTOMER = "133";
+    public final static String ERR_CODE_INCORRECT_LOGIN = "135";
+    public final static String ERR_CODE_NOT_UNIQUE_EMAIL = "138";
+    public final static String ERR_CODE_INCORRECT_EMAIL = "139";
+    public final static String ERR_CODE_EDIT_CUSTOMER = "140";
+
+
+
 
 
     //cocktail code
@@ -26,10 +33,14 @@ public class ErrorConstant {
     public final static String ERR_CODE_GET_COCKTAIL_BY_CUSTOMER = "130";
     public final static String ERR_CODE_GET_INGREDIENT_BY_COCKTAIL = "131";
     public final static String ERR_CODE_NOT_EXIST_COCKTAIL = "124";
+    public final static String ERR_CODE_NOT_UNIQUE_COCKTAIL = "136";
+
 
     //ingredient code
     public final static String ERR_CODE_NOT_EXIST_INGREDIENT = "125";
     public final static String ERR_CODE_CREATE_INGREDIENT = "134";
+    public final static String ERR_CODE_NOT_UNIQUE_INGREDIENT = "137";
+
 
     //login service code
     public final static String ERR_CODE_INCORRECT_PASSWORD = "126";

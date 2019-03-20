@@ -9,6 +9,7 @@ import com.tsibulko.finaltask.dto.ResponseContent;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.impl.CustomerFeedbackServiceImpl;
 import com.tsibulko.finaltask.service.impl.CustomerServiceImpl;
 import com.tsibulko.finaltask.util.AppConstant;
 
@@ -22,7 +23,10 @@ public class ShowCustomerListCommand implements Command {
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
         CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
+        CustomerFeedbackServiceImpl feedbackService = (CustomerFeedbackServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER_FEEDBACK);
         List<Customer> customers = service.getList();
+        feedbackService.setAverageMarkToCustomer(customers);
+
         request.setAttribute(AppConstant.CUSTOMER_LIST_PARAMETR, customers);
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
         request.setAttribute(Include.VIEW_NAME.getName(), Include.CUSTOMER_LIST_INCLUDE.getName());

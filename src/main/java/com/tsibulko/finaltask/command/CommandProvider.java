@@ -49,6 +49,8 @@ public class CommandProvider {
         commandMap.put(CommandEnum.DELETE_INGREDIENT, new DeleteIngreditntCommand());
         commandMap.put(CommandEnum.EDIT_INGREDIENT, new EditIngredientCommand());
         commandMap.put(CommandEnum.SHOW_EDIT_INGREDIENT, new ShowEditIngredientCommand());
+        commandMap.put(CommandEnum.CHANGE_STATE, new ChangeUserStateCommand());
+
     }
 
     /**
