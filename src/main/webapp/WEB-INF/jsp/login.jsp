@@ -28,7 +28,7 @@
 
 <head>
     <title>Login page</title>
-    <%@include file="/WEB-INF/res.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/matrix.login.js"></script>
@@ -40,6 +40,7 @@
     <script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>
 
     <script src="https://unpkg.com/sweetalert2@7.8.2/dist/sweetalert2.all.js"></script>
+    <%@include file="/WEB-INF/localizedTags.jsp" %>
 
 
 </head>
@@ -219,8 +220,6 @@
             </div>
         </div>
     </form>
-
-    <%@include file="/WEB-INF/jsp/localizedTags.jsp" %>
 
 </div>
 

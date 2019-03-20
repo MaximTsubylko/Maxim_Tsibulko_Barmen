@@ -1,6 +1,7 @@
 package com.tsibulko.finaltask.validation;
 
 import com.tsibulko.finaltask.bean.Cocktail;
+import com.tsibulko.finaltask.bean.Customer;
 
 public class CocktailValidator implements Validator<Cocktail> {
     @Override

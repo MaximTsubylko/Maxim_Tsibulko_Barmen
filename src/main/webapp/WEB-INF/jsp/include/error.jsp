@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <%@include file="/WEB-INF/jsp/localizedTags.jsp" %>
+            <%@include file="/WEB-INF/localizedTags.jsp" %>
 
         </div>
     </div>
