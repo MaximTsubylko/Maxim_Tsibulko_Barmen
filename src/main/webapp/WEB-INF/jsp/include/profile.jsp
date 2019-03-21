@@ -30,9 +30,6 @@
     <div class="row-fluid">
         <div class="span2">
             <img src="${pageContext.request.contextPath}/static/img/usericon.png">
-            <div class="pagination-centered">
-                <h1><c:out value="${customer.login}"/></h1>
-            </div>
         </div>
 
         <div class="span4">
@@ -40,6 +37,7 @@
                 <h1>
                     <fmt:message key="user.information" bundle="${bundle}"/>
                 </h1>
+                <p><h1><c:out value="${customer.login}"/></h1></p>
                 <p><h5><fmt:message key="user.firstname" bundle="${bundle}"/> : <c:out
                     value="${customer.first_name}"/></h5></p>
                 <p><h5><fmt:message key="user.lastname" bundle="${bundle}"/> : <c:out
