@@ -126,11 +126,8 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
             try {
                 validator.simpleStingMatches(login, 20, 4, "login");
                 validator.isMatcesByPattern("^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$", login);
-                validator.isUnique(new String[]{"login"}, Customer.class, login);
             } catch (ValidationException e) {
                 ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_LOGIN);
-                throw new ServiceException(e);
-            } catch (DaoException e) {
                 throw new ServiceException(e);
             }
         }
