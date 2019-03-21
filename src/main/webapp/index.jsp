@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Buddtha
-  Date: 03.02.2019
-  Time: 20:48
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -22,66 +15,75 @@
 
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 <html>
-
 <head>
-    <title>Matrix Admin</title>
-    <meta charset="UTF-8"/>
-    <%@include file="/WEB-INF/resources.jsp" %>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
+    <a>
+        <form action="${pageContext.request.contextPath}/barman" method="post">
+            <input type="hidden" name="command" value="show_index_page">
+            <input type="hidden" name="change_lang" value="ru">
+            <button type="submit" class="btn btn-info btn btn-block">Ru</button>
+        </form>
+    </a>
+    <a>
+        <form action="${pageContext.request.contextPath}/barman" method="post">
+            <input type="hidden" name="command" value="show_index_page">
+            <input type="hidden" name="change_lang" value="en">
+            <button type="submit" class="btn btn-info btn btn-block ">En</button>
+        </form>
+    </a>
 
+    <title><fmt:message key="title.barmanhelper" bundle="${bundle}"/></title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/main.css"/>
+    <noscript>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/noscript.css"/>
+    </noscript>
 </head>
-
-<body>
-<div id="user-nav" class="navbar">
-    <div class="btn-group ">
-        <ul class="nav" style="width: auto; margin-left: 150vh;">
-            <li>
-                <button data-toggle="dropdown" class="btn btn-inverse dropdown-toggle"><fmt:message key="main.language"
-                                                                                                    bundle="${bundle}"/>
-                    <span
-                            class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a>
-                        <form action="${pageContext.request.contextPath}/barman" method="post">
-                            <input type="hidden" name="command" value="show_index_page">
-                            <input type="hidden" name="change_lang" value="ru">
-                            <button type="submit" class="btn btn-info btn btn-block">Ru</button>
-                        </form>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a>
-                        <form action="${pageContext.request.contextPath}/barman" method="post">
-                            <input type="hidden" name="command" value="show_index_page">
-                            <input type="hidden" name="change_lang" value="en">
-                            <button type="submit" class="btn btn-info btn btn-block ">En</button>
-                        </form>
-                    </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div>
+<body class="is-preload">
 
 
-<div id="loginbox">
-    <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
-        <p class="normal_text"><fmt:message key="index.welcomemessage" bundle="${bundle}"/></p>
+<!-- Header -->
+<section id="header">
+    <header>
+        <h1><fmt:message key="index.barman" bundle="${bundle}"/></h1>
+        <p><fmt:message key="index.helper" bundle="${bundle}"/></p>
+    </header>
+    <footer>
+        <a href="#banner" class="button style2 scrolly-middle"><fmt:message key="index.join" bundle="${bundle}"/></a>
+    </footer>
+</section>
+
+<!-- Banner -->
+<section id="banner">
+    <header>
+        <h2><fmt:message key="title.barmanhelper" bundle="${bundle}"/></h2>
+    </header>
+    <p><fmt:message key="index.info1" bundle="${bundle}"/><br/>
+        <fmt:message key="index.info2" bundle="${bundle}"/><br/>
+        <fmt:message key="index.info3" bundle="${bundle}"/><br/>
+        <fmt:message key="index.info4" bundle="${bundle}"/>
+    </p>
+    <footer>
+        <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
+
         <input type="hidden" name="command" value="show_login_page">
-        <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="index.startbutton"
+        <button type="submit" style=""><fmt:message key="index.startbutton"
                                                                                  bundle="${bundle}"/></button>
-    </form>
-</div>
-<ul class="typeahead dropdown-menu"></ul>
-<script src="static/js/jquery.min.js"></script>
-<script src="static/js/matrix.login.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/matrix.js"></script>
-<script src="static/js/jquery.min.js"></script>
-<script src="static/js/jquery.ui.custom.js"></script>
-</body>
+        </form>
+    </footer>
+</section>
 
+
+<!-- Scripts -->
+<script src="${pageContext.request.contextPath}/static/indexjs/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/indexjs/jquery.scrolly.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/indexjs/jquery.poptrox.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/indexjs/browser.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/indexjs/breakpoints.min.js"></script>
+<script src="${pageContext.request.contextPath}/static/indexjs/util.js"></script>
+<script src="${pageContext.request.contextPath}/static/indexjs/main.js"></script>
+
+
+</body>
 </html>

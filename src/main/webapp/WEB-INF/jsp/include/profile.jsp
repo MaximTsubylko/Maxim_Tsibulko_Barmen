@@ -129,7 +129,7 @@
                     </c:when>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.state == 1 && CurentUser.id != ProfileUser.id}">
+                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.state == 1&& CurentUser.id != ProfileUser.id}">
                         <form action="${pageContext.request.contextPath}/barman" method="post">
                             <a href="?command=change_state&id=${ProfileUser.id}&state=blocked"
                                class="btn btn-danger btn btn-block ">
