@@ -37,7 +37,7 @@
                 <h1>
                     <fmt:message key="user.information" bundle="${bundle}"/>
                 </h1>
-                <p><h1><c:out value="${customer.login}"/></h1></p>
+                <p><h3 style="color: black"><c:out value="${customer.login}"/></h3></p>
                 <p><h5><fmt:message key="user.firstname" bundle="${bundle}"/> : <c:out
                     value="${customer.first_name}"/></h5></p>
                 <p><h5><fmt:message key="user.lastname" bundle="${bundle}"/> : <c:out
