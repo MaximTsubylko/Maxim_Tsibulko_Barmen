@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <title>Main page</title>
+    <title><fmt:message key="main.page" bundle="${bundle}"/></title>
     <%@include file="/WEB-INF/resources.jsp" %>
 
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>

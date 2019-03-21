@@ -27,7 +27,7 @@
 <html>
 
 <head>
-    <title>Login page</title>
+    <title><fmt:message key="login.login" bundle="${bundle}"/></title>
     <%@include file="/WEB-INF/resources.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
