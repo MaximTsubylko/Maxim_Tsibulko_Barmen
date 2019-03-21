@@ -30,7 +30,7 @@ public class RegistrationCommand implements Command {
                 AppConstant.ACTIV_TITLE, AppConstant.ACTIV_LINK);
 
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.SHOW_SUCCESS_PAGE.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_SUCCESS_PAGE.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

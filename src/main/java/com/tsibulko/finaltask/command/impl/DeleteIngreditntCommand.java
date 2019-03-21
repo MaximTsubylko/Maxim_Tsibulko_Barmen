@@ -23,7 +23,7 @@ public class DeleteIngreditntCommand implements Command {
         Ingredient ingredient = service.getByPK(id);
 
         service.delete(ingredient);
-        responseContent.setRouter(new Router(CommandEnum.SHOW_INGREDIENT_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_INGREDIENT_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

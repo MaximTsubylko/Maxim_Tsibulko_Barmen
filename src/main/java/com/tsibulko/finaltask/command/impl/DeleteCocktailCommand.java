@@ -24,7 +24,7 @@ public class DeleteCocktailCommand implements Command {
         Integer id = Integer.parseInt(request.getParameter(AppConstant.COCKTAIL_ID_PARAMETR));
         Cocktail cocktaile = service.getByPK(id);
         service.delete(cocktaile);
-        responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

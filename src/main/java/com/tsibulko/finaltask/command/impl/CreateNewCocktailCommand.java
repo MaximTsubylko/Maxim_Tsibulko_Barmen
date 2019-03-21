@@ -29,7 +29,7 @@ public class CreateNewCocktailCommand implements Command {
         Cocktail cocktail = builder.build(request);
 
         service.createNewCocktail(cocktail, customer);
-        responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.COCKTAIL_LIST.useCommand(), Router.Type.REDIRECT));
 
         return responseContent;
     }

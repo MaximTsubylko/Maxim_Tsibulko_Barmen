@@ -24,7 +24,7 @@ public class AddCocktailFedbackCommand implements Command {
         CocktaileFeedback cocktaileFeedback = builder.build(request);
 
         service.create(cocktaileFeedback);
-        responseContent.setRouter(new Router(CommandEnum.SHOW_COCKTAIL_DETAILS.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_COCKTAIL_DETAILS.useCommand(), Router.Type.REDIRECT));
 
         return responseContent;
     }

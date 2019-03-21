@@ -23,7 +23,7 @@ public class EditCocktailCommand implements Command {
         Cocktail cocktail = builder.buildForEdit(request);
         service.update(cocktail);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.SHOW_COCKTAIL_DETAILS.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_COCKTAIL_DETAILS.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

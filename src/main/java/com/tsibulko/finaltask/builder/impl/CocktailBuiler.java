@@ -48,7 +48,7 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
             validator.simpleStingMatches(name, 20,3,"name");
             validator.simpleStingMatches(description, 500, 0, "description");
             validator.isMatchesInt(price, new int[]{1, 1000});
-            validator.isMatcesByPattern("[а-яА-ЯёЁa-zA-Z0-9]+$|[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$|[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);
             throw new ServiceException(e);
@@ -87,9 +87,9 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
             validator.simpleStingMatches(name, 20,3,"name");
             validator.simpleStingMatches(description, 500, 0, "description");
             validator.isMatchesInt(price, new int[]{1, 1000});
-            validator.isMatcesByPattern("[а-яА-ЯёЁa-zA-Z0-9]+$|" +
-                    "[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$|" +
-                    "[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|" +
+                    "[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|" +
+                    "[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
 
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);

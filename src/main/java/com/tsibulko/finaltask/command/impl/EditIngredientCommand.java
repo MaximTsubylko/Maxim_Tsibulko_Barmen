@@ -29,7 +29,7 @@ public class EditIngredientCommand implements Command {
 
         service.update(newIngredient);
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.SHOW_INGREDIENT_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_INGREDIENT_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

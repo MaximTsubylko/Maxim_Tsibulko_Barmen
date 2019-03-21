@@ -102,8 +102,8 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
         }
 
         try {
-            validator.isMatcesByPattern("^[а-яА-ЯёЁa-zA-Z]{1,10}$", firstName);
-            validator.isMatcesByPattern("^[а-яА-ЯёЁa-zA-Z]{1,10}$", secondName);
+            validator.isMatcesByPattern("^[а-яА-Яa-zA-Z]{1,10}$", firstName);
+            validator.isMatcesByPattern("^[а-яА-Яa-zA-Z]{1,10}$", secondName);
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_EDIT_CUSTOMER);
             throw new ServiceException(e);

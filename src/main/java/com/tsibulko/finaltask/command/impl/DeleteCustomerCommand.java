@@ -24,7 +24,7 @@ public class DeleteCustomerCommand implements Command {
         Customer customer = service.getByPK(id);
 
         service.delete(customer);
-        responseContent.setRouter(new Router(CommandEnum.SHOW_CUSTOMER_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_CUSTOMER_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

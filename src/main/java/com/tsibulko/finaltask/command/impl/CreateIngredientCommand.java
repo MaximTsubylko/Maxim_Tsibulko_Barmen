@@ -24,7 +24,7 @@ public class CreateIngredientCommand implements Command {
         Ingredient ingredient = builder.build(request);
 
         service.create(ingredient);
-        responseContent.setRouter(new Router(CommandEnum.SHOW_INGREDIENT_LIST.useCommand(), Router.Type.FORWARD));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_INGREDIENT_LIST.useCommand(), Router.Type.REDIRECT));
 
         return responseContent;
     }
