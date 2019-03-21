@@ -69,6 +69,7 @@
 
     <fmt:message key="error.customer.edit" var="error_140_message" bundle="${bundle}"/>
 
+    <fmt:message key="error.customer.notuniquelogin" var="error_141_message" bundle="${bundle}"/>
 
 
     <fmt:message key="error.pagenotfound" var="error_404_title" bundle="${bundle}"/>
@@ -186,7 +187,13 @@
     <span id="e140_message">${error_140_message}</span>
     <span id="e140_title">${title}</span>
 
-    <%--page not found--%>
+
+    <%--not unique login--%>
+    <span id="e141_message">${error_141_message}</span>
+    <span id="e141_title">${title}</span>
+
+
+<%--page not found--%>
     <span id="e404_title">${error_404_title}</span>
 
 

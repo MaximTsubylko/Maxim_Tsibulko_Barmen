@@ -41,6 +41,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    public void setNewRole(Customer customer, Integer id) throws ServiceException {
+        customer.setRole_id(id);
+        update(customer);
+
+    }
+
     public Customer restorePassword(Customer customer, String reaquestKey) throws ServiceException {
         StringGenerator generator = new StringGenerator();
         String newPassword = generator.generate();

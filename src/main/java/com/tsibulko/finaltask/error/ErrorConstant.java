@@ -23,6 +23,7 @@ public class ErrorConstant {
     public final static String ERR_CODE_NOT_UNIQUE_EMAIL = "138";
     public final static String ERR_CODE_INCORRECT_EMAIL = "139";
     public final static String ERR_CODE_EDIT_CUSTOMER = "140";
+    public final static String ERR_CODE_NOT_UNIQUE_LOGIN = "141";
 
 
 
