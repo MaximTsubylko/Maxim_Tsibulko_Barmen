@@ -19,7 +19,7 @@
 <html>
 <head>
     <title>Main page</title>
-    <%@include file="/WEB-INF/res.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
 
     <script src="${pageContext.request.contextPath}/static/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/jquery.ui.custom.js"></script>

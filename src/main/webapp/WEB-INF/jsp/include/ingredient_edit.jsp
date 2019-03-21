@@ -13,7 +13,7 @@
 </c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <head>
-    <%@include file="/WEB-INF/res.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css" />

@@ -19,7 +19,7 @@
 <head>
     <title>Success!</title>
     <meta charset="UTF-8"/>
-    <%@include file="/WEB-INF/res.jsp" %>
+    <%@include file="/WEB-INF/resources.jsp" %>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-login.css"/>
 </head>
 <body>
