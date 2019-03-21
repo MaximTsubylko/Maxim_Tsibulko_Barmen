@@ -32,7 +32,7 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
         try {
             validator.simpleStingMatches(name, 30,3,"name");
             validator.simpleStingMatches(description, 500, 0, "description");
-            validator.isMatcesByPattern("[а-яА-ЯёЁa-zA-Z0-9]+$|[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$|[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
 
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_INGREDIENT);
@@ -73,7 +73,7 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
         try {
             validator.simpleStingMatches(name, 30,3,"name");
             validator.simpleStingMatches(description, 500, 0, "description");
-            validator.isMatcesByPattern("[а-яА-ЯёЁa-zA-Z0-9]+$|[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$|[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+\\s+[а-яА-ЯёЁa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
 
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_INGREDIENT);

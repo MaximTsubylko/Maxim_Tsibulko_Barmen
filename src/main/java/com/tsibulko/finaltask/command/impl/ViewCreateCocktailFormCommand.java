@@ -10,6 +10,7 @@ import com.tsibulko.finaltask.service.IngredientService;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.service.ServiceFactory;
 import com.tsibulko.finaltask.service.ServiceTypeEnum;
+import com.tsibulko.finaltask.service.impl.IngredientServiceImpl;
 import com.tsibulko.finaltask.util.AppConstant;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class ViewCreateCocktailFormCommand implements Command {
     @Override
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) throws ServiceException {
         ResponseContent responseContent = new ResponseContent();
-        IngredientService service = (IngredientService) ServiceFactory.getInstance().getService(ServiceTypeEnum.INGREDIENT);
+        IngredientServiceImpl service = (IngredientServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.INGREDIENT);
         List<Ingredient> ingredientList = service.getList();
 
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
