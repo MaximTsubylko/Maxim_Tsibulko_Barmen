@@ -35,6 +35,10 @@ public class ErrorConstant {
     public final static String ERR_CODE_GET_INGREDIENT_BY_COCKTAIL = "131";
     public final static String ERR_CODE_NOT_EXIST_COCKTAIL = "124";
     public final static String ERR_CODE_NOT_UNIQUE_COCKTAIL = "136";
+    public final static String ERR_CODE_LARGE_PRICE = "142";
+    public final static String ERR_CODE_LARGE_NAME = "143";
+    public final static String ERR_CODE_LARGE_DESCRIPTION = "144";
+    public final static String ERR_CODE_INCORRECT_NAME = "145";
 
 
     //ingredient code

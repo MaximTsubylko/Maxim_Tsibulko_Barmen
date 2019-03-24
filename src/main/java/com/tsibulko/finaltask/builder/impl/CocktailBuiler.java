@@ -44,15 +44,34 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
             cocktail.setIngredients(ingredientList);
         }
 
-        try {//FIXME
+        try {
             validator.simpleStingMatches(name, 20,3,"name");
-            validator.simpleStingMatches(description, 500, 0, "description");
-            validator.isMatchesInt(price, new int[]{1, 1000});
-            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
-        } catch (ValidationException e) {
-            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);
+          } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_NAME);
             throw new ServiceException(e);
         }
+        try {
+            validator.simpleStingMatches(description, 500, 5, "description");
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_DESCRIPTION);
+            throw new ServiceException(e);
+        }
+
+        try {
+            validator.isMatchesInt(price, new int[]{1, 1000});
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_PRICE);
+            throw new ServiceException(e);
+        }
+
+        try {
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_NAME);
+            throw new ServiceException(e);
+        }
+
+
 
         try {
             validator.isUnique(new String[]{"name"},Cocktail.class,name);
@@ -83,16 +102,31 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
         String name = request.getParameter(AppConstant.NAME_PARAMETR);
         String description = request.getParameter(AppConstant.DESCRIPTION_PARAMETR);
         String price = request.getParameter(AppConstant.PRICE_PARAMETR);
+
         try {
             validator.simpleStingMatches(name, 20,3,"name");
-            validator.simpleStingMatches(description, 500, 0, "description");
-            validator.isMatchesInt(price, new int[]{1, 1000});
-            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|" +
-                    "[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|" +
-                    "[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
-
         } catch (ValidationException e) {
-            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_NAME);
+            throw new ServiceException(e);
+        }
+        try {
+            validator.simpleStingMatches(description, 500, 5, "description");
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_DESCRIPTION);
+            throw new ServiceException(e);
+        }
+
+        try {
+            validator.isMatchesInt(price, new int[]{1, 1000});
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_PRICE);
+            throw new ServiceException(e);
+        }
+
+        try {
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_NAME);
             throw new ServiceException(e);
         }
         newCocktail.setName(name);

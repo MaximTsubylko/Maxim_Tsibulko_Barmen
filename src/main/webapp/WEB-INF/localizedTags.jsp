@@ -69,6 +69,12 @@
 
     <fmt:message key="error.customer.notuniquelogin" var="error_141_message" bundle="${bundle}"/>
 
+    <fmt:message key="error.cocktail.largename" var="error_143_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.cocktail.descriptionsize" var="error_144_message" bundle="${bundle}"/>
+
+    <fmt:message key="error.name.incorrect" var="error_145_message" bundle="${bundle}"/>
+
 
     <fmt:message key="error.pagenotfound" var="error_404_title" bundle="${bundle}"/>
 
@@ -190,6 +196,22 @@
     <span id="e141_message">${error_141_message}</span>
     <span id="e141_title">${title}</span>
 
+
+    <%--large price login--%>
+    <span id="e142_message">${error_20}</span>
+    <span id="e142_title">${title}</span>
+
+    <%--cocktail name size--%>
+    <span id="e143_message">${error_143_message}</span>
+    <span id="e143_title">${title}</span>
+
+    <%--cocktail deacription size--%>
+    <span id="e144_message">${error_144_message}</span>
+    <span id="e144_title">${title}</span>
+
+    <%--cocktail deacription size--%>
+    <span id="e145_message">${error_145_message}</span>
+    <span id="e145_title">${title}</span>
 
 <%--page not found--%>
     <span id="e404_title">${error_404_title}</span>
