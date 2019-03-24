@@ -15,7 +15,7 @@ public class ShowErrorPage implements Command {
     public ResponseContent process(HttpServletRequest request, HttpServletResponse response) {
         ResponseContent responseContent = new ResponseContent();
         String code = ErrorCode.getInstance().getErr_code();
-        request.setAttribute("code",code );
+        request.setAttribute("code", code);
         responseContent.setRouter(new Router(Page.MAIN_PAGE.getRout(), Router.Type.FORWARD));
         request.setAttribute(Include.VIEW_NAME.getName(), Include.ERROR.getName());
 

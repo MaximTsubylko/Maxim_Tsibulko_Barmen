@@ -15,7 +15,8 @@
 </c:choose><fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>"
+                            class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a>
         <a href="#" class="current">
@@ -37,7 +38,7 @@
 
                 <div class="widget-box">
                     <div class="widget-title"><span class="icon"> <i class="icon-th"></i> </span>
-                        <h5>        <fmt:message key="cocktail.cocktails" bundle="${bundle}"/></h5>
+                        <h5><fmt:message key="cocktail.cocktails" bundle="${bundle}"/></h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-bordered table-striped">

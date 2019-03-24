@@ -1,6 +1,5 @@
 package com.tsibulko.finaltask.builder;
 
-import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
 import com.tsibulko.finaltask.service.ServiceException;
 

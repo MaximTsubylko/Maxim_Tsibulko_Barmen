@@ -30,8 +30,8 @@ public class BarmanFeedbackBuilder implements Builder<BarmenFeedback> {
         String mark = request.getParameter(MARK);
 
         try {
-            validator.simpleStingMatches(title,20,1,"title");
-            validator.simpleStingMatches(comment,500,0,"comment");
+            validator.simpleStingMatches(title, 20, 1, "title");
+            validator.simpleStingMatches(comment, 500, 0, "comment");
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_CUSTOMER_FEBACK);
             throw new ServiceException(e);

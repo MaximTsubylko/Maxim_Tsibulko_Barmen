@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.service.impl;
 
 import com.tsibulko.finaltask.bean.BarmenFeedback;
-import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.BarmanFeedBackSpecificDAO;
 import com.tsibulko.finaltask.dao.DaoException;
@@ -29,7 +28,7 @@ public class CustomerFeedbackServiceImpl implements CustomerFedbackService {
         }
     }
 
-    public void setAverageMarkToCustomer (List<Customer> customers) throws ServiceException {
+    public void setAverageMarkToCustomer(List<Customer> customers) throws ServiceException {
         BarmanFeedBackSpecificDAO dao;
         try {
             dao = (BarmanFeedBackSpecificDAO) daoFactory.getDao(BarmenFeedback.class);

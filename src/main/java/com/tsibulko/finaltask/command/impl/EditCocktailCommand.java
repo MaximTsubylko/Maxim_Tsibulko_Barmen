@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.builder.Builder;
 import com.tsibulko.finaltask.builder.BuilderFactory;
 import com.tsibulko.finaltask.builder.CocktailExtendedBuilder;
 import com.tsibulko.finaltask.command.Command;

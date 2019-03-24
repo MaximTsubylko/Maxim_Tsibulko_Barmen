@@ -14,19 +14,20 @@
 
 <head>
     <%@include file="/WEB-INF/resources.jsp" %>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/select2.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-media.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-wysihtml5.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/select2.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-media.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-wysihtml5.css"/>
 
 
 </head>
 <fmt:requestEncoding value="utf-8"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>"
+                            class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message
             key="link.createingredient" bundle="${bundle}"/></a></div>
     <h1 class="pagination-centered">
@@ -49,7 +50,8 @@
                     <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal"
                           accept-charset="UTF-8">
                         <div class="control-group">
-                            <label class="control-label"><fmt:message key="ingredient.name" bundle="${bundle}"/> :</label>
+                            <label class="control-label"><fmt:message key="ingredient.name" bundle="${bundle}"/>
+                                :</label>
                             <div class="controls">
                                 <input type="text" class="span11"
                                        placeholder="<fmt:message key="ingredient.name" bundle="${bundle}"/>"

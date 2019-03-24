@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.builder;
 
 import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;

@@ -2,7 +2,6 @@ package com.tsibulko.finaltask.builder.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.builder.Builder;
 import com.tsibulko.finaltask.builder.CocktailExtendedBuilder;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.error.ErrorCode;
@@ -45,8 +44,8 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
         }
 
         try {
-            validator.simpleStingMatches(name, 20,3,"name");
-          } catch (ValidationException e) {
+            validator.simpleStingMatches(name, 20, 3, "name");
+        } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_NAME);
             throw new ServiceException(e);
         }
@@ -65,16 +64,15 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
         }
 
         try {
-            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$", name);
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_NAME);
             throw new ServiceException(e);
         }
 
 
-
         try {
-            validator.isUnique(new String[]{"name"},Cocktail.class,name);
+            validator.isUnique(new String[]{"name"}, Cocktail.class, name);
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (ValidationException e) {
@@ -104,7 +102,7 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
         String price = request.getParameter(AppConstant.PRICE_PARAMETR);
 
         try {
-            validator.simpleStingMatches(name, 20,3,"name");
+            validator.simpleStingMatches(name, 20, 3, "name");
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_LARGE_NAME);
             throw new ServiceException(e);
@@ -124,7 +122,7 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
         }
 
         try {
-            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$", name);
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_NAME);
             throw new ServiceException(e);

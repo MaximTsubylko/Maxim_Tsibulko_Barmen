@@ -23,7 +23,6 @@
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 
-
 <html>
 
 <head>
@@ -86,19 +85,21 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span style="padding-bottom:8px" class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
-                                                                                       id="loginField"
-                                                                                       name="login"
-                                                                                       placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
+                    <span style="padding-bottom:8px" class="add-on bg_lg"><i class="icon-user"> </i></span><input
+                        required="required" type="text"
+                        id="loginField"
+                        name="login"
+                        placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span style="padding-bottom:8px" class="add-on bg_ly"><i class="icon-lock"></i></span><input required="required"
-                                                                                      type="password" name="password"
-                                                                                      placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
+                    <span style="padding-bottom:8px" class="add-on bg_ly"><i class="icon-lock"></i></span><input
+                        required="required"
+                        type="password" name="password"
+                        placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -133,9 +134,10 @@
 
         <div class="controls">
             <div class="main_input_box">
-                <span style="padding-bottom:8px" class="add-on bg_lo"><i class="icon-envelope"></i></span><input required="required" type="email"
-                                                                                      name="email"
-                                                                                      placeholder="E-mail"/>
+                <span style="padding-bottom:8px" class="add-on bg_lo"><i class="icon-envelope"></i></span><input
+                    required="required" type="email"
+                    name="email"
+                    placeholder="E-mail"/>
             </div>
         </div>
 
@@ -163,30 +165,33 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span style="padding-bottom:8px" class="add-on bg_lg"><i class="icon-user"> </i></span><input required="required" type="text"
-                                                                                       id="login"
-                                                                                       name="login"
-                                                                                       placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
+                    <span style="padding-bottom:8px" class="add-on bg_lg"><i class="icon-user"> </i></span><input
+                        required="required" type="text"
+                        id="login"
+                        name="login"
+                        placeholder="<fmt:message key="login.login" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span style="padding-bottom:8px" class="add-on bg_db"><i class="icon-envelope-alt"> </i></span><input required="required"
-                                                                                               id="email"
-                                                                                               type="email" name="email"
-                                                                                               placeholder="E-mail"/>
+                    <span style="padding-bottom:8px" class="add-on bg_db"><i
+                            class="icon-envelope-alt"> </i></span><input required="required"
+                                                                         id="email"
+                                                                         type="email" name="email"
+                                                                         placeholder="E-mail"/>
                 </div>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span style="padding-bottom:8px" class="add-on bg_ly"><i class="icon-key"></i></span><input required="required" type="password"
-                                                                                     id="password"
-                                                                                     name="password"
-                                                                                     placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
+                    <span style="padding-bottom:8px" class="add-on bg_ly"><i class="icon-key"></i></span><input
+                        required="required" type="password"
+                        id="password"
+                        name="password"
+                        placeholder="<fmt:message key="user.password" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>
@@ -194,9 +199,10 @@
         <div class="control-group">
             <div class="controls">
                 <div class="main_input_box">
-                    <span style="padding-bottom:8px" class="add-on bg_lr"><i class="icon-key"></i></span><input required="required" type="password"
-                                                                                     name="confirm_password" id="confirm_password"
-                                                                                     placeholder="<fmt:message key="user.confirmpassword" bundle="${bundle}"/>"/>
+                    <span style="padding-bottom:8px" class="add-on bg_lr"><i class="icon-key"></i></span><input
+                        required="required" type="password"
+                        name="confirm_password" id="confirm_password"
+                        placeholder="<fmt:message key="user.confirmpassword" bundle="${bundle}"/>"/>
                 </div>
             </div>
         </div>

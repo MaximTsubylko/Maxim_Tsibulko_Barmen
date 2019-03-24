@@ -14,20 +14,20 @@
 
 <head>
     <%@include file="/WEB-INF/resources.jsp" %>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/select2.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-media.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/js/create_cocktai_validation.js" />
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/colorpicker.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/datepicker.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/uniform.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/select2.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/matrix-media.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/js/create_cocktai_validation.js"/>
 
 
 </head>
 <fmt:requestEncoding value="utf-8"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>"
+                            class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message
             key="link.createcocktil" bundle="${bundle}"/></a></div>
     <h1>
@@ -80,7 +80,8 @@
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label"><fmt:message key="ingredient.ingredients" bundle="${bundle}"/></label>
+                            <label class="control-label"><fmt:message key="ingredient.ingredients"
+                                                                      bundle="${bundle}"/></label>
                             <div class="controls">
                                 <select name="ingredients" multiple="" required="required" style="display: none;">
                                     <c:forEach items="${ingredientList}" var="ingredient">
@@ -91,8 +92,9 @@
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden" name="command" value="register_cocktail" >
-                        <button type="submit" class="btn btn-success btn btn-large btn-block" onclick="validateCocktailData()"><fmt:message
+                        <input type="hidden" name="command" value="register_cocktail">
+                        <button type="submit" class="btn btn-success btn btn-large btn-block"
+                                onclick="validateCocktailData()"><fmt:message
                                 key="button.create" bundle="${bundle}"/></button>
                     </form>
                 </div>

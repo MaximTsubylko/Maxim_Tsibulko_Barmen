@@ -2,7 +2,6 @@ package com.tsibulko.finaltask.dao.impl;
 
 import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.CocktaileFeedback;
-import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.dao.AbstractJdbcDao;
 import com.tsibulko.finaltask.dao.AutoConnection;
 import com.tsibulko.finaltask.dao.CocktailFeedBackSpecificDAO;
@@ -126,7 +125,7 @@ public class CocktailFeedbackDAO extends AbstractJdbcDao<CocktaileFeedback, Inte
                 statment.setInt(1, cocktail.getId());
                 List<Integer> marks = new ArrayList<>();
                 try (ResultSet resultSet = statment.executeQuery()) {
-                    while (resultSet.next()){
+                    while (resultSet.next()) {
                         marks.add(resultSet.getInt("mark"));
                     }
                 }

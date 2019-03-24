@@ -121,7 +121,7 @@ public class BarmenFeedbackDAO extends AbstractJdbcDao<BarmenFeedback, Integer> 
                 statment.setInt(1, customer.getId());
                 List<Integer> marks = new ArrayList<>();
                 try (ResultSet resultSet = statment.executeQuery()) {
-                    while (resultSet.next()){
+                    while (resultSet.next()) {
                         marks.add(resultSet.getInt("mark"));
                     }
                 }

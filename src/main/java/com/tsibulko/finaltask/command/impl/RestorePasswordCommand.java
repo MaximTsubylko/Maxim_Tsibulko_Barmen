@@ -1,8 +1,6 @@
 package com.tsibulko.finaltask.command.impl;
 
 import com.tsibulko.finaltask.bean.Customer;
-import com.tsibulko.finaltask.builder.Builder;
-import com.tsibulko.finaltask.builder.BuilderFactory;
 import com.tsibulko.finaltask.command.Command;
 import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.command.Router;

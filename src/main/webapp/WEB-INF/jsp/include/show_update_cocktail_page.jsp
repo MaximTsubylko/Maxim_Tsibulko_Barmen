@@ -5,7 +5,6 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
         <fmt:setLocale value="${requestScope.get('lang')}"/>
@@ -17,7 +16,8 @@
 
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>"
+                            class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a>
         <a href="#" class="current"> <fmt:message key="link.cocktailedit" bundle="${bundle}"/>
@@ -49,7 +49,8 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label"> <fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>:</label>
+                            <label class="control-label"> <fmt:message key="cocktail.descriptoin"
+                                                                       bundle="${bundle}"/>:</label>
                             <div class="controls">
                                 <input type="text" class="span11"
                                        placeholder="<fmt:message key="cocktail.descriptoin" bundle="${bundle}"/>"
@@ -59,7 +60,8 @@
                         <div class="control-group">
                             <label class="control-label"><fmt:message key="cocktail.price" bundle="${bundle}"/>:</label>
                             <div class="controls">
-                                <input type="number" class="span11" placeholder="<fmt:message key="cocktail.price" bundle="${bundle}"/>"
+                                <input type="number" class="span11"
+                                       placeholder="<fmt:message key="cocktail.price" bundle="${bundle}"/>"
                                        value="<c:out value="${cocktail.price}"/>" name="price">
                             </div>
                         </div>

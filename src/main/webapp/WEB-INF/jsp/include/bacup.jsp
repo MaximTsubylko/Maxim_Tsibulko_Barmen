@@ -1,4 +1,3 @@
-
 <div class="span6">
 
     <label class="control-label">Password :</label>

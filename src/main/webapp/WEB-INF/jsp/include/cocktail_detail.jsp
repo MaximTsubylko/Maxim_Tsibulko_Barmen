@@ -19,7 +19,8 @@
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>"
+                            class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a><a href="#" class="current"><c:out value="${cocktail.name}"/></a></div>
 </div>
@@ -92,19 +93,19 @@
         <div class="span3 pagination-centered">
             <c:choose>
                 <c:when test="${CurentUser.role_id == 3 || CurentUser.id == ProfileUser.id }">
-                        <form action="${pageContext.request.contextPath}/barman" method="post">
-                            <a href="?command=show_update_cocktail_page&id=${cocktail.id}"
-                               class="btn btn-info btn btn-block ">
-                                <fmt:message key="cocktail.edit" bundle="${bundle}"/>
-                            </a>
-                        </form>
+                    <form action="${pageContext.request.contextPath}/barman" method="post">
+                        <a href="?command=show_update_cocktail_page&id=${cocktail.id}"
+                           class="btn btn-info btn btn-block ">
+                            <fmt:message key="cocktail.edit" bundle="${bundle}"/>
+                        </a>
+                    </form>
 
-                        <form action="${pageContext.request.contextPath}/barman" method="post">
-                            <a href="?command=delete_cocktail&cocktailId=${cocktail.id}"
-                               class="btn btn-danger btn btn-block ">
-                                <fmt:message key="cocktail.delete" bundle="${bundle}"/>
-                            </a>
-                        </form>
+                    <form action="${pageContext.request.contextPath}/barman" method="post">
+                        <a href="?command=delete_cocktail&cocktailId=${cocktail.id}"
+                           class="btn btn-danger btn btn-block ">
+                            <fmt:message key="cocktail.delete" bundle="${bundle}"/>
+                        </a>
+                    </form>
                 </c:when>
             </c:choose>
         </div>
@@ -144,7 +145,8 @@
                     </h5>
                 </div>
                 <div class="widget-content nopadding in collapse" id="collapseG3" style="height: auto;">
-                    <form id="commentform" action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
+                    <form id="commentform" action="${pageContext.request.contextPath}/barman" method="post"
+                          class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label">
                                 <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
@@ -204,18 +206,23 @@
 
 <script>
     var mark = 0;
+
     function m1() {
         mark = 1;
     }
+
     function m2() {
         mark = 2;
     }
+
     function m3() {
         mark = 3;
     }
+
     function m4() {
         mark = 4;
     }
+
     function m5() {
         mark = 5;
     }

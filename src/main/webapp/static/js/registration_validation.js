@@ -1,6 +1,6 @@
 function validLogin() {
 
-    if (validLoginByPattern() && validLoginBylength()){
+    if (validLoginByPattern() && validLoginBylength()) {
         return Boolean(1);
     } else {
         return Boolean(0);
@@ -11,7 +11,7 @@ function validLogin() {
 
 function validRegistration() {
 
-    if (validEmailByPattern() && validConfirmingPassword() && validPasswordByLength() && validLogin()){
+    if (validEmailByPattern() && validConfirmingPassword() && validPasswordByLength() && validLogin()) {
         return Boolean(1);
     } else {
         return Boolean(0);
@@ -20,7 +20,7 @@ function validRegistration() {
 }
 
 function validPassword() {
-    if (validPasswordByLength() && validConfirmingPassword()){
+    if (validPasswordByLength() && validConfirmingPassword()) {
         return Boolean(1);
     } else {
         return Boolean(0);
@@ -86,7 +86,7 @@ function validLoginBylength() {
 
 function validPasswordByLength() {
     var password = document.getElementById("password").value;
-    if (password.length < 6){
+    if (password.length < 6) {
         var title = document.getElementById("e_title").textContent;
         var message = document.getElementById("e17_message").textContent;
         swal(title, message, "error");
@@ -95,7 +95,7 @@ function validPasswordByLength() {
         return Boolean(1);
     }
 
-    if (password.length > 20){
+    if (password.length > 20) {
         var title = document.getElementById("e_title").textContent;
         var message = document.getElementById("e18_message").textContent;
         swal(title, message, "error");

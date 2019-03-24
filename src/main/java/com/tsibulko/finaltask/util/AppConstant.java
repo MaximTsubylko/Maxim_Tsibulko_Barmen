@@ -27,7 +27,6 @@ public class AppConstant {
     public static final String COMMAND_PARAMETER = "command";
 
 
-
     // End of command constant
 
     public static final String ACTIV_LINK = "Your activation link: %s/barman?command=activate_user&id=%d&value=%s";

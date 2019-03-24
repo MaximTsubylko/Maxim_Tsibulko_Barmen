@@ -12,7 +12,6 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
         <fmt:setLocale value="${requestScope.get('lang')}"/>
@@ -41,7 +40,8 @@
             <div class="center-pill">
                 <div class="row-fluid">
                     <input type="hidden" name="command" value="show_login_page">
-                    <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="button.backtologin" bundle="${bundle}"/></button>
+                    <button type="submit" class="btn btn-success btn btn-block"><fmt:message key="button.backtologin"
+                                                                                             bundle="${bundle}"/></button>
                 </div>
             </div>
         </div>

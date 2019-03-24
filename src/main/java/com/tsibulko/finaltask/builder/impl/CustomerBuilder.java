@@ -75,12 +75,11 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
         }
 
         try {
-            validator.isMatcesByPattern("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$",email);
+            validator.isMatcesByPattern("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", email);
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_EMAIL);
             throw new ServiceException(e);
         }
-
 
 
         customer.setFirst_name(firstName);
@@ -103,7 +102,7 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
 
 
         try {
-            validator.isMatcesByPattern("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$",email);
+            validator.isMatcesByPattern("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", email);
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_EMAIL);
             throw new ServiceException(e);
@@ -128,13 +127,13 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
         Customer customer = new Customer();
         FieldValidator validator = FieldValidator.getInstance();
         String login = request.getParameter(AppConstant.LOGIN_PARAMENR);
-            try {
-                validator.simpleStingMatches(login, 20, 4, "login");
-                validator.isMatcesByPattern("^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$", login);
-            } catch (ValidationException e) {
-                ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_LOGIN);
-                throw new ServiceException(e);
-            }
+        try {
+            validator.simpleStingMatches(login, 20, 4, "login");
+            validator.isMatcesByPattern("^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$", login);
+        } catch (ValidationException e) {
+            ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_LOGIN);
+            throw new ServiceException(e);
+        }
         customer.setLogin(login);
 
         if (request.getParameter(AppConstant.PASSWORD_PARAMETR) != null) {

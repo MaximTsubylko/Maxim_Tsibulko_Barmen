@@ -105,7 +105,7 @@
             <fmt:message key="main.cocktaillist" bundle="${bundle}"/>
         </span></a></li>
 
-                <c:choose>
+        <c:choose>
             <c:when test="${CurentUser.role_id == 3 || CurentUser.id == 2}">
                 <li class="submenu"><a href="#"><i class="icon  icon-glass"></i> <span>
                      <fmt:message key="main.barman" bundle="${bundle}"/>
@@ -140,7 +140,6 @@
 
             </ul>
         </li>
-
 
 
     </ul>

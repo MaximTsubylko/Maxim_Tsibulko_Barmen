@@ -12,7 +12,6 @@
 <fmt:requestEncoding value="utf-8"/>
 
 
-
 <c:choose>
     <c:when test="${not empty requestScope.get('lang')}">
         <fmt:setLocale value="${requestScope.get('lang')}"/>
@@ -24,7 +23,8 @@
 <fmt:setBundle basename="language" var="bundle" scope="application"/>
 
 <div id="content-header">
-    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>" class="tip-bottom"><i class="icon-home"></i>
+    <div id="breadcrumb"><a href="?command=main" title="<fmt:message key="link.gotohome" bundle="${bundle}"/>"
+                            class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a>
         <a href="#" class="current"> <fmt:message key="link.useredit" bundle="${bundle}"/>
@@ -92,7 +92,8 @@
                     </h5>
                 </div>
                 <div class="widget-content nopadding">
-                    <form id="changepasswordform" action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
+                    <form id="changepasswordform" action="${pageContext.request.contextPath}/barman" method="post"
+                          class="form-horizontal">
 
                         <div class="control-group">
                             <label class="control-label"> <fmt:message key="edit.newpassword" bundle="${bundle}"/>
@@ -108,7 +109,8 @@
                                 <fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>
                                 :</label>
                             <div class="controls">
-                                <input type="password" class="span11" placeholder="<fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>"
+                                <input type="password" class="span11"
+                                       placeholder="<fmt:message key="edit.confirmnewpassword" bundle="${bundle}"/>"
                                        name="confirm_password" id="confirm_password">
                             </div>
                         </div>

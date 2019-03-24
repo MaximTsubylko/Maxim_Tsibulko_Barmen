@@ -28,7 +28,7 @@ public class FieldValidator {
     public void isMatcesByPattern(String patternString, String testString) throws ValidationException {
         Pattern pattern = Pattern.compile(patternString);
         if (testString == null || !pattern.matcher(testString).matches()) {
-            throw new ValidationException("Not valid "+testString);
+            throw new ValidationException("Not valid " + testString);
         }
 
     }

@@ -17,7 +17,7 @@ import java.util.List;
 public class CocktailFeedbackServiceImpl implements CocktailFeedbackService {
     private JdbcDaoFactory daoFactory = JdbcDaoFactory.getInstance();
 
-    public void setAverageMarkToCocktais (List<Cocktail> cocktais) throws ServiceException {
+    public void setAverageMarkToCocktais(List<Cocktail> cocktais) throws ServiceException {
         CocktailFeedBackSpecificDAO dao;
         try {
             dao = (CocktailFeedBackSpecificDAO) daoFactory.getDao(CocktaileFeedback.class);
@@ -39,7 +39,7 @@ public class CocktailFeedbackServiceImpl implements CocktailFeedbackService {
             return dao.getCocktailFeedbacksByCocktail(cocktail);
         } catch (DaoException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_GET_COCKTAIL_FEEDBACK);
-            throw new ServiceException(e,"Dao error");
+            throw new ServiceException(e, "Dao error");
         }
     }
 

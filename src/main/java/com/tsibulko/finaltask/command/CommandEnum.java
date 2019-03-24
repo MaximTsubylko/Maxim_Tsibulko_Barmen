@@ -58,7 +58,10 @@ public enum CommandEnum {
     }
 
 
-    public String getName() {return name;}
+    public String getName() {
+        return name;
+    }
+
     public AccessLevel[] getLevels() {
         return levels;
     }

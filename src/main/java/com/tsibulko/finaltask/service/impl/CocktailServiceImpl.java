@@ -2,15 +2,15 @@ package com.tsibulko.finaltask.service.impl;
 
 
 import com.tsibulko.finaltask.bean.Cocktail;
-import com.tsibulko.finaltask.bean.CocktaileFeedback;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.*;
+import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
+import com.tsibulko.finaltask.dao.DaoException;
+import com.tsibulko.finaltask.dao.IngredientSpecificDAO;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;
 import com.tsibulko.finaltask.dao.impl.TransactionManager;
 import com.tsibulko.finaltask.error.ErrorCode;
 import com.tsibulko.finaltask.error.ErrorConstant;
-import com.tsibulko.finaltask.service.CocktailFeedbackService;
 import com.tsibulko.finaltask.service.CocktailService;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.validation.FieldValidator;
@@ -30,7 +30,7 @@ public class CocktailServiceImpl implements CocktailService {
             return ingredientDao.setCocktailIngredients(create(cocktail), ingredients);
         } catch (DaoException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS);
-            throw new ServiceException(e,"Dao error");
+            throw new ServiceException(e, "Dao error");
         }
     }
 

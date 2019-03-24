@@ -1,8 +1,6 @@
 package com.tsibulko.finaltask.service.impl;
 
-import com.tsibulko.finaltask.bean.Cocktail;
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.dao.CocktailSpecificDAO;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.dao.IngredientSpecificDAO;
 import com.tsibulko.finaltask.dao.impl.JdbcDaoFactory;

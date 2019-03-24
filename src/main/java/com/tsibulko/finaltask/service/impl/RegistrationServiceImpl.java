@@ -10,7 +10,8 @@ import com.tsibulko.finaltask.error.ErrorCode;
 import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
 import com.tsibulko.finaltask.util.EncryptPassword;
-import com.tsibulko.finaltask.validation.*;
+import com.tsibulko.finaltask.validation.FieldValidator;
+import com.tsibulko.finaltask.validation.ValidationException;
 
 public class RegistrationServiceImpl {
     public Customer signUp(Customer customer) throws ServiceException {
@@ -21,7 +22,7 @@ public class RegistrationServiceImpl {
             customer.setRole_id(UserRole.CUSTOMER.getId());
             customer.setState(UserState.WAITING_CONFIRMATION.getId());
 
-            validator.isUnique(new String[]{"login","email"},Customer.class,customer.getLogin(),customer.getEmail());
+            validator.isUnique(new String[]{"login", "email"}, Customer.class, customer.getLogin(), customer.getEmail());
 
             GenericDAO<Customer, Integer> userDao = daoFactory.getDao(Customer.class);
             EncryptPassword.encrypt(customer);

@@ -20,7 +20,7 @@
                             class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a><a href="#" class="current"><fmt:message key="error" bundle="${bundle}"/></a></div>
-    <h1><fmt:message key="error" bundle="${bundle}"/> </h1>
+    <h1><fmt:message key="error" bundle="${bundle}"/></h1>
 </div>
 <div class="container-fluid">
     <div class="row-fluid">

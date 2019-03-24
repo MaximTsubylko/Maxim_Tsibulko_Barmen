@@ -1,7 +1,6 @@
 package com.tsibulko.finaltask.builder.impl;
 
 import com.tsibulko.finaltask.bean.Ingredient;
-import com.tsibulko.finaltask.builder.Builder;
 import com.tsibulko.finaltask.builder.IngredientExtendedBuilder;
 import com.tsibulko.finaltask.dao.DaoException;
 import com.tsibulko.finaltask.error.ErrorCode;
@@ -20,7 +19,6 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
         FieldValidator validator = FieldValidator.getInstance();
 
 
-
         if (request.getParameter(AppConstant.ID_PARAMETR) != null) {
             Integer id = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
             ingredient.setId(id);
@@ -30,9 +28,9 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
 
 
         try {
-            validator.simpleStingMatches(name, 30,3,"name");
+            validator.simpleStingMatches(name, 30, 3, "name");
             validator.simpleStingMatches(description, 500, 0, "description");
-            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$", name);
 
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_INGREDIENT);
@@ -40,7 +38,7 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
         }
 
         try {
-            validator.isUnique(new String[]{"name"},Ingredient.class,name);
+            validator.isUnique(new String[]{"name"}, Ingredient.class, name);
         } catch (DaoException e) {
             throw new ServiceException(e);
         } catch (ValidationException e) {
@@ -61,7 +59,6 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
         FieldValidator validator = FieldValidator.getInstance();
 
 
-
         if (request.getParameter(AppConstant.ID_PARAMETR) != null) {
             Integer id = Integer.valueOf(request.getParameter(AppConstant.ID_PARAMETR));
             ingredient.setId(id);
@@ -71,15 +68,14 @@ public class IngredientBuilder implements IngredientExtendedBuilder {
 
 
         try {
-            validator.simpleStingMatches(name, 30,3,"name");
+            validator.simpleStingMatches(name, 30, 3, "name");
             validator.simpleStingMatches(description, 500, 0, "description");
-            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$",name);
+            validator.isMatcesByPattern("[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$|[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+\\s+[а-яА-Яa-zA-Z0-9]+$", name);
 
         } catch (ValidationException e) {
             ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_CREATE_INGREDIENT);
             throw new ServiceException(e);
         }
-
 
 
         ingredient.setName(name);

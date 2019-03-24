@@ -1,9 +1,7 @@
-
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:requestEncoding value="utf-8"/>
-
 
 
 <div style="display: none">
@@ -18,7 +16,6 @@
     <fmt:message key="error.create.cocktaile.description.large" var="error_19" bundle="${bundle}"/>
     <fmt:message key="error.create.cocktail.price.large" var="error_20" bundle="${bundle}"/>
     <fmt:message key="error.create.cocktail.price.sign" var="error_20" bundle="${bundle}"/>
-
 
 
     <fmt:message key="error.dao" var="error_113" bundle="${bundle}"/>
@@ -77,7 +74,6 @@
 
 
     <fmt:message key="error.pagenotfound" var="error_404_title" bundle="${bundle}"/>
-
 
 
     <span id="e_title">${title}</span>
@@ -213,9 +209,8 @@
     <span id="e145_message">${error_145_message}</span>
     <span id="e145_title">${title}</span>
 
-<%--page not found--%>
+    <%--page not found--%>
     <span id="e404_title">${error_404_title}</span>
-
 
 
 </div>

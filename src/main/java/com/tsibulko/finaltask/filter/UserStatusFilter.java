@@ -3,7 +3,6 @@ package com.tsibulko.finaltask.filter;
 import com.tsibulko.finaltask.bean.Customer;
 import com.tsibulko.finaltask.bean.UserState;
 import com.tsibulko.finaltask.command.CommandEnum;
-import com.tsibulko.finaltask.command.Page;
 import com.tsibulko.finaltask.error.ErrorCode;
 import com.tsibulko.finaltask.error.ErrorConstant;
 import com.tsibulko.finaltask.service.ServiceException;
@@ -37,8 +36,8 @@ public class UserStatusFilter implements Filter {
         if (customer != null) {
             CustomerServiceImpl service = (CustomerServiceImpl) ServiceFactory.getInstance().getService(ServiceTypeEnum.CUSTOMER);
             try {
-                if (command.equals(CommandEnum.LOGOUT.getName())){
-                    chain.doFilter(request,response);
+                if (command.equals(CommandEnum.LOGOUT.getName())) {
+                    chain.doFilter(request, response);
                 } else {
                     Customer dbCustomer = service.getByPK(customer.getId());
                     if (dbCustomer.getState() == UserState.WAITING_CONFIRMATION.getId()) {

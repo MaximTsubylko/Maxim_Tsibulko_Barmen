@@ -26,9 +26,6 @@ public class ErrorConstant {
     public final static String ERR_CODE_NOT_UNIQUE_LOGIN = "141";
 
 
-
-
-
     //cocktail code
     public final static String ERR_CODE_CREATE_COCKTAIL_WHITH_INGREDIENTS = "123";
     public final static String ERR_CODE_GET_COCKTAIL_BY_CUSTOMER = "130";

@@ -50,7 +50,7 @@
         <p><fmt:message key="index.helper" bundle="${bundle}"/></p>
     </header>
     <%--<footer>--%>
-        <%--<a href="#banner" class="button style2 scrolly-middle"><fmt:message key="index.join" bundle="${bundle}"/></a>--%>
+    <%--<a href="#banner" class="button style2 scrolly-middle"><fmt:message key="index.join" bundle="${bundle}"/></a>--%>
     <%--</footer>--%>
 </section>
 
@@ -66,8 +66,8 @@
     </p>
     <footer>
         <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
-        <input type="hidden" name="command" value="show_login_page">
-        <button type="submit" style=""><fmt:message key="index.startbutton" bundle="${bundle}"/></button>
+            <input type="hidden" name="command" value="show_login_page">
+            <button type="submit" style=""><fmt:message key="index.startbutton" bundle="${bundle}"/></button>
         </form>
     </footer>
 </section>

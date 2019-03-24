@@ -38,7 +38,8 @@
                 <h1>
                     <fmt:message key="user.information" bundle="${bundle}"/>
                 </h1>
-                <p><h3 style="color: black"><c:out value="${customer.login}"/></h3></p>
+                <p>
+                <h3 style="color: black"><c:out value="${customer.login}"/></h3></p>
                 <p><h5><fmt:message key="user.firstname" bundle="${bundle}"/> : <c:out
                     value="${customer.first_name}"/></h5></p>
                 <p><h5><fmt:message key="user.lastname" bundle="${bundle}"/> : <c:out
@@ -172,69 +173,74 @@
                 </div>
             </div>
             <c:if test="${CurentUser.id != ProfileUser.id}">
-            <div class="span5">
-                <div class="widget-box">
-                    <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG3"><span class="icon"><i
-                            class="icon-chevron-down"></i></span>
-                        <h5>
-                            <fmt:message key="user.comments.add" bundle="${bundle}"/>
-                        </h5>
-                    </div>
-                    <div class="widget-content nopadding in collapse" id="collapseG3" style="height: auto;">
-                        <form action="${pageContext.request.contextPath}/barman" method="post" class="form-horizontal">
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
-                                <div class="controls">
-                                    <input name="title" type="text" class="span11"
-                                           placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
-                                </div>
-                            </div>
-
-                            <div class="control-group">
-                                <label class="control-label">Mark</label>
-                                <div class="controls">
-                                    <div data-toggle="buttons-radio" class="btn-group">
-                                        <button class="btn btn-info" type="button" onclick="m1()">
-                                            1
-                                        </button>
-                                        <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m2()">
-                                            2
-                                        </button>
-                                        <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m3()">
-                                            3
-                                        </button>
-                                        <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m4()">
-                                            4
-                                        </button>
-                                        <button style="margin-left: 1vh" class="btn btn-info" type="button" onclick="m5()">
-                                            5
-                                        </button>
+                <div class="span5">
+                    <div class="widget-box">
+                        <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG3"><span class="icon"><i
+                                class="icon-chevron-down"></i></span>
+                            <h5>
+                                <fmt:message key="user.comments.add" bundle="${bundle}"/>
+                            </h5>
+                        </div>
+                        <div class="widget-content nopadding in collapse" id="collapseG3" style="height: auto;">
+                            <form action="${pageContext.request.contextPath}/barman" method="post"
+                                  class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label">
+                                        <fmt:message key="user.comments.title" bundle="${bundle}"/>:</label>
+                                    <div class="controls">
+                                        <input name="title" type="text" class="span11"
+                                               placeholder="<fmt:message key="user.comments.title" bundle="${bundle}"/>">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    <fmt:message key="user.comments.message" bundle="${bundle}"/>:
-                                </label>
-                                <div class="controls">
-                                    <textarea name="comment" class="span11"></textarea>
+
+                                <div class="control-group">
+                                    <label class="control-label">Mark</label>
+                                    <div class="controls">
+                                        <div data-toggle="buttons-radio" class="btn-group">
+                                            <button class="btn btn-info" type="button" onclick="m1()">
+                                                1
+                                            </button>
+                                            <button style="margin-left: 1vh" class="btn btn-info" type="button"
+                                                    onclick="m2()">
+                                                2
+                                            </button>
+                                            <button style="margin-left: 1vh" class="btn btn-info" type="button"
+                                                    onclick="m3()">
+                                                3
+                                            </button>
+                                            <button style="margin-left: 1vh" class="btn btn-info" type="button"
+                                                    onclick="m4()">
+                                                4
+                                            </button>
+                                            <button style="margin-left: 1vh" class="btn btn-info" type="button"
+                                                    onclick="m5()">
+                                                5
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-success" onclick="setMark()">
-                                    <input type="hidden" name="from" value="${CurentUser.id}">
-                                    <input type="hidden" name="to" value="${ProfileUser.id}">
-                                    <input type="hidden" name="id" value="${ProfileUser.id}">
-                                    <input type="hidden" id="mark" name="mark" value="">
-                                    <input type="hidden" name="command" value="add_user_feedback">
-                                    <fmt:message key="edit.savebutton" bundle="${bundle}"/>
-                                </button>
-                            </div>
-                        </form>
+                                <div class="control-group">
+                                    <label class="control-label">
+                                        <fmt:message key="user.comments.message" bundle="${bundle}"/>:
+                                    </label>
+                                    <div class="controls">
+                                        <textarea name="comment" class="span11"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-success" onclick="setMark()">
+                                        <input type="hidden" name="from" value="${CurentUser.id}">
+                                        <input type="hidden" name="to" value="${ProfileUser.id}">
+                                        <input type="hidden" name="id" value="${ProfileUser.id}">
+                                        <input type="hidden" id="mark" name="mark" value="">
+                                        <input type="hidden" name="command" value="add_user_feedback">
+                                        <fmt:message key="edit.savebutton" bundle="${bundle}"/>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             </c:if>
         </div>
     </div>
@@ -242,18 +248,23 @@
 
 <script>
     var mark = 0;
+
     function m1() {
         mark = 1;
     }
+
     function m2() {
         mark = 2;
     }
+
     function m3() {
         mark = 3;
     }
+
     function m4() {
         mark = 4;
     }
+
     function m5() {
         mark = 5;
     }
