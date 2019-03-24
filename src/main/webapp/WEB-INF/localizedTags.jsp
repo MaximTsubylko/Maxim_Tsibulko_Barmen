@@ -39,11 +39,9 @@
     <fmt:message key="error.validation.notexistemil" var="error_127" bundle="${bundle}"/>
 
 
-    <fmt:message key="error.waiting_conf.title" var="error_128_title" bundle="${bundle}"/>
     <fmt:message key="error.waiting_conf.text" var="error_128_message" bundle="${bundle}"/>
 
 
-    <fmt:message key="error.blocked.title" var="error_129_title" bundle="${bundle}"/>
     <fmt:message key="error.blocked.text" var="error_129_message" bundle="${bundle}"/>
 
 
@@ -157,15 +155,15 @@
 
     <%--get cocktail by customer--%>
     <span id="e130_message">${error_130_message}</span>
-    <span id="e130_title">${error_130_title}</span>
+    <span id="e130_title">${title}</span>
 
     <%--waiting conformation--%>
     <span id="e128_message">${error_128_message}</span>
-    <span id="e128_title">${error_128_title}</span>
+    <span id="e128_title">${title}</span>
 
     <%--bloced--%>
     <span id="e129_message">${error_129_message}</span>
-    <span id="e129_title">${error_129_title}</span>
+    <span id="e129_title">${title}</span>
 
     <%--not unique cocktail--%>
     <span id="e136_message">${error_136_message}</span>

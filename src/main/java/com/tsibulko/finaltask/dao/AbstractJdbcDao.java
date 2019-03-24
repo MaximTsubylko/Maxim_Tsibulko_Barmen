@@ -75,7 +75,7 @@ public abstract class AbstractJdbcDao<T extends Identified<PK>, PK extends Numbe
     public void update(T object) throws DaoException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(getUpdateQuery())) {
             prepareStatementForUpdate(preparedStatement, object);
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e, "Update error");
         }

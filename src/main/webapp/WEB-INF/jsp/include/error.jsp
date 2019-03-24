@@ -20,7 +20,7 @@
                             class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/>
     </a><a href="#" class="current"><fmt:message key="error" bundle="${bundle}"/></a></div>
-    <h1><fmt:message key="error" bundle="${bundle}"/> ${code}</h1>
+    <h1><fmt:message key="error" bundle="${bundle}"/> </h1>
 </div>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -32,10 +32,9 @@
                 </div>
                 <div class="widget-content">
                     <div class="error_ex">
-                        <h1 id="error_code"></h1>
-                        <h3 id="title"></h3>
+                        <h1 id="title"></h1>
 
-                        <p id="message"></p>
+                        <h3><p id="message"></p></h3>
                     </div>
                 </div>
             </div>
@@ -46,7 +45,6 @@
 </div>
 <script>
     $(document).ready(function f() {
-        document.getElementById('error_code').innerHTML = String(${code});
         document.getElementById('title').innerHTML = document.getElementById("e" + String(${code}) + "_title").textContent;
         document.getElementById('message').innerHTML = document.getElementById("e" + String(${code}) + "_message").textContent;
 
