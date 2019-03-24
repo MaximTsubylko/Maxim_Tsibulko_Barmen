@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:requestEncoding value="utf-8"/>
 
@@ -44,30 +45,10 @@
                     value="${customer.second_name}"/></h5></p>
                 <p><h5>E-mail : <c:out value="${customer.email}"/></h5></p>
                 <p><h5><fmt:message key="user.role" bundle="${bundle}"/> :
-                <c:choose>
-                    <c:when test="${customer.role_id == 3}">
-                        <fmt:message key="user.role.administrator" bundle="${bundle}"/>
-                    </c:when>
-                    <c:when test="${customer.role_id == 2}">
-                        <fmt:message key="user.role.barman" bundle="${bundle}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <fmt:message key="user.role.customer" bundle="${bundle}"/>
-                    </c:otherwise>
-                </c:choose>
+                <tags:role_writer id="${customer.id}"/>
             </h5></p>
                 <p><h5><fmt:message key="user.state" bundle="${bundle}"/> :
-                <c:choose>
-                    <c:when test="${customer.state == 3}">
-                        <fmt:message key="user.state.whait" bundle="${bundle}"/>
-                    </c:when>
-                    <c:when test="${customer.state == 2}">
-                        <fmt:message key="user.state.blocked" bundle="${bundle}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <fmt:message key="user.state.active" bundle="${bundle}"/>
-                    </c:otherwise>
-                </c:choose>
+                <tags:state_write id="${customer.id}"/>
             </h5></p>
             </div>
         </div>
