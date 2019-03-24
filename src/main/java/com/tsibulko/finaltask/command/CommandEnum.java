@@ -35,6 +35,7 @@ public enum CommandEnum {
     EDIT_INGREDIENT("edit_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
     SHOW_EDIT_INGREDIENT("show_edit_ingredient", AccessLevel.BARMEN, AccessLevel.ADMINISTRATOR),
     CHANGE_STATE("change_state", AccessLevel.ADMINISTRATOR),
+    CHANGE_ROLE("change_role", AccessLevel.ADMINISTRATOR),
     CREATE_INGREDIENT("create_ingredient", AccessLevel.ADMINISTRATOR, AccessLevel.BARMEN);
 
 

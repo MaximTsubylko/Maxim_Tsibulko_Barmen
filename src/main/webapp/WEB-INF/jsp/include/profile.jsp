@@ -127,7 +127,7 @@
                     </c:when>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.state == 1&& CurentUser.id != ProfileUser.id}">
+                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.state == 1 && CurentUser.id != ProfileUser.id}">
                         <form action="${pageContext.request.contextPath}/barman" method="post">
                             <a href="?command=change_state&id=${ProfileUser.id}&state=blocked"
                                class="btn btn-danger btn btn-block ">
@@ -140,6 +140,24 @@
                             <a href="?command=change_state&id=${ProfileUser.id}&state=active"
                                class="btn btn-success btn btn-block ">
                                 <fmt:message key="customer.unban" bundle="${bundle}"/>
+                            </a>
+                        </form>
+                    </c:when>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.role_id == 1 && CurentUser.id != ProfileUser.id}">
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=change_role&id=${ProfileUser.id}&role=2"
+                               class="btn btn-success btn btn-block ">
+                                <fmt:message key="customer.tobarman" bundle="${bundle}"/>
+                            </a>
+                        </form>
+                    </c:when>
+                    <c:when test="${CurentUser.role_id == 3 && ProfileUser.role_id == 2 && CurentUser.id != ProfileUser.id}">
+                        <form action="${pageContext.request.contextPath}/barman" method="post">
+                            <a href="?command=change_role&id=${ProfileUser.id}&role=1"
+                               class="btn btn-danger btn btn-block ">
+                                <fmt:message key="customer.touser" bundle="${bundle}"/>
                             </a>
                         </form>
                     </c:when>

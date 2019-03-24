@@ -28,7 +28,7 @@ public class EditProfileCommand implements Command {
         service.update(NewCustomer);
         session.setAttribute(AppConstant.SESSION_ATTRIBUTE, service.getByPK(NewCustomer.getId()));
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_CUSTOMER_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

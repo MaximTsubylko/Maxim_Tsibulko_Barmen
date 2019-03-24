@@ -27,7 +27,7 @@ public class ChangeUserStateCommand implements Command {
         service.setNewState(customer, state);
 
         ResponseContent responseContent = new ResponseContent();
-        responseContent.setRouter(new Router(CommandEnum.SHOW_PROFILE.useCommand(), Router.Type.REDIRECT));
+        responseContent.setRouter(new Router(CommandEnum.SHOW_CUSTOMER_LIST.useCommand(), Router.Type.REDIRECT));
         return responseContent;
     }
 }

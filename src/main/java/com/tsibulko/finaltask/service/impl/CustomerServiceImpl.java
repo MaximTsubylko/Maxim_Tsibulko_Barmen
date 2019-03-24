@@ -41,8 +41,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
-    public void setNewRole(Customer customer, Integer id) throws ServiceException {
-        customer.setRole_id(id);
+    public void setNewRole(Customer customer, String role) throws ServiceException {
+        customer.setRole_id(Integer.valueOf(role));
         update(customer);
 
     }

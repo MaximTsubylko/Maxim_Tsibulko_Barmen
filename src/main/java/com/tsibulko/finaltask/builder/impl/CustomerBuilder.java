@@ -128,9 +128,6 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
         Customer customer = new Customer();
         FieldValidator validator = FieldValidator.getInstance();
         String login = request.getParameter(AppConstant.LOGIN_PARAMENR);
-        if (login.equals("root")){
-            customer.setLogin(login);
-        } else {
             try {
                 validator.simpleStingMatches(login, 20, 4, "login");
                 validator.isMatcesByPattern("^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$", login);
@@ -138,7 +135,6 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
                 ErrorCode.getInstance().setErr_code(ErrorConstant.ERR_CODE_INCORRECT_LOGIN);
                 throw new ServiceException(e);
             }
-        }
         customer.setLogin(login);
 
         if (request.getParameter(AppConstant.PASSWORD_PARAMETR) != null) {

@@ -44,7 +44,7 @@ public class CocktailBuiler implements CocktailExtendedBuilder {
             cocktail.setIngredients(ingredientList);
         }
 
-        try {
+        try {//FIXME
             validator.simpleStingMatches(name, 20,3,"name");
             validator.simpleStingMatches(description, 500, 0, "description");
             validator.isMatchesInt(price, new int[]{1, 1000});
