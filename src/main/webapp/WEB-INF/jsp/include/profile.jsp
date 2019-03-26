@@ -46,10 +46,10 @@
                     value="${customer.second_name}"/></h5></p>
                 <p><h5>E-mail : <c:out value="${customer.email}"/></h5></p>
                 <p><h5><fmt:message key="user.role" bundle="${bundle}"/> :
-                <tags:role_writer id="${customer.id}"/>
+                <tags:role_writer id="${customer.role_id}"/>
             </h5></p>
                 <p><h5><fmt:message key="user.state" bundle="${bundle}"/> :
-                <tags:state_write id="${customer.id}"/>
+                <tags:state_write id="${customer.state}"/>
             </h5></p>
             </div>
         </div>

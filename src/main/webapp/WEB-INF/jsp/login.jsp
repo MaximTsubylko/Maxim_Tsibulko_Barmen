@@ -80,7 +80,7 @@
 <div id="loginbox">
     <form id="loginform" class="form-vertical" action="${pageContext.request.contextPath}/barman" method="post">
 
-        <div class="control-group normal_text"><h3><img src="${pageContext.request.contextPath}/static/img/logo.png"
+        <div class="control-group normal_text"><h3><img src="${pageContext.request.contextPath}/static/img/PIVO.svg"
                                                         alt="Logo"/></h3></div>
         <div class="control-group">
             <div class="controls">

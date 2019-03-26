@@ -4,10 +4,10 @@
 <jsp:directive.attribute name="id" required="true"/>
 
 <c:choose>
-    <c:when test="${customer.role_id == 3}">
+    <c:when test="${id == 3}">
         <fmt:message key="user.role.administrator" bundle="${bundle}"/>
     </c:when>
-    <c:when test="${customer.role_id == 2}">
+    <c:when test="${id == 2}">
         <fmt:message key="user.role.barman" bundle="${bundle}"/>
     </c:when>
     <c:otherwise>

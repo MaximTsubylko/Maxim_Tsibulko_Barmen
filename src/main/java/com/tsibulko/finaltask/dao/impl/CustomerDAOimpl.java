@@ -24,7 +24,7 @@ public class CustomerDAOimpl extends AbstractJdbcDao<Customer, Integer> implemen
                 Customer customer = new Customer();
                 customer.setFirst_name(resultSet.getString("first_name"));
                 customer.setSecond_name(resultSet.getString("last_name"));
-                customer.setRegistr_date(resultSet.getDate("registr_date"));
+                customer.setRegistr_date(resultSet.getTimestamp("registr_date"));
                 customer.setRole_id(resultSet.getInt("role_id"));
                 customer.setState(resultSet.getInt("state_id"));
                 customer.setEmail(resultSet.getString("email"));
@@ -76,7 +76,7 @@ public class CustomerDAOimpl extends AbstractJdbcDao<Customer, Integer> implemen
             statement.setString(++i, customer.getSecond_name());
             statement.setString(++i, customer.getLogin());
             statement.setString(++i, customer.getPassword());
-            statement.setDate(++i, customer.getRegistr_date());
+            statement.setTimestamp(++i, customer.getRegistr_date());
             statement.setInt(++i, customer.getState());
             statement.setString(++i, customer.getEmail());
             statement.setInt(++i, customer.getRole_id());

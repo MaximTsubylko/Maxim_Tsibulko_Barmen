@@ -3,6 +3,7 @@ package com.tsibulko.finaltask.bean;
 import com.tsibulko.finaltask.dao.Identified;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class Customer implements Identified<Integer> {
@@ -11,7 +12,7 @@ public class Customer implements Identified<Integer> {
     private String second_name;
     private String login;
     private String password;
-    private Date registr_date;
+    private Timestamp registr_date;
     private int state = 3;
     private String email;
     private List<Cocktail> cocktails;
@@ -95,11 +96,11 @@ public class Customer implements Identified<Integer> {
         this.password = password;
     }
 
-    public Date getRegistr_date() {
+    public Timestamp getRegistr_date() {
         return registr_date;
     }
 
-    public void setRegistr_date(Date registr_date) {
+    public void setRegistr_date(Timestamp registr_date) {
         this.registr_date = registr_date;
     }
 

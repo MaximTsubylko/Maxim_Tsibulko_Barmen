@@ -12,6 +12,9 @@ import com.tsibulko.finaltask.validation.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CustomerBuilder implements CustomerExtendedBuilder {
 
@@ -85,6 +88,7 @@ public class CustomerBuilder implements CustomerExtendedBuilder {
         customer.setFirst_name(firstName);
         customer.setSecond_name(secondName);
         customer.setEmail(email);
+        customer.setRegistr_date(new Timestamp(new Date().getTime()));
 
 
         return customer;

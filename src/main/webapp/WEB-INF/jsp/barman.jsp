@@ -53,7 +53,15 @@
 
 <!--Header-part-->
 <div id="header">
-    <h1><a href="dashboard.html">Barman helper</a></h1>
+    <img style="
+    background-color: #fffafe;
+    height: 31px;
+    left: 10px;
+    line-height: 600px;
+    overflow: hidden;
+    position: relative;
+    top: 26px;
+    width: 200px;" src="${pageContext.request.contextPath}/static/img/PIVO.svg">
 </div>
 <!--close-Header-part-->
 
