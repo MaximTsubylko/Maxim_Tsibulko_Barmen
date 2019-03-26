@@ -57,6 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setPassword(newPassword);
             EncryptPassword.encrypt(customer);
             update(customer);
+            userKey.remove(userID);
             return validCustomer;
 
         } else {

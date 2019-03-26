@@ -29,11 +29,9 @@
         <div class="span12">
             <div class="error_ex">
                 <h3 style="color: #46a546"><fmt:message key="password.change.succes" bundle="${bundle}"/></h3>
-                <h4 style="color: #46a546"><fmt:message key="password.change.newpassword" bundle="${bundle}"/> - <c:out
-                        value="${new_password}"/></h4>
                 <h4><fmt:message key="password.change.inprofile" bundle="${bundle}"/></h4>
                 <a class="btn btn-warning btn-big"
-                   href="${pageContext.request.contextPath}/barman?command=show_edit_page">Edit profile</a>
+                   href="${pageContext.request.contextPath}/barman?command=show_edit_page"><fmt:message key="edit.edituprofile" bundle="${bundle}"/></a>
             </div>
         </div>
     </div>

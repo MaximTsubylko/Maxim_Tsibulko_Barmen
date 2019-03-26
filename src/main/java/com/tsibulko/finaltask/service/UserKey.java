@@ -32,7 +32,7 @@ public class UserKey {
         keys.put(id, key);
     }
 
-    public void remove(Integer id, String key) {
+    public void remove(Integer id) {
         keys.remove(id);
     }
 
