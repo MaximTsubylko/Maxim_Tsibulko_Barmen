@@ -30,11 +30,12 @@
                             class="tip-bottom"><i class="icon-home"></i>
         <fmt:message key="link.home" bundle="${bundle}"/></a><a href="#" class="current"><fmt:message
             key="link.createcocktil" bundle="${bundle}"/></a></div>
-    <h1>
+    <h1 class="pagination-centered">
         <fmt:message key="cocktail.createnew" bundle="${bundle}"/>
     </h1>
 </div>
 <div class="container-fluid">
+    <hr>
     <div class="row-fluid">
         <div style="margin-left: 45vh" class="span6">
 
